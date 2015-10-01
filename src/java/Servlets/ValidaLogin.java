@@ -45,7 +45,7 @@ public class ValidaLogin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");       
-        user = new Usuario(request.getParameter("usuario"), request.getParameter("pass"), "");
+        user = new Usuario(request.getParameter("user"), request.getParameter("pass"));
         user = ctrlLogin.validaUsuario(user);
         if (user != null) {
             HttpSession sesion = request.getSession(true);

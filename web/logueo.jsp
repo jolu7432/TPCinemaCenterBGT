@@ -14,7 +14,7 @@
     <body>
         <h1>Logueo</h1>
         <form method="post" action="ValidaLogin">
-            Usuario:<input type="text" name="usuario"><br><br>
+            Usuario:<input type="text" name="user"><br><br>
             Password<input type="password" name="pass"><br><br>
             <input type="submit" value="Ingresar">            
         </form>

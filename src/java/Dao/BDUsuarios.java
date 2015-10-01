@@ -51,12 +51,12 @@ public class BDUsuarios implements IBD {
         Conexion oCon = new Conexion();
         ResultSet rs = null;
         oCon.getConexion();
-        String insert = "SELECT * FROM usuario where nombre='"+((Usuario)dato).getNombre() + "' and pass='"+((Usuario)dato).getPass()+"'";      
+        String insert = "SELECT * FROM usuarios where User='"+((Usuario)dato).getUser() + "' and Pass='"+((Usuario)dato).getPass()+"'";      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
             rs = sentencia.executeQuery();            
             while (rs.next()) {
-                resp = new Usuario(rs.getString("nombre"), rs.getString("pass"), rs.getString("rol"));
+                resp = new Usuario(rs.getInt("idUsuario"), rs.getString("Nombre"), rs.getString("Apellido"), rs.getInt("DNI"),rs.getBoolean("Administrador"), rs.getString("User"), rs.getString("Pass"), rs.getString("email"), rs.getString("Telefono"));
             }
             rs.close();
             sentencia.close();

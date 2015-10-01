@@ -16,6 +16,6 @@
         <h1>Entraste</h1>
         <%= usuarioLog.getNombre()%>
         <%= usuarioLog.getPass()%>
-        <%= usuarioLog.getRol()%>    
+  
     </body>
 </html>

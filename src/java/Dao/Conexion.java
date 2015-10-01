@@ -29,7 +29,7 @@ public class Conexion {
         pass = "";
         servidor = "localhost";
         puerto = 3306;
-        bd = "bdusuarios";
+        bd = "bdcinemacenterbgt";
         url = "jdbc:mysql://" + servidor + ":" + puerto + "/" + bd;
         driver = "com.mysql.jdbc.Driver";
     }
