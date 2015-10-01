@@ -5,7 +5,7 @@
 
 nbproject/
 
-# # generic files to ignore
+## generic files to ignore
 *~
 *.lock
 *.DS_Store
