@@ -14,8 +14,18 @@
     </head>
     <body>
         <h1>Entraste</h1>
+        <%= usuarioLog.getId()%>
         <%= usuarioLog.getNombre()%>
+        <%= usuarioLog.getApellido()%>
+        <%= usuarioLog.getDni()%>
+        <% if(usuarioLog.isAdministrador()){%>
+                 <%="sos administrador"%>
+        <%}else{%>
+                 <%="no sos administrador"%>
+        <%}%>
+        <%= usuarioLog.getUser()%>
         <%= usuarioLog.getPass()%>
-  
+        <%= usuarioLog.getEmail()%>
+        <%= usuarioLog.getTelefono()%>
     </body>
 </html>
