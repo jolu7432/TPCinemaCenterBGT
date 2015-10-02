@@ -5,12 +5,13 @@
  */
 package Servlets;
 
+import Controladora.CtrlPelicula;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import javax.json.Json;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +24,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Pelicula", urlPatterns = {"/Pelicula"})
 public class Pelicula extends HttpServlet {
+    CtrlPelicula ctrlPelicula;
+
+    public Pelicula() {
+        this.ctrlPelicula = new CtrlPelicula();
+    }
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,11 +41,8 @@ public class Pelicula extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {    
-        List<String> list = new ArrayList<String>();
-        list.add("item1");
-        list.add("item2");
-        list.add("item3");
+            throws ServletException, IOException, SQLException {    
+        ArrayList<Pelicula> list = ctrlPelicula.listarPeliculas();        
         String json = new Gson().toJson(list);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -57,7 +61,11 @@ public class Pelicula extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Pelicula.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -71,7 +79,11 @@ public class Pelicula extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Pelicula.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
