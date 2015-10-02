@@ -42,7 +42,17 @@ public class Menu extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet Menu at " + request.getContextPath() + "</h1>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>"); 
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
     }
 

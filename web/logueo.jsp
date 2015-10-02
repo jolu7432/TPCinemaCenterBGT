@@ -14,7 +14,7 @@
         <link href="bootstrap/css/style.css" rel="stylesheet">
 
     </head>
-    <body>
+    <body>       
         <div class="navbar-fixed-top"> 
                 <form class="navbar-form" action="ValidaLogin" method="post">
                     <div class="navbar-header">
