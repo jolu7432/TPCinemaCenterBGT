@@ -32,7 +32,19 @@ public class BDUsuarios implements IBD {
 
     @Override
     public void alta(Object dato) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Conexion oCon = new Conexion();
+        oCon.getConexion();
+        Usuario aux = (Usuario) dato;
+        String insert = "INSERT INTO usuarios(nombre, apellido, DNI, Administrador, User, Pass, email,Telefono) VALUES('" +aux.getNombre()+ "','" +aux.getApellido()+ "'," +aux.getDni()+ "," +aux.isAdministrador()+ ",'" +aux.getUser()+ "','" +aux.getPass()+ "','"+aux.getEmail()+"','"+aux.getTelefono()+ "')";
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
+            sentencia.execute();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+        }
     }
 
     @Override
