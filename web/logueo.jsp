@@ -15,22 +15,22 @@
 
     </head>
     <body>
-        <div class="navbar-fixed-top"> 
-                <form class="navbar-form" action="ValidaLogin" method="post">
-                    <div class="navbar-header">
-                        <h1>CinemaCenter</h1>
-                    </div>
-                        <div class="navbar-right navbar-">
-                            <label for="inputUsuario" >Usuario</label>
-                            <input type="text" id="inputUsuario" name="user"  class="form-control" placeholder="Ingrese usuario" required autofocus>
-
-                            <label for="inputPassword" >Contraseña: </label>
-                            <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
-
-                            <button class="navbar-btn btn-primary " type="submit" name="Ingresar" >Ingresar</button>
-                        </div>
-                </form>
-            
-        </div>
+        <nav class="navbar-fixed-top"> 
+            <div class="container-fluid">
+                <h1 class="navbar-header navbar-">CinemaCenter</h1>
+                <div>
+                    
+                </div>
+                 <div class="navbar-right">
+                     <form class="navbar-form" action="ValidaLogin" method="post">
+                         <label for="inputUsuario" >Usuario:</label>
+                         <input type="text" id="inputUsuario" name="user"  class="form-control" placeholder="Ingrese usuario" required autofocus>
+                         <label for="inputPassword" >Contraseña: </label>
+                         <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                         <button class="navbar-btn btn-primary " type="submit" name="Ingresar" >Ingresar</button>
+                     </form>
+                 </div>  
+            </div>
+        </nav>
     </body>
 </html>
