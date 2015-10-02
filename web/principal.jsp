@@ -13,7 +13,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <jsp:include page="menu.jsp"/>
+        <div id="menu">  
+            <jsp:include page="menu.jsp"/>
+        </div>
         <h1>Entraste</h1>
         <%= usuarioLog.getId()%>
         <%= usuarioLog.getNombre()%>
