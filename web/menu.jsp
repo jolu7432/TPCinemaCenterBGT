@@ -41,11 +41,8 @@
                         <label for="inputPassword" >Contraseña: </label>
                         <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
                         <button class="navbar-btn btn-primary " type="submit" name="ingresar" >Ingresar</button> 
-                        <button class="navbar-btn btn-primary " type="button" name="registrar" ><a href="registro.jsp">Registrar</a></button>                     
-                         <input type="hidden" name="accion" value="logIn"/>.
-                        <% } else {%>
-                        <input type="hidden" name="accion" value="logOut"/>
-                        <button class="navbar-btn btn-primary " type="submit" name="salir" >Salir</button>                  
+                        <button class="navbar-btn btn-primary " type="button" name="registrar" onclick="location.href = 'registro.jsp'">Registrar</button>                     
+                        <input type="hidden" name="accion" value="logIn"/>               
                         <% }%>
                     </form>
                 </div>  
@@ -87,6 +84,7 @@
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>
                         <ul class="nav navbar-nav navbar-right">
+                            <% if (usuarioLog.getId() != 0) {%>    
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -94,9 +92,13 @@
                                     <li><a href="#">Another action</a></li>
                                     <li><a href="#">Something else here</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    <li>  <form class="navbar-form" action="Login" method="post">
+                                            <input type="hidden" name="accion" value="logOut"/>
+                                            <button class="navbar-btn btn-primary" type="submit" name="salir" >Salir</button>
+                                        </form></li>
                                 </ul>
                             </li>
+                            <%}%>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
