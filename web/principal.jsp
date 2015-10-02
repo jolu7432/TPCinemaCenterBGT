@@ -27,6 +27,6 @@
         <%= usuarioLog.getUser()%>
         <%= usuarioLog.getPass()%>
         <%= usuarioLog.getEmail()%>
-        <%= usuarioLog.getTelefono()%>
+        <%= usuarioLog.getTelefono()%>       
     </body>
 </html>

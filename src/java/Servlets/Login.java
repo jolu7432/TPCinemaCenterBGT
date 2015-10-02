@@ -23,13 +23,13 @@ import javax.servlet.http.HttpSession;
  *
  * @author Jorge
  */
-@WebServlet(name = "ValidaLogin", urlPatterns = {"/ValidaLogin"})
-public class ValidaLogin extends HttpServlet {
+@WebServlet(name = "Login", urlPatterns = {"/Login"})
+public class Login extends HttpServlet {
 
     private CtrlLogin ctrlLogin;
     private Usuario user;
     
-    public ValidaLogin(){
+    public Login(){
         ctrlLogin = new CtrlLogin();
         user = null;
     }
@@ -44,16 +44,35 @@ public class ValidaLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        response.setContentType("text/html;charset=UTF-8");       
+        //response.setContentType("text/html;charset=UTF-8");  
+        switch (request.getParameter("accion")){
+            case "logOut":
+                logOut(request, response);
+            break;
+            case "logIn":
+                logIn(request, response);
+            break;
+            default:
+            break;
+                
+        }
+        
+    }
+    
+    protected void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        HttpSession sesion = request.getSession(true);
+        sesion.invalidate();
+        RequestDispatcher aux = request.getRequestDispatcher("/logueo.jsp");
+        aux.forward(request, response);
+    }
+    
+    protected void logIn(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
         user = new Usuario(request.getParameter("user"), request.getParameter("pass"));
         user = ctrlLogin.validaUsuario(user);
         if (user != null) {
             HttpSession sesion = request.getSession(true);
             sesion.setAttribute("usuarioLog", user);
             RequestDispatcher aux = request.getRequestDispatcher("/principal.jsp");
-            aux.forward(request, response);
-        } else {
-            RequestDispatcher aux = request.getRequestDispatcher("/logueo.jsp");
             aux.forward(request, response);
         }
     }
@@ -73,7 +92,7 @@ public class ValidaLogin extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ValidaLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -91,7 +110,7 @@ public class ValidaLogin extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ValidaLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
