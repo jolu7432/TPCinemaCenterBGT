@@ -7,6 +7,7 @@ package Servlets;
 
 import Controladora.CtrlLogin;
 import Modelo.Usuario;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -58,6 +59,7 @@ public class Login extends HttpServlet {
         }
          RequestDispatcher aux = request.getRequestDispatcher("/principal.jsp");
             aux.forward(request, response);
+            Gson gson= new Gson();
     }
     
     protected void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
