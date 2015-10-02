@@ -13,6 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+         <jsp:include page="menu.jsp"/>
         <h1>Entraste</h1>
         <%= usuarioLog.getNombre()%>
         <%= usuarioLog.getPass()%>
