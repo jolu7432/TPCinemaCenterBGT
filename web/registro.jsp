@@ -9,9 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Alta de Usuarios</title>
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="bootstrap/css/style.css" rel="stylesheet">
+        <title>Alta de Usuarios</title>      
     </head>
     <body>  
         <jsp:include page="menu.jsp"/>
