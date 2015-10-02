@@ -16,6 +16,18 @@ import java.util.ArrayList;
  * @author hernan
  */
 public class BDPeliculas implements IBD{
+    private static BDPeliculas instance = null;
+
+    public static BDPeliculas getInstance() {
+        if (instance == null) {
+            instance = new BDPeliculas();
+        }
+        return instance;
+    }
+
+    public BDPeliculas() {
+    }
+    
 
     @Override
     public void alta(Object dato) throws SQLException {
