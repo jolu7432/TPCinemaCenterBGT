@@ -14,15 +14,15 @@
     </head>
     <body>
         <% String aux = usuarioLog.getUser();
-            if (aux.equals("jolu7432")) {%>
+            if (aux.equals("valtanders")) {%>
         <div class="dropdown">
-            <h1>Jorge</h1> 
+            <h1>Bruno</h1> 
             <button type="button">Menú desplegable</button>
 
         </div> 
         <% }else {%>
         <div class="dropdown">
-            <h1>Hernan</h1> 
+            <h1>GIL</h1> 
             <button type="button">Menú desplegable</button>
 
         </div> 

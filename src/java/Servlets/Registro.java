@@ -25,12 +25,12 @@ import javax.servlet.http.HttpSession;
  * @author microtik
  */
 @WebServlet(name = "testplagio", urlPatterns = {"/testplagio"})
-public class testplagio extends HttpServlet {
+public class Registro extends HttpServlet {
     
     private CtrlLogin ctrlLogin;
     private Usuario user;
     
-    public testplagio(){
+    public Registro(){
         ctrlLogin = new CtrlLogin();
     }
 
@@ -55,7 +55,7 @@ public class testplagio extends HttpServlet {
             RequestDispatcher aux = request.getRequestDispatcher("/principal.jsp");
             aux.forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(testplagio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
