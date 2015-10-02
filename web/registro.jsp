@@ -13,7 +13,8 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="bootstrap/css/style.css" rel="stylesheet">
     </head>
-    <body>        
+    <body>  
+        <jsp:include page="menu.jsp"/>
         <form method="post" action="testplagio" class="form-signup">
             <center><h1>Registro de usuario</h1></center>
             <div id="rcorners" class="container">

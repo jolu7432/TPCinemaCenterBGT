@@ -41,7 +41,7 @@
                         <label for="inputPassword" >Contraseña: </label>
                         <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
                         <button class="navbar-btn btn-primary " type="submit" name="ingresar" >Ingresar</button> 
-                        <button class="navbar-btn btn-primary " type="button" name="registrar" ><a href="/registro.jsp">Registrar</a></button>                     
+                        <button class="navbar-btn btn-primary " type="button" name="registrar" ><a href="registro.jsp">Registrar</a></button>                     
                          <input type="hidden" name="accion" value="logIn"/>.
                         <% } else {%>
                         <input type="hidden" name="accion" value="logOut"/>

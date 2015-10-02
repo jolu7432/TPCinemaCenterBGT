@@ -56,14 +56,13 @@ public class Login extends HttpServlet {
             break;
                 
         }
-        
+         RequestDispatcher aux = request.getRequestDispatcher("/principal.jsp");
+            aux.forward(request, response);
     }
     
     protected void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         HttpSession sesion = request.getSession(true);
-        sesion.invalidate();
-        RequestDispatcher aux = request.getRequestDispatcher("/logueo.jsp");
-        aux.forward(request, response);
+        sesion.invalidate();       
     }
     
     protected void logIn(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
@@ -71,9 +70,7 @@ public class Login extends HttpServlet {
         user = ctrlLogin.validaUsuario(user);
         if (user != null) {
             HttpSession sesion = request.getSession(true);
-            sesion.setAttribute("usuarioLog", user);
-            RequestDispatcher aux = request.getRequestDispatcher("/principal.jsp");
-            aux.forward(request, response);
+            sesion.setAttribute("usuarioLog", user);           
         }
     }
 
