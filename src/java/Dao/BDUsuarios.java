@@ -54,7 +54,19 @@ public class BDUsuarios implements IBD {
 
     @Override
     public void modificar(Object dato) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Conexion oCon = new Conexion();
+        oCon.getConexion();
+        Usuario aux = (Usuario) dato;
+        String insert = "UPDATE usuarios SET  nombre = '" +aux.getNombre()+ "' and apellido = '" +aux.getApellido()+ "' and DNI = " +aux.getDni()+ " and Administrador = " +aux.isAdministrador()+ " and User = '" +aux.getUser()+ "' and Pass = '" +aux.getPass()+ "' and email = '"+aux.getEmail()+"' and Telefono = '"+aux.getTelefono()+ "'  WHERE idUsuario = " + aux.getId();
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
+            sentencia.execute();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+        }
     }
 
     @Override
