@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public interface IBD <T> {
     public void alta(T dato) throws SQLException;
     public void baja(T dato) throws SQLException;
-    public void modificar(T oldDato,T newDato) throws SQLException;
+    public void modificar(T dato) throws SQLException;
     public T existe(T dato) throws SQLException;
     public ArrayList listado() throws SQLException;    
 }

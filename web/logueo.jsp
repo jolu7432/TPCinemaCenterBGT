@@ -10,13 +10,27 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="bootstrap/css/style.css" rel="stylesheet">
+
     </head>
     <body>
-        <h1>Logueo</h1>
-        <form method="post" action="ValidaLogin">
-            Usuario:<input type="text" name="user"><br><br>
-            Password<input type="password" name="pass"><br><br>
-            <input type="submit" value="Ingresar">            
-        </form>
+        <div class="navbar-fixed-top"> 
+                <form class="navbar-form" action="ValidaLogin" method="post">
+                    <div class="navbar-header">
+                        <h1>CinemaCenter</h1>
+                    </div>
+                        <div class="navbar-right navbar-">
+                            <label for="inputUsuario" >Usuario</label>
+                            <input type="text" id="inputUsuario" name="user"  class="form-control" placeholder="Ingrese usuario" required autofocus>
+
+                            <label for="inputPassword" >Contraseña: </label>
+                            <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+
+                            <button class="navbar-btn btn-primary " type="submit" name="Ingresar" >Ingresar</button>
+                        </div>
+                </form>
+            
+        </div>
     </body>
 </html>

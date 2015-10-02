@@ -41,7 +41,7 @@ public class BDUsuarios implements IBD {
     }
 
     @Override
-    public void modificar(Object oldDato, Object newDato) throws SQLException {
+    public void modificar(Object dato) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
