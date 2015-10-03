@@ -15,7 +15,7 @@
         <div id="menu">  
             <jsp:include page="menu.jsp"/>
         </div>
-        <form method="post" action="testplagio" class="form-signup">
+        <form method="post" action="Registro" class="form-signup">
             <center><h1>Registro de usuario</h1></center>
             <div id="rcorners" class="container">
                 <div class="form-group">

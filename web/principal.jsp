@@ -10,7 +10,37 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <script language="javascript">
+            var titletext = "Bienvenidos a CinemaCenter!";
+            var repeat = true;
+            var index = 0;
+            var inicio = 0;
+            function scrolltitle() {
+                if (index <= titletext.length && index <= 15) {
+                    document.title = titletext.substring(0, index);
+                    index++;
+                    setTimeout('scrolltitle()', 200);
+                }
+                else if(index <= titletext.length && index >= 15){
+                        inicio++;
+                        document.title = titletext.substring(inicio, index);
+                        index++;
+                        setTimeout('scrolltitle()', 200);
+                    }
+                        
+                else {
+                    index = 0;
+                    inicio = 0;
+                    if (repeat)
+                        setTimeout('scrolltitle()', 1000);
+                }
+            }
+            window.onload = function () {
+                if (!document.layers)
+                    setTimeout('scrolltitle()', 1000);
+            }
+        </script>
+        <title> </title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script>
             $(document).ready(function () {
@@ -22,7 +52,8 @@
                         var div2= $('<div id=d3"'+index+'"  class="caption">').appendTo(div1);  
                         $('<h3>').text(item.nombre).appendTo(div2);
                         $('<p>').text(item.descripcion).appendTo(div2);
-                        $(' <a href="reservar.jsp?id='+item.idPelicula+'" class="btn btn-primary" role="button">Reservar</a> ').appendTo(div2);                        
+                        $(' <a href="reservar.jsp?id='+item.idPelicula+'" class="btn btn-primary" role="button">Reservar</a> ').appendTo(div2); 
+                        $(' <a href="reservar.jsp?id=' + item.idPelicula + '" class="btn btn-primary" role="button">Reservar</a> ').appendTo(div2);                              
                     });
                 });
             });
@@ -32,8 +63,8 @@
         <div id="menu">  
             <jsp:include page="menu.jsp"/>
         </div>
-        <h1 align= "center" >Peliculas en Cartel</h1>       
-        <div id="pelis" class="row">             
+        <h1 align= "center" >Peliculas</h1>       
+        <div id="pelis" class="row">       
         </div>
         <!--<div class="row">            
             <div class="col-sm-6 col-md-4">
