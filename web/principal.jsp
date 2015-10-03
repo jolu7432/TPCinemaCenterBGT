@@ -15,43 +15,25 @@
         <script>
             $(document).ready(function () {
                 $.get('Pelicula', function (responseJson) {
-                    $.each(responseJson, function (index, item) {
-                        console.log(index);
+                    $.each(responseJson, function (index, item) {                       
                         var div = $('<div id=d1"'+index+'" class="col-sm-6 col-md-4">').appendTo($('#pelis'));                        
                         var div1= $('<div id=d2"'+index+'" class="thumbnail">').appendTo(div);                        
                         $('<img id=img"'+index+'" src="img/'+item.urlImagen+'" alt="...">').appendTo(div1);
                         var div2= $('<div id=d3"'+index+'"  class="caption">').appendTo(div1);  
                         $('<h3>').text(item.nombre).appendTo(div2);
                         $('<p>').text(item.descripcion).appendTo(div2);
-                        $(' <a href="reservar.jsp?id='+item.idPelicula+'" class="btn btn-primary" role="button">Reservar</a> ').appendTo(div2);
-                        
+                        $(' <a href="reservar.jsp?id='+item.idPelicula+'" class="btn btn-primary" role="button">Reservar</a> ').appendTo(div2);                        
                     });
                 });
             });
-
         </script>
     </head>
     <body>
         <div id="menu">  
             <jsp:include page="menu.jsp"/>
         </div>
-        <h1 align= "center" >Peliculas en Cartel</h1>
-        <!%= usuarioLog.getId()%>
-        <!%= usuarioLog.getNombre()%>
-        <!%= usuarioLog.getApellido()%>
-        <!%= usuarioLog.getDni()%>
-        <!% if (usuarioLog.isAdministrador()) {%>
-        <!%="sos administrador"%>
-        <!%} else {%>
-        <!%="no sos administrador"%>
-        <!%}%>
-        <!%= usuarioLog.getUser()%>
-        <!%= usuarioLog.getPass()%>
-        <!%= usuarioLog.getEmail()%>
-        <!%= usuarioLog.getTelefono()%> 
-
-        <div id="pelis" class="row">            
-           
+        <h1 align= "center" >Peliculas en Cartel</h1>       
+        <div id="pelis" class="row">             
         </div>
         <!--<div class="row">            
             <div class="col-sm-6 col-md-4">
@@ -70,7 +52,5 @@
             </div> 
         </div>
         -->
-
-
     </body>
 </html>

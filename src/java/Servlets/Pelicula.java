@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  *
  * @author Jorge
@@ -41,7 +42,9 @@ public class Pelicula extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {    
+            throws ServletException, IOException, SQLException { 
+        
+        String idUsuario = request.getParameter("idUsuario");
         ArrayList<Pelicula> list = ctrlPelicula.listarPeliculas();        
         String json = new Gson().toJson(list);
         response.setContentType("application/json");
