@@ -36,7 +36,7 @@
                 });
 
                 $('#altaPelicula').click(function () {
-                   $('#formAltaPelicula').load('principal.jsp');
+                   $('#formAltaPelicula').load('altaPelicula.jsp');                  
                 });
             });
 

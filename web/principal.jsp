@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script language="javascript">
-            var titletext = "Bienvenidos a CinemaCenter!";
+            var titletext = "Bienvenidos a CinemaCenter!!!";
             var repeat = true;
             var index = 0;
             var inicio = 0;
@@ -53,7 +53,6 @@
                         $('<h3>').text(item.nombre).appendTo(div2);
                         $('<p>').text(item.descripcion).appendTo(div2);
                         $(' <a href="reservar.jsp?id='+item.idPelicula+'" class="btn btn-primary" role="button">Reservar</a> ').appendTo(div2); 
-                        $(' <a href="reservar.jsp?id=' + item.idPelicula + '" class="btn btn-primary" role="button">Reservar</a> ').appendTo(div2);                              
                     });
                 });
             });

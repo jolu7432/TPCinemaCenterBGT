@@ -12,10 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alta de Peliculas</title>   
     </head>
-    <body>
-        <div id="menu">  
-            <jsp:include page="menu.jsp"/>
-        </div>
+    <body>        
         <form method="post" action="Pelicula" enctype="multipart/form-data" class="form-signup">
             <center><h1>Alta de Pelicula</h1></center>
             <div id="rcorners" class="container">
