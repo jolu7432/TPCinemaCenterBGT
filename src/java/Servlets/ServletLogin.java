@@ -24,13 +24,13 @@ import javax.servlet.http.HttpSession;
  *
  * @author Jorge
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "ServletLogin", urlPatterns = {"/ServletLogin"})
+public class ServletLogin extends HttpServlet {
 
     private CtrlLogin ctrlLogin;
     private Usuario user;
     
-    public Login(){
+    public ServletLogin(){
         ctrlLogin = new CtrlLogin();
         user = null;
     }
@@ -91,7 +91,7 @@ public class Login extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -109,7 +109,7 @@ public class Login extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

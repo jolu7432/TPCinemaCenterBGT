@@ -15,7 +15,7 @@
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script>
             $(document).ready(function () {
-                $.post('Pelicula', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {
+                $.post('ServletPelicula', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {
                     var i = 1;
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));

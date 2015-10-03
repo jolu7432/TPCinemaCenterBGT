@@ -44,7 +44,7 @@
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script>
             $(document).ready(function () {
-                $.get('Pelicula', function (responseJson) {
+                $.get('ServletPelicula', function (responseJson) {
                     $.each(responseJson, function (index, item) {                       
                         var div = $('<div id=d1"'+index+'" class="col-sm-6 col-md-4">').appendTo($('#pelis'));                        
                         var div1= $('<div id=d2"'+index+'" class="thumbnail">').appendTo(div);                        

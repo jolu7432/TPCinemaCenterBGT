@@ -34,7 +34,7 @@
         <nav class="navbar-fixed-top"> 
             <div class="container-fluid">            
                 <div class="navbar-right">
-                    <form class="navbar-form" action="Login" method="post">
+                    <form class="navbar-form" action="ServletLogin" method="post">
                         <% if (usuarioLog.getId() == 0) {%>                  
                         <label for="inputUsuario" >Usuario:</label>
                         <input type="text" id="inputUsuario" name="user"  class="form-control" placeholder="Ingrese usuario" required autofocus>

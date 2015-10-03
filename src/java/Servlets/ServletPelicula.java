@@ -6,10 +6,13 @@
 package Servlets;
 
 import Controladora.CtrlPelicula;
+import Modelo.Pelicula;
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -17,20 +20,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
  * @author Jorge
  */
-@WebServlet(name = "Pelicula", urlPatterns = {"/Pelicula"})
-public class Pelicula extends HttpServlet {
+@WebServlet(name = "ServletPelicula", urlPatterns = {"/ServletPelicula"})
+public class ServletPelicula extends HttpServlet {
+
     CtrlPelicula ctrlPelicula;
 
-    public Pelicula() {
+    public ServletPelicula() {
         this.ctrlPelicula = new CtrlPelicula();
     }
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,14 +49,28 @@ public class Pelicula extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException { 
-        
+            throws ServletException, IOException, SQLException, FileUploadException, Exception {
         String idUsuario = request.getParameter("idUsuario");
-        ArrayList<Pelicula> list = ctrlPelicula.listarPeliculas();        
+        /*if (idUsuario == null) {
+            FileItemFactory file_factory = new DiskFileItemFactory();
+            ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
+            List items = servlet_up.parseRequest(request);
+            String urlImg = "";
+            for (int i = 0; i < items.size(); i++) {
+                FileItem item = (FileItem) items.get(i);
+                if (!item.isFormField()) {
+                    urlImg = item.getName();
+                    File file = new File("../img", item.getName());
+                    item.write(file);
+                }
+            }
+            Pelicula nueva = new Pelicula(request.getParameter("nombre"), request.getParameter("director"), Integer.parseInt(request.getParameter("duracion")), request.getParameter("descripcion"), true, urlImg) ;
+        }*/
+        ArrayList<Pelicula> list = ctrlPelicula.listarPeliculas();
         String json = new Gson().toJson(list);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);      
+        response.getWriter().write(json);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,7 +88,9 @@ public class Pelicula extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Pelicula.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -85,7 +108,9 @@ public class Pelicula extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Pelicula.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

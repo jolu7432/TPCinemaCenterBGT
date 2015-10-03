@@ -13,7 +13,7 @@
         <title>Alta de Peliculas</title>   
     </head>
     <body>        
-        <form method="post" action="Pelicula" enctype="multipart/form-data" class="form-signup">
+        <form method="post" action="ServletPelicula" enctype="multipart/form-data" class="form-signup">
             <center><h1>Alta de Pelicula</h1></center>
             <div id="rcorners" class="container">
                 <div class="form-group">

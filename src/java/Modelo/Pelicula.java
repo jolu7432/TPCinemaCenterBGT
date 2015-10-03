@@ -85,6 +85,16 @@ public class Pelicula {
         this.estado = estado;
         this.urlImagen = urlImagen;
     }
+    
+        public Pelicula(String nombre, String director, int duracion, String descripcion, boolean estado, String urlImagen) {
+        this.idPelicula = 0;
+        this.nombre = nombre;
+        this.director = director;
+        this.duracion = duracion;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.urlImagen = urlImagen;
+    }
 
 
 
