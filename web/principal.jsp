@@ -10,21 +10,51 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <script language="javascript">
+            var titletext = "Bienvenidos a CinemaCenter!";
+            var repeat = true;
+            var index = 0;
+            var inicio = 0;
+            function scrolltitle() {
+                if (index <= titletext.length && index <= 15) {
+                    document.title = titletext.substring(0, index);
+                    index++;
+                    setTimeout('scrolltitle()', 200);
+                }
+                else if(index <= titletext.length && index >= 15){
+                        inicio++;
+                        document.title = titletext.substring(inicio, index);
+                        index++;
+                        setTimeout('scrolltitle()', 200);
+                    }
+                        
+                else {
+                    index = 0;
+                    inicio = 0;
+                    if (repeat)
+                        setTimeout('scrolltitle()', 1000);
+                }
+            }
+            window.onload = function () {
+                if (!document.layers)
+                    setTimeout('scrolltitle()', 1000);
+            }
+        </script>
+        <title> </title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script>
             $(document).ready(function () {
                 $.get('Pelicula', function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         console.log(index);
-                        var div = $('<div id=d1"'+index+'" class="col-sm-6 col-md-4">').appendTo($('#pelis'));                        
-                        var div1= $('<div id=d2"'+index+'" class="thumbnail">').appendTo(div);                        
-                        $('<img id=img"'+index+'" src="img/'+item.urlImagen+'" alt="...">').appendTo(div1);
-                        var div2= $('<div id=d3"'+index+'"  class="caption">').appendTo(div1);  
+                        var div = $('<div id=d1"' + index + '" class="col-sm-6 col-md-4">').appendTo($('#pelis'));
+                        var div1 = $('<div id=d2"' + index + '" class="thumbnail">').appendTo(div);
+                        $('<img id=img"' + index + '" src="img/' + item.urlImagen + '" alt="...">').appendTo(div1);
+                        var div2 = $('<div id=d3"' + index + '"  class="caption">').appendTo(div1);
                         $('<h3>').text(item.nombre).appendTo(div2);
                         $('<p>').text(item.descripcion).appendTo(div2);
-                        $(' <a href="reservar.jsp?id='+item.idPelicula+'" class="btn btn-primary" role="button">Reservar</a> ').appendTo(div2);
-                        
+                        $(' <a href="reservar.jsp?id=' + item.idPelicula + '" class="btn btn-primary" role="button">Reservar</a> ').appendTo(div2);
+
                     });
                 });
             });
@@ -51,7 +81,7 @@
         <!%= usuarioLog.getTelefono()%> 
 
         <div id="pelis" class="row">            
-           
+
         </div>
         <!--<div class="row">            
             <div class="col-sm-6 col-md-4">
