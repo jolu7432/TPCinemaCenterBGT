@@ -12,9 +12,11 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -50,27 +52,41 @@ public class ServletPelicula extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, FileUploadException, Exception {
-        String idUsuario = request.getParameter("idUsuario");
-        /*if (idUsuario == null) {
+        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+        if (isMultipart) {
             FileItemFactory file_factory = new DiskFileItemFactory();
             ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
             List items = servlet_up.parseRequest(request);
             String urlImg = "";
+            Hashtable datosPelicula =  new Hashtable();
             for (int i = 0; i < items.size(); i++) {
                 FileItem item = (FileItem) items.get(i);
-                if (!item.isFormField()) {
+                if (!item.isFormField()) { 
                     urlImg = item.getName();
-                    File file = new File("../img", item.getName());
-                    item.write(file);
+                    String dir =  getServletContext().getRealPath("/");
+                    String dir2 = dir.replaceAll("web", "img"); 
+                    String dir3 = dir2.replaceAll("build", "web");  
+                    File fileFoto = new File(dir3,item.getName());
+                    item.write(fileFoto);
+                }else{                   
+                    datosPelicula.put(item.getFieldName(),item.getString());                    
                 }
             }
-            Pelicula nueva = new Pelicula(request.getParameter("nombre"), request.getParameter("director"), Integer.parseInt(request.getParameter("duracion")), request.getParameter("descripcion"), true, urlImg) ;
-        }*/
-        ArrayList<Pelicula> list = ctrlPelicula.listarPeliculas();
-        String json = new Gson().toJson(list);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);
+            Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(),datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
+            ctrlPelicula.altaPelicula(nueva);
+            RequestDispatcher aux = request.getRequestDispatcher("/abmPelicula.jsp");
+            aux.forward(request, response);
+            
+            
+        } else {
+            String idUsuario = request.getParameter("idUsuario");
+            ArrayList<Pelicula> list = ctrlPelicula.listarPeliculas();
+            String json = new Gson().toJson(list);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -96,7 +96,7 @@
                                     <li><a href="#">Another action</a></li>
                                     <li><a href="#">Something else here</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li>  <form class="navbar-form" action="Login" method="post">
+                                    <li>  <form class="navbar-form" action="ServletLogin" method="post">
                                             <input type="hidden" name="accion" value="logOut"/>
                                             <button class="navbar-btn btn-primary" type="submit" name="salir" >Salir</button>
                                         </form></li>

@@ -6,6 +6,7 @@
 package Controladora;
 
 import Dao.BDPeliculas;
+import Modelo.Pelicula;
 import Servlets.ServletPelicula;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class CtrlPelicula {
      private BDPeliculas datosPeliculas = BDPeliculas.getInstance();
      
-     public void altaPelicula(ServletPelicula peli) throws SQLException{
+     public void altaPelicula(Pelicula peli) throws SQLException{
          datosPeliculas.alta(peli);
      }
      

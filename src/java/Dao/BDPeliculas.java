@@ -6,6 +6,7 @@
 package Dao;
 
 import Modelo.Pelicula;
+import com.sun.org.apache.xpath.internal.axes.AxesWalker;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,9 +35,15 @@ public class BDPeliculas implements IBD{
         Conexion oCon = new Conexion();
         oCon.getConexion();
         Pelicula aux = (Pelicula) dato;
-        String insert = "INSERT INTO peliculas(nombre, director, duracionPeli, descripcion, estado) VALUES('" +aux.getNombre()+ "','" +aux.getDirector()+ "'," +aux.getDuracion()+ ",'" +aux.getDescripcion() + "'," +aux.isEstado();
+        String insert = "INSERT INTO peliculas(nombre, director, duracionPeli, descripcion, estado,UrlImagen) VALUES(?,?,?,?,?,?)";
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
+            sentencia.setString(1, aux.getNombre());  
+            sentencia.setString(2, aux.getDirector());
+            sentencia.setInt(3, aux.getDuracion());
+            sentencia.setString(4, aux.getDescripcion());
+            sentencia.setBoolean(5, aux.isEstado());
+            sentencia.setString(6, aux.getUrlImagen());           
             sentencia.execute();
             sentencia.close();
         } catch (SQLException e) {

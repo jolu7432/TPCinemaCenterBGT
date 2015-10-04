@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                         <label for="UrlImagen"></label>
-                    <input type="file" id="UrlImagen">
+                    <input type="file" id="UrlImagen" name="urlImagen">
                     <p class="help-block">Cargue una imagen</p>
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg">Dar de alta</button>
