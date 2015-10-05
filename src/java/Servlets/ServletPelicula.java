@@ -58,26 +58,27 @@ public class ServletPelicula extends HttpServlet {
             ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
             List items = servlet_up.parseRequest(request);
             String urlImg = "";
-            Hashtable datosPelicula =  new Hashtable();
+            Hashtable datosPelicula = new Hashtable();
             for (int i = 0; i < items.size(); i++) {
                 FileItem item = (FileItem) items.get(i);
-                if (!item.isFormField()) { 
+                if (!item.isFormField()) {
                     urlImg = item.getName();
-                    String dir =  getServletContext().getRealPath("/");
-                    String dir2 = dir.replaceAll("web", "img"); 
-                    String dir3 = dir2.replaceAll("build", "web");  
-                    File fileFoto = new File(dir3,item.getName());
-                    item.write(fileFoto);
-                }else{                   
-                    datosPelicula.put(item.getFieldName(),item.getString());                    
+                    if (!urlImg.equals("")) {
+                        String dir = getServletContext().getRealPath("/");
+                        String dir2 = dir.replaceAll("web", "img");
+                        String dir3 = dir2.replaceAll("build", "web");
+                        File fileFoto = new File(dir3, item.getName());
+                        item.write(fileFoto);
+                    }
+                } else {
+                    datosPelicula.put(item.getFieldName(), item.getString());
                 }
             }
-            Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(),datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
+            Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(), datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
             ctrlPelicula.altaPelicula(nueva);
             RequestDispatcher aux = request.getRequestDispatcher("/abmPelicula.jsp");
             aux.forward(request, response);
-            
-            
+
         } else {
             String idUsuario = request.getParameter("idUsuario");
             ArrayList<Pelicula> list = ctrlPelicula.listarPeliculas();
