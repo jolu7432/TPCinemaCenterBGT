@@ -14,11 +14,9 @@
         <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>        
         <script>
             $(document).ready(function () {
-                  $.post('ServletPelicula', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {
-                    var i = 1;
+                  $.post('ServletPelicula', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {                   
                     $.each(responseJson, function (index, item) {
-                        var tr = $('<tr>').appendTo($('#tbody'));
-                        var th = $('<th scope="row">' + i + '</th>').appendTo(tr);
+                        var tr = $('<tr>').appendTo($('#tbody'));                       
                         $('<td>').text(item.nombre).appendTo(tr);
                         $('<td>').text(item.director).appendTo(tr);
                         $('<td>').text(item.duracion).appendTo(tr);
@@ -29,8 +27,7 @@
                         $('<img src="img/' + item.urlImagen + '" alt="..." class=img-circle ">').appendTo(div);
                         var accion = $('<td class="center">').appendTo(tr);
                         $('<a href="" title="Edit" class="btn14 mr5"><img src="iconos/editar.png" alt="Edit">').appendTo(accion);
-                        $('<a href="#" title="Remove" class="btn14 mr5 removeBtn" data-entity-id="21589"><img src="iconos/remove.png" alt="Remove">').appendTo(accion);
-                        i++;
+                        $('<a href="#" title="Remove" class="btn14 mr5 removeBtn" data-entity-id="21589"><img src="iconos/remove.png" alt="Remove">').appendTo(accion);                      
                     });
                     $('#example').dataTable();
                 });
@@ -39,8 +36,7 @@
         </script>
          <style>
             .btn14 {
-                border: 1px solid #d5d5d5; 
-                background: url(../images/leftNavBg.png) repeat-x 0 0;
+                border: 1px solid #d5d5d5;               
                 padding: 6px 8px;
                 display: inline-block;
             }
@@ -54,8 +50,7 @@
        <div class="table-responsive">
             <table id="example" class="dataTable" cellspacing="0" width="100%">
                 <thead>
-                    <tr>
-                        <th>#</th>
+                    <tr>                        
                         <th>Nombre</th>
                         <th>Director</th>
                         <th>Duracion</th>
@@ -66,8 +61,7 @@
                     </tr>
                 </thead>
                 <tfoot>
-                    <tr>
-                        <th>#</th>
+                    <tr>                        
                         <th>Nombre</th>
                         <th>Director</th>
                         <th>Duracion</th>
