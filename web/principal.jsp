@@ -51,7 +51,9 @@
                         $('<img id=img"'+index+'" src="img/'+item.urlImagen+'" alt="...">').appendTo(div1);
                         var div2= $('<div id=d3"'+index+'"  class="caption">').appendTo(div1);  
                         $('<h3>').text(item.nombre).appendTo(div2);
-                        $('<p>').text(item.descripcion).appendTo(div2);
+                        var p = $('<p>').text(item.descripcion.substr(0,200) + "...").appendTo(div2);
+                        $('<a href="reservar.jsp?id='+item.idPelicula+'" class="btn btn-secondary" role="button">+ Ver Más</a>').appendTo(p);                        
+                        
                         $(' <a href="reservar.jsp?id='+item.idPelicula+'" class="btn btn-primary" role="button">Reservar</a> ').appendTo(div2); 
                     });
                 });

@@ -99,5 +99,7 @@ textarea{
     resize: none;
 }
 
-
+.thumbnail img {
+    height: 300px;       
+}
 
