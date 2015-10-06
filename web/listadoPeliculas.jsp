@@ -24,7 +24,7 @@
                         $('<td>').text(item.estado).appendTo(tr);
                         var img = $('<td>').appendTo(tr);
                         var div = $('<div id=d2"' + index + '" class="thumbnail">').appendTo(img);
-                        $('<img src="img/' + item.urlImagen + '" alt="..." class=img-circle ">').appendTo(div);
+                        $('<img src="img/' + item.urlImagen + '" alt="..." class="img-circle" style="height: 100px" ">').appendTo(div);
                         var accion = $('<td class="center">').appendTo(tr);
                         $('<a href="" title="Edit" class="btn14 mr5"><img src="iconos/editar.png" alt="Edit">').appendTo(accion);
                         $('<a href="#" title="Remove" class="btn14 mr5 removeBtn" data-entity-id="21589"><img src="iconos/remove.png" alt="Remove">').appendTo(accion);                      
@@ -47,7 +47,7 @@
 
     </head>
     <body>         
-       <div class="table-responsive">
+        <div class="table-responsive">
             <table id="example" class="dataTable" cellspacing="0" width="100%">
                 <thead>
                     <tr>                        
