@@ -12,7 +12,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alta de Peliculas</title>   
     </head>
-    <body>        
+    <body>   
+        <jsp:include page="ServletValidaLoginRol" flush="true"/> 
         <form method="post" action="ServletPelicula" enctype="multipart/form-data" class="form-signup">
             <center><h1>Alta de Pelicula</h1></center>
             <div id="rcorners" class="container">

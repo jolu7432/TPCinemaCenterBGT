@@ -67,7 +67,8 @@
         </style>
 
     </head>
-    <body>         
+    <body> 
+      
         <div class="table-responsive">
             <table id="example" class="dataTable" cellspacing="0" width="100%">
                 <thead>

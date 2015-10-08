@@ -17,14 +17,14 @@
         <div id="menu">  
             <jsp:include page="menu.jsp"/>           
         </div> 
-    <center><h1>ACA VA UN TITULO DESCRIPTIVO</h1></center>
-    <input type="button" id="altaPelicula" value="Subir Pelicula"/><br>     
-    <div id="formAltaPelicula"></div>         
-    <div id="listadoPeliculas">
-        <jsp:include page="listadoPeliculas.jsp"/>
-    </div>    
+        <center><h1>ACA VA UN TITULO DESCRIPTIVO</h1></center>
+        <input type="button" id="altaPelicula" value="Subir Pelicula"/><br>     
+        <div id="formAltaPelicula"></div>         
+        <div id="listadoPeliculas">
+            <jsp:include page="listadoPeliculas.jsp"/>
+        </div>    
 </body> 
 <script>
-   
+
 </script>
 </html>
