@@ -25,14 +25,6 @@
     </div>    
 </body> 
 <script>
-    $('#altaPelicula').click(function () {
-        if ($('#altaPelicula').val() == 'Cancelar') {
-            $('#altaPelicula').val('Subir Pelicula');
-            $('#formAltaPelicula').text('');
-        } else {
-            $('#altaPelicula').val('Cancelar');
-            $('#formAltaPelicula').load('altaPelicula.jsp');
-        }
-    });
+   
 </script>
 </html>
