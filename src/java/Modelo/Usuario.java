@@ -19,6 +19,15 @@ public class Usuario {
     private String pass;    
     private String email;
     private String telefono;
+    private String urlImg;
+
+    public String getUrlImg() {
+        return urlImg;
+    }
+
+    public void setUrlImg(String urlImg) {
+        this.urlImg = urlImg;
+    }
 
     public String getNombre() {
         return nombre;
@@ -92,7 +101,7 @@ public class Usuario {
         this.id = id;
     }
    
-    public Usuario(int id, String nombre, String apellido, int dni, boolean administrador, String user, String pass, String email, String telefono) {
+    public Usuario(int id, String nombre, String apellido, int dni, boolean administrador, String user, String pass, String email, String telefono, String urlImg) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -102,6 +111,7 @@ public class Usuario {
         this.pass = pass;
         this.email = email;
         this.telefono = telefono;
+        this.urlImg = urlImg;
     }
 
     public Usuario() {

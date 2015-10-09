@@ -35,7 +35,7 @@ public class BDUsuarios implements IBD {
         Conexion oCon = new Conexion();
         oCon.getConexion();
         Usuario aux = (Usuario) dato;
-        String insert = "INSERT INTO usuarios(nombre, apellido, DNI, Administrador, User, Pass, email,Telefono) VALUES('" +aux.getNombre()+ "','" +aux.getApellido()+ "'," +aux.getDni()+ "," +aux.isAdministrador()+ ",'" +aux.getUser()+ "','" +aux.getPass()+ "','"+aux.getEmail()+"','"+aux.getTelefono()+ "')";
+        String insert = "INSERT INTO usuarios(nombre, apellido, DNI, Administrador, User, Pass, email,Telefono,UrlImg) VALUES('" +aux.getNombre()+ "','" +aux.getApellido()+ "'," +aux.getDni()+ "," +aux.isAdministrador()+ ",'" +aux.getUser()+ "','" +aux.getPass()+ "','"+aux.getEmail()+"','"+aux.getTelefono()+ "','"+aux.getUrlImg()+"')";
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
             sentencia.execute();
@@ -80,7 +80,7 @@ public class BDUsuarios implements IBD {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
             rs = sentencia.executeQuery();            
             while (rs.next()) {
-                resp = new Usuario(rs.getInt("idUsuario"), rs.getString("Nombre"), rs.getString("Apellido"), rs.getInt("DNI"),rs.getBoolean("Administrador"), rs.getString("User"), rs.getString("Pass"), rs.getString("email"), rs.getString("Telefono"));
+                resp = new Usuario(rs.getInt("idUsuario"), rs.getString("Nombre"), rs.getString("Apellido"), rs.getInt("DNI"),rs.getBoolean("Administrador"), rs.getString("User"), rs.getString("Pass"), rs.getString("email"), rs.getString("Telefono"), rs.getString("UrlImg"));
             }
             rs.close();
             sentencia.close();
