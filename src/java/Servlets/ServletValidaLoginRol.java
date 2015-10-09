@@ -23,11 +23,12 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ServletValidaLoginRol", urlPatterns = {"/ServletValidaLoginRol"})
 public class ServletValidaLoginRol extends HttpServlet {
 
-    Hashtable urlAdmin;
+    Hashtable urlNoAdmin;
 
     public ServletValidaLoginRol() {
-        urlAdmin = new Hashtable();
-        urlAdmin.put("/altaPelicula.jsp", "/altaPelicula.jsp");
+        urlNoAdmin = new Hashtable();
+        //Agregar las URL que puede ingresar un usuario comun
+        urlNoAdmin.put("/altaPelicula.jsp", "/altaPelicula.jsp");
     }
 
     /**
@@ -61,7 +62,7 @@ public class ServletValidaLoginRol extends HttpServlet {
         } else {
             if (!user.isAdministrador()) {
                 String url = request.getServletPath();
-                if (urlAdmin.get(url) == null) {
+                if (urlNoAdmin.get(url) == null) {
                     response.setContentType("text/html;charset=UTF-8");
                     try (PrintWriter out = response.getWriter()) {
                         /* TODO output your page here. You may use following sample code. */

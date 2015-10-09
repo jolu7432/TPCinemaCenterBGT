@@ -80,14 +80,26 @@ public class ServletPelicula extends HttpServlet {
             aux.forward(request, response);
 
         } else {
-            String idUsuario = request.getParameter("idUsuario");
-            ArrayList<Pelicula> list = ctrlPelicula.listarPeliculas();
-            String json = new Gson().toJson(list);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
+            String idPelicula = request.getParameter("idPelicula");
+            ArrayList<Pelicula> list = null;
+            boolean flag = false;
+            if (idPelicula == null) {
+                list = ctrlPelicula.listarPeliculas();
+                flag = true;
+            } else {
+                if (!idPelicula.equals("0")) {
+                    list = new ArrayList<>();
+                    list.add(ctrlPelicula.existe(Integer.parseInt(idPelicula)));
+                    flag = true;
+                }
+            }
+            if (flag) {
+                String json = new Gson().toJson(list);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+            }
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

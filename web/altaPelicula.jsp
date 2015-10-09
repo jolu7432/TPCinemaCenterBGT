@@ -10,11 +10,25 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Alta de Peliculas</title>   
+        <title>Alta de Peliculas</title>  
+        <script>
+            $(document).ready(function () {
+                 $.post('ServletPelicula', {idPelicula: <%= request.getParameter("idPelicula")%>}, function (responseJson) {
+                     if (<%= request.getParameter("idPelicula")%> != null) {
+                        $.each(responseJson, function (index, item) {
+                            $('#txtNombre').val(item.nombre);
+                            $('#txtDirector').val(item.director);
+                            $('#txtDuracion').val(item.duracion);
+                            $('#txtDescripcion').val(item.descripcion);
+                        });
+                    }
+                });
+            });
+        </script>
     </head>
     <body>   
-     <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> 
-        <form method="post" action="ServletPelicula" enctype="multipart/form-data" class="form-signup">
+        <jsp:include page="ServletValidaLoginRol" flush="true"/> 
+        <form method="post" action="ServletPelicula" enctype="multipart/form-data" class="form-signup">            
             <center><h1>Alta de Pelicula</h1></center>
             <div id="rcorners" class="container">
                 <div class="form-group">
@@ -27,14 +41,14 @@
                 </div>
                 <div class="form-group">
                     <label for="txtDuracion">Duracion</label>
-                    <input type="text" class="form-control" id="txtDNI" placeholder="Duracion" name="duracion" required>
+                    <input type="text" class="form-control" id="txtDuracion" placeholder="Duracion" name="duracion" required>
                 </div>
                 <div class="form-group">
                     <label for="txtDescripcion">Descripcion</label>
                     <textarea class="form-control" id="txtDescripcion" placeholder="Descripcion..." name="descripcion" col="25" row="30" required></textarea>
                 </div>
                 <div class="form-group">
-                        <label for="UrlImagen"></label>
+                    <label for="UrlImagen"></label>
                     <input type="file" id="UrlImagen" name="urlImagen">
                     <p class="help-block">Cargue una imagen</p>
                 </div>

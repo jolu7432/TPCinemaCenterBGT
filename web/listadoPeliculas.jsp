@@ -14,7 +14,7 @@
         <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>        
         <script>
             $(document).ready(function () {
-                $.post('ServletPelicula', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {
+                $.post('ServletPelicula', function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
                         $('<td>').text(item.nombre).appendTo(tr);
@@ -26,36 +26,29 @@
                         var div = $('<div id=d2"' + index + '" class="thumbnail">').appendTo(img);
                         $('<img src="img/' + item.urlImagen + '" alt="..." class="img-circle" style="height: 100px" ">').appendTo(div);
                         var accion = $('<td class="center">').appendTo(tr);
-                        // <a id="editar" href="#" title="Edit" class="btn14 mr5">
-                        $('<button id="editar" title="Editar" class="btn14 mr5"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
-                        $('<button id="borrar" title="Borrar" class="btn14 mr5 removeBtn" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
+                        $('<button id="' + item.idPelicula + '" title="Editar" class="btn14 mr5 editar"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
+                        $('<button id="' + item.idPelicula + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
                     });
                     $('#example').dataTable();
-                    $('#editar').click(function () {
-                        divAltaPelicula();
-                        $('#txtNombre').innerHTML('Nombre de la Pelicula');
+                    $('.editar').click(function () {
+                        $('#altaPelicula').val('Subir Pelicula');
+                        $('#formAltaPelicula').text('');
+                        $('#altaPelicula').val('Cancelar');
+                        $('#formAltaPelicula').load('altaPelicula.jsp?idPelicula='+this.id);
                     });
-                    $('#borrar').click(function () {
+                    $('.borrar').click(function () {
                         alert('prueba de boton borrar');
                     });
                 });
-                $('#altaPelicula').click(function () {
-                    divAltaPelicula();
-                });
-
-                function divAltaPelicula() {
-                    if ($('#altaPelicula').val() == 'Cancelar') {
-                        $('#altaPelicula').val('Subir Pelicula');
-                        $('#formAltaPelicula').text('');
-                    } else {
-                        $('#altaPelicula').val('Cancelar');
-                        $('#formAltaPelicula').load('altaPelicula.jsp');
-                    }
-                }
-                ;
             });
         </script>
         <style>
+            .editar{
+
+            }
+            .borrar{
+
+            }
             .btn14 {
                 border: 1px solid #d5d5d5;               
                 padding: 6px 8px;
@@ -68,7 +61,7 @@
 
     </head>
     <body> 
-        <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> 
+        <jsp:include page="ServletValidaLoginRol" flush="true"/> 
         <div class="table-responsive">
             <table id="example" class="dataTable" cellspacing="0" width="100%">
                 <thead>
