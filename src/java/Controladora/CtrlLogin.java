@@ -8,6 +8,7 @@ package Controladora;
 import Dao.BDUsuarios;
 import Modelo.Usuario;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,4 +25,7 @@ public class CtrlLogin {
         datosUsuarios.alta(user);
     }
     
+    public ArrayList listarUsuarios() throws SQLException{
+        return datosUsuarios.listado();
+    }
 }

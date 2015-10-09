@@ -94,7 +94,27 @@ public class BDUsuarios implements IBD {
 
     @Override
     public ArrayList listado() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Usuario resp = null;
+        Conexion oCon = new Conexion();
+        ResultSet rs = null;
+        ArrayList listaUsuarios = new ArrayList();
+        oCon.getConexion();
+        String consulta = "SELECT * FROM usuarios";      
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+            rs = sentencia.executeQuery();            
+            while (rs.next()) {
+                resp = new Usuario(rs.getInt("idUsuario"), rs.getString("Nombre"), rs.getString("Apellido"), rs.getInt("DNI"), rs.getBoolean("Administrador"), rs.getString("User"), rs.getString("Pass"), rs.getString("email"), rs.getString("Telefono"), rs.getString("UrlImg"));
+                listaUsuarios.add(resp);
+            }
+            rs.close();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+            return listaUsuarios;
+        }
     }
 
 }

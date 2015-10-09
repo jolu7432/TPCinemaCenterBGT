@@ -7,10 +7,12 @@ package Servlets;
 
 import Controladora.CtrlLogin;
 import Modelo.Usuario;
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Level;
@@ -87,6 +89,13 @@ public class ServletRegistro extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            String idUsuario = request.getParameter("idUsuario");
+            ArrayList<Usuario> list = ctrlLogin.listarUsuarios();
+            String json = new Gson().toJson(list);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
         }
     }
 
