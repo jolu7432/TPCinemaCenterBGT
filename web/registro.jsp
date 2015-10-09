@@ -29,13 +29,7 @@
                 <div class="form-group">
                     <label for="txtDNI">DNI</label>
                     <input type="text" class="form-control" id="txtDNI" placeholder="DNI" name="dni" required>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="adm" id="rdbAdm" >
-                        Administrador?
-                    </label>
-                </div>
+                </div>              
                 <div class="form-group">
                     <label for="txtUsuario">Usuario</label>
                     <input type="text" class="form-control" id="txtUsuario" placeholder="Usuario" name="user" required>

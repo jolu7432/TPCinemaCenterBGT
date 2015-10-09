@@ -46,7 +46,7 @@ public class ServletRegistro extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        user = new Usuario(0, request.getParameter("nombre"), request.getParameter("apellido"), Integer.parseInt(request.getParameter("dni")), Boolean.parseBoolean(request.getParameter("adm")), request.getParameter("user"), request.getParameter("pass"), request.getParameter("email"), request.getParameter("telefono"));
+        user = new Usuario(0, request.getParameter("nombre"), request.getParameter("apellido"), Integer.parseInt(request.getParameter("dni")), false, request.getParameter("user"), request.getParameter("pass"), request.getParameter("email"), request.getParameter("telefono"));
         try {
             ctrlLogin.registraUsuario(user);
             user = ctrlLogin.validaUsuario(user);

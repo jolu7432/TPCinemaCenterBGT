@@ -10,7 +10,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- <meta http-equiv="refresh" content="2">  actualizar la pagina cada x segundos-->
         <script language="javascript">
             var titletext = "Bienvenidos a CinemaCenter!!!";
             var repeat = true;

@@ -53,8 +53,7 @@ public class ServletLogin extends HttpServlet {
                 logIn(request, response);
             break;
             default:
-            break;
-                
+            break;                
         }
         RequestDispatcher aux = request.getRequestDispatcher("/principal.jsp");
         aux.forward(request, response);

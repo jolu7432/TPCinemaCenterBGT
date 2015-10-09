@@ -8,7 +8,7 @@ package Servlets;
 import Modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.util.Hashtable;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +23,13 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ServletValidaLoginRol", urlPatterns = {"/ServletValidaLoginRol"})
 public class ServletValidaLoginRol extends HttpServlet {
 
+    Hashtable urlAdmin;
+
+    public ServletValidaLoginRol() {
+        urlAdmin = new Hashtable();
+        urlAdmin.put("/altaPelicula.jsp", "/altaPelicula.jsp");
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,12 +43,41 @@ public class ServletValidaLoginRol extends HttpServlet {
             throws ServletException, IOException {
         Usuario user = new Usuario();
         HttpSession sesion = request.getSession(true);
-        user = (Usuario)sesion.getAttribute("usuarioLog");
-        if(user.getId() == 0){
-            RequestDispatcher aux = request.getRequestDispatcher("/reserva.jsp");
-            aux.forward(request, response);            
+        user = (Usuario) sesion.getAttribute("usuarioLog");
+        if (user.getId() == 0) {
+            response.setContentType("text/html;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=principal.jsp'>");
+                out.println("<title>Servlet NewServlet</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("</body>");
+                out.println("</html>");
+            }
+        } else {
+            if (!user.isAdministrador()) {
+                String url = request.getServletPath();
+                if (urlAdmin.get(url) == null) {
+                    response.setContentType("text/html;charset=UTF-8");
+                    try (PrintWriter out = response.getWriter()) {
+                        /* TODO output your page here. You may use following sample code. */
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=error.jsp'>");
+                        out.println("<title>Servlet NewServlet</title>");
+                        out.println("</head>");
+                        out.println("<body>");                       
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
+                } 
+            }
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

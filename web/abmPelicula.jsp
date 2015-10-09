@@ -13,7 +13,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ABM Pelicula</title>       
     </head>
-    <body>       
+    <body> 
+        <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> 
         <div id="menu">  
             <jsp:include page="menu.jsp"/>           
         </div> 

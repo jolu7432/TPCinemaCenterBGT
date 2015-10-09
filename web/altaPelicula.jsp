@@ -13,7 +13,7 @@
         <title>Alta de Peliculas</title>   
     </head>
     <body>   
-        <jsp:include page="ServletValidaLoginRol" flush="true"/> 
+     <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> 
         <form method="post" action="ServletPelicula" enctype="multipart/form-data" class="form-signup">
             <center><h1>Alta de Pelicula</h1></center>
             <div id="rcorners" class="container">
@@ -38,7 +38,7 @@
                     <input type="file" id="UrlImagen" name="urlImagen">
                     <p class="help-block">Cargue una imagen</p>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg">Dar de alta</button>
+                <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
         </form>
     </body>
 </html>
