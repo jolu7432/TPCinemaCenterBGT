@@ -7,9 +7,12 @@ package Servlets;
 
 import Controladora.CtrlLogin;
 import Modelo.Usuario;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -19,6 +22,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -26,11 +34,11 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ServletRegistro", urlPatterns = {"/ServletRegistro"})
 public class ServletRegistro extends HttpServlet {
-    
+
     private CtrlLogin ctrlLogin;
     private Usuario user;
-    
-    public ServletRegistro(){
+
+    public ServletRegistro() {
         ctrlLogin = new CtrlLogin();
     }
 
@@ -44,18 +52,41 @@ public class ServletRegistro extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, FileUploadException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        user = new Usuario(0, request.getParameter("nombre"), request.getParameter("apellido"), Integer.parseInt(request.getParameter("dni")), false, request.getParameter("user"), request.getParameter("pass"), request.getParameter("email"), request.getParameter("telefono"));
-        try {
-            ctrlLogin.registraUsuario(user);
-            user = ctrlLogin.validaUsuario(user);
-            HttpSession sesion = request.getSession(true);
-            sesion.setAttribute("usuarioLog", user);
-            RequestDispatcher aux = request.getRequestDispatcher("/principal.jsp");
-            aux.forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
+        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+        if (isMultipart) {
+            FileItemFactory file_factory = new DiskFileItemFactory();
+            ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
+            List items = servlet_up.parseRequest(request);
+            String urlImg = "";
+            Hashtable datosUsuario = new Hashtable();
+            for (int i = 0; i < items.size(); i++) {
+                FileItem item = (FileItem) items.get(i);
+                if (!item.isFormField()) {
+                    urlImg = item.getName();
+                    if (!urlImg.equals("")) {
+                        String dir = getServletContext().getRealPath("/");
+                        String dir2 = dir.replaceAll("web", "img");
+                        String dir3 = dir2.replaceAll("build", "web");
+                        File fileFoto = new File(dir3, item.getName());
+                        item.write(fileFoto);
+                    }
+                } else {
+                    datosUsuario.put(item.getFieldName(), item.getString());
+                }
+            }
+            user = new Usuario(0, (String) datosUsuario.get("nombre"), (String) datosUsuario.get("apellido"), Integer.parseInt((String) datosUsuario.get("dni")), false, (String) datosUsuario.get("user"), (String) datosUsuario.get("pass"), (String) datosUsuario.get("email"), (String) datosUsuario.get("telefono"), urlImg);
+            try {
+                ctrlLogin.registraUsuario(user);
+                user = ctrlLogin.validaUsuario(user);
+                HttpSession sesion = request.getSession(true);
+                sesion.setAttribute("usuarioLog", user);
+                RequestDispatcher aux = request.getRequestDispatcher("/principal.jsp");
+                aux.forward(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -71,7 +102,11 @@ public class ServletRegistro extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -85,7 +120,11 @@ public class ServletRegistro extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
