@@ -56,7 +56,7 @@ public class ServletLogin extends HttpServlet {
             break;                
         }
         RequestDispatcher aux = request.getRequestDispatcher("/principal.jsp");
-        aux.forward(request, response);
+        aux.include(request, response);
       
     }
     

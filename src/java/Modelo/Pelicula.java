@@ -10,6 +10,7 @@ package Modelo;
  * @author hernan
  */
 public class Pelicula {
+
     private int idPelicula;
     private String nombre;
     private String director;
@@ -17,7 +18,7 @@ public class Pelicula {
     private String descripcion;
     private boolean estado;
     private String urlImagen;
-    
+
     public int getIdPelicula() {
         return idPelicula;
     }
@@ -49,8 +50,6 @@ public class Pelicula {
     public void setDuracion(int duracion) {
         this.duracion = duracion;
     }
-
-
 
     public boolean isEstado() {
         return estado;
@@ -85,8 +84,8 @@ public class Pelicula {
         this.estado = estado;
         this.urlImagen = urlImagen;
     }
-    
-        public Pelicula(String nombre, String director, int duracion, String descripcion, boolean estado, String urlImagen) {
+
+    public Pelicula(String nombre, String director, int duracion, String descripcion, boolean estado, String urlImagen) {
         this.idPelicula = 0;
         this.nombre = nombre;
         this.director = director;
@@ -95,10 +94,15 @@ public class Pelicula {
         this.estado = estado;
         this.urlImagen = urlImagen;
     }
-
-
-
     
-    
-    
+    public Pelicula(int idPelicula) {
+        this.idPelicula = idPelicula;
+        this.nombre = "";
+        this.director = "";
+        this.duracion = 0;
+        this.descripcion = "";
+        this.estado = false;
+        this.urlImagen = "";
+    }
+
 }

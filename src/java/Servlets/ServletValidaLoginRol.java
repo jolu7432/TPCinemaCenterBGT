@@ -23,11 +23,14 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ServletValidaLoginRol", urlPatterns = {"/ServletValidaLoginRol"})
 public class ServletValidaLoginRol extends HttpServlet {
 
-    Hashtable urlAdmin;
+    Hashtable urlNoAdmin;
 
     public ServletValidaLoginRol() {
-        urlAdmin = new Hashtable();
-        urlAdmin.put("/altaPelicula.jsp", "/altaPelicula.jsp");
+        urlNoAdmin = new Hashtable();
+        //Agregar las URL que puede ingresar un usuario comun
+        urlNoAdmin.put("/altaPelicula.jsp", "/altaPelicula.jsp"); 
+        urlNoAdmin.put("/abmPelicula.jsp", "/abmPelicula.jsp");
+
     }
 
     /**
@@ -52,7 +55,6 @@ public class ServletValidaLoginRol extends HttpServlet {
                 out.println("<html>");
                 out.println("<head>");
                 out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=principal.jsp'>");
-                out.println("<title>Servlet NewServlet</title>");
                 out.println("</head>");
                 out.println("<body>");
                 out.println("</body>");
@@ -61,7 +63,7 @@ public class ServletValidaLoginRol extends HttpServlet {
         } else {
             if (!user.isAdministrador()) {
                 String url = request.getServletPath();
-                if (urlAdmin.get(url) == null) {
+                if (urlNoAdmin.get(url) == null) {
                     response.setContentType("text/html;charset=UTF-8");
                     try (PrintWriter out = response.getWriter()) {
                         /* TODO output your page here. You may use following sample code. */
@@ -69,7 +71,6 @@ public class ServletValidaLoginRol extends HttpServlet {
                         out.println("<html>");
                         out.println("<head>");
                         out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=error.jsp'>");
-                        out.println("<title>Servlet NewServlet</title>");
                         out.println("</head>");
                         out.println("<body>");                       
                         out.println("</body>");

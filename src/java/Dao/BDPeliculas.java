@@ -65,7 +65,25 @@ public class BDPeliculas implements IBD{
 
     @Override
     public Object existe(Object dato) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pelicula resp = null;
+        Conexion oCon = new Conexion();
+        ResultSet rs = null;       
+        oCon.getConexion();
+        String consulta = "SELECT * FROM peliculas where idPelicula ="+((Pelicula)dato).getIdPelicula();      
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+            rs = sentencia.executeQuery();            
+            while (rs.next()) {
+                resp = new Pelicula(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
+            }
+            rs.close();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+            return resp;
+        }        
     }
 
     @Override
@@ -91,8 +109,32 @@ public class BDPeliculas implements IBD{
         } finally {
             oCon.close();
             return listaPeliculas;
-        }
+        }        
+    }
+    
+    public ArrayList listadoAdmin() throws SQLException {
         
+        Pelicula resp = null;
+        Conexion oCon = new Conexion();
+        ResultSet rs = null;
+        ArrayList listaPeliculas = new ArrayList();
+        oCon.getConexion();
+        String consulta = "SELECT * FROM peliculas";      
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+            rs = sentencia.executeQuery();            
+            while (rs.next()) {
+                resp = new Pelicula(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
+                listaPeliculas.add(resp);
+            }
+            rs.close();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+            return listaPeliculas;
+        }        
     }
     
 }
