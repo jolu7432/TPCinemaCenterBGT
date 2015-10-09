@@ -26,6 +26,10 @@ public class CtrlPelicula {
          return datosPeliculas.listado();
      }
      
+      public ArrayList listarPeliculasAdmin() throws SQLException{
+         return datosPeliculas.listadoAdmin();
+     }
+     
      public Pelicula existe(int idPelicula) throws SQLException{
          Pelicula peli = new Pelicula(idPelicula);
          return (Pelicula)datosPeliculas.existe(peli);

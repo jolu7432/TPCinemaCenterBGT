@@ -77,14 +77,19 @@ public class ServletPelicula extends HttpServlet {
             Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(), datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
             ctrlPelicula.altaPelicula(nueva);
             RequestDispatcher aux = request.getRequestDispatcher("/abmPelicula.jsp");
-            aux.forward(request, response);
+            aux.include(request, response);
 
         } else {
             String idPelicula = request.getParameter("idPelicula");
             ArrayList<Pelicula> list = null;
             boolean flag = false;
             if (idPelicula == null) {
-                list = ctrlPelicula.listarPeliculas();
+                String url = request.getParameter("urlPage");
+                if(url != null ){
+                    list = ctrlPelicula.listarPeliculas();
+                }else{
+                    list = ctrlPelicula.listarPeliculasAdmin();
+                }                
                 flag = true;
             } else {
                 if (!idPelicula.equals("0")) {

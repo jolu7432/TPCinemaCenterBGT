@@ -28,7 +28,9 @@ public class ServletValidaLoginRol extends HttpServlet {
     public ServletValidaLoginRol() {
         urlNoAdmin = new Hashtable();
         //Agregar las URL que puede ingresar un usuario comun
-        urlNoAdmin.put("/altaPelicula.jsp", "/altaPelicula.jsp");
+        urlNoAdmin.put("/altaPelicula.jsp", "/altaPelicula.jsp"); 
+        urlNoAdmin.put("/abmPelicula.jsp", "/abmPelicula.jsp");
+
     }
 
     /**
@@ -53,7 +55,6 @@ public class ServletValidaLoginRol extends HttpServlet {
                 out.println("<html>");
                 out.println("<head>");
                 out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=principal.jsp'>");
-                out.println("<title>Servlet NewServlet</title>");
                 out.println("</head>");
                 out.println("<body>");
                 out.println("</body>");
@@ -70,7 +71,6 @@ public class ServletValidaLoginRol extends HttpServlet {
                         out.println("<html>");
                         out.println("<head>");
                         out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=error.jsp'>");
-                        out.println("<title>Servlet NewServlet</title>");
                         out.println("</head>");
                         out.println("<body>");                       
                         out.println("</body>");

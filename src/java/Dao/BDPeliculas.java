@@ -109,8 +109,32 @@ public class BDPeliculas implements IBD{
         } finally {
             oCon.close();
             return listaPeliculas;
-        }
+        }        
+    }
+    
+    public ArrayList listadoAdmin() throws SQLException {
         
+        Pelicula resp = null;
+        Conexion oCon = new Conexion();
+        ResultSet rs = null;
+        ArrayList listaPeliculas = new ArrayList();
+        oCon.getConexion();
+        String consulta = "SELECT * FROM peliculas";      
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+            rs = sentencia.executeQuery();            
+            while (rs.next()) {
+                resp = new Pelicula(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
+                listaPeliculas.add(resp);
+            }
+            rs.close();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+            return listaPeliculas;
+        }        
     }
     
 }
