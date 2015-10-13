@@ -21,7 +21,11 @@ public class CtrlPelicula {
      public void altaPelicula(Pelicula peli) throws SQLException{
          datosPeliculas.alta(peli);
      }
-     
+
+    public void bajaPelicula(int peli) throws SQLException{
+         datosPeliculas.baja(peli);
+    }
+
      public ArrayList listarPeliculas() throws SQLException{
          return datosPeliculas.listado();
      }

@@ -23,12 +23,14 @@
                         });
                     }
                 });
+   
             });
+            
         </script>
     </head>
     <body>   
         <jsp:include page="ServletValidaLoginRol" flush="true"/> 
-        <form method="post" action="ServletPelicula" enctype="multipart/form-data" class="form-signup">            
+        <form method="post" action="ServletPelicula"  enctype="multipart/form-data" accept-charset="UTF-8" class="form-signup">            
             <center><h1>Alta de Pelicula</h1></center>
             <div id="rcorners" class="container">
                 <div class="form-group">
@@ -45,14 +47,16 @@
                 </div>
                 <div class="form-group">
                     <label for="txtDescripcion">Descripcion</label>
-                    <textarea class="form-control" id="txtDescripcion" placeholder="Descripcion..." name="descripcion" col="25" row="30" required></textarea>
+                    <textarea class="form-control" id="txtDescripcion" placeholder="Descripcion..." name="descripcion" rows="5" required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="UrlImagen"></label>
                     <input type="file" id="UrlImagen" name="urlImagen">
                     <p class="help-block">Cargue una imagen</p>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+                <button type="submit" id="guardarPeli" class="btn btn-primary btn-lg">Guardar</button>
+     </div>
         </form>
+     
     </body>
 </html>
