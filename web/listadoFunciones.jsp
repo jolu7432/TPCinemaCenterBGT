@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listadoPeliculas
-    Created on : 05-oct-2015, 1:27:29
+    Document   : listadoFunciones
+    Created on : 14-oct-2015, 18:09:55
     Author     : Jorge
 --%>
 
@@ -14,20 +14,20 @@
         <script type="text/javascript" charset="UTF-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>        
         <script>
             $(document).ready(function () {
-                $.post('ServletPelicula', function (responseJson) {
+                $.post('ServletFuncion', function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
-                        $('<td>').text(item.nombre).appendTo(tr);
-                        $('<td>').text(item.director).appendTo(tr);
+                        $('<td>').text(item.fechaYHora).appendTo(tr);
+                        $('<td>').text(item.precio).appendTo(tr);
                         $('<td>').text(item.duracion).appendTo(tr);
-                        $('<td>').text(item.descripcion).appendTo(tr);
-                        $('<td>').text(item.estado).appendTo(tr);
-                        var img = $('<td>').appendTo(tr);
-                        var div = $('<div id=d2"' + index + '" class="thumbnail">').appendTo(img);
-                        $('<img src="img/' + item.urlImagen + '" alt="..." class="img-circle" style="height: 100px" ">').appendTo(div);
-                        var accion = $('<td class="center">').appendTo(tr);
-                        $('<button id="' + item.idPelicula + '" title="Editar" class="btn14 mr5 editar"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
-                        $('<button id="' + item.idPelicula + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
+                        $('<td>').text(item.sala.cine.nombre).appendTo(tr);
+                        $('<td>').text(item.numSala).appendTo(tr);
+                        //var img = $('<td>').appendTo(tr);
+                        //var div = $('<div id=d2"' + index + '" class="thumbnail">').appendTo(img);
+                        //$('<img src="img/' + item.urlImagen + '" alt="..." class="img-circle" style="height: 100px" ">').appendTo(div);
+                       // var accion = $('<td class="center">').appendTo(tr);
+                        //$('<button id="' + item.idPelicula + '" title="Editar" class="btn14 mr5 editar"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
+                        //$('<button id="' + item.idPelicula + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
                     });
                     $('#example').dataTable();
                     $('.editar').click(function () {
@@ -38,7 +38,7 @@
                     });
                     $('.borrar').click(function () {
                         //alert('prueba de boton borrar');
-                        $.post('ServletPelicula', {borrar: + this.id});
+                        $.post('ServletFuncion', {borrar: + this.id});
                     });
                 });
             });
@@ -67,24 +67,22 @@
             <table id="example" class="dataTable" cellspacing="0" width="100%">
                 <thead>
                     <tr>                        
-                        <th>Nombre</th>
-                        <th>Director</th>
+                        <th>Fecha Y Hora</th>
+                        <th>Precio</th>
                         <th>Duracion</th>
-                        <th>Descripcion</th>
-                        <th>Estado</th>
-                        <th>Imagen</th>
-                        <th>Accion</th>
+                        <th>Cine</th>
+                        <th>Sala</th>
+                        <th>Pelicula</th>                        
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>                        
-                        <th>Nombre</th>
-                        <th>Director</th>
+                        <th>Fecha Y Hora</th>
+                        <th>Precio</th>
                         <th>Duracion</th>
-                        <th>Descripcion</th>
-                        <th>Estado</th>
-                        <th>Imagen</th>
-                        <th>Accion</th>
+                        <th>Cine</th>
+                        <th>Sala</th>
+                        <th>Pelicula</th>    
                     </tr>
                 </tfoot>
                 <tbody id="tbody">                   
@@ -93,3 +91,4 @@
         </div>    
     </body>
 </html>
+
