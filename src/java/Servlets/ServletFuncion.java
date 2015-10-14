@@ -5,8 +5,15 @@
  */
 package Servlets;
 
+import Controladora.CtrlFuncion;
+import Modelo.Funcion;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +26,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletFuncion", urlPatterns = {"/ServletFuncion"})
 public class ServletFuncion extends HttpServlet {
+    
+    CtrlFuncion ctrlFuncion;
+
+    public ServletFuncion(){
+        this.ctrlFuncion = new CtrlFuncion();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,28 +43,28 @@ public class ServletFuncion extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
        if(request.getParameter("borrar") != null)
         {
             String idPeli= request.getParameter("borrar");
-            ctrlPelicula.bajaPelicula(Integer.parseInt(idPeli));
+            //ctrlFuncion.bajaPelicula(Integer.parseInt(idPeli));
         }
         else {
             String idPelicula = request.getParameter("idPelicula");
-            ArrayList<Pelicula> list = null;
+            ArrayList<Funcion> list = null;
             boolean flag = false;
             if (idPelicula == null) {
                 String url = request.getParameter("urlPage");
                 if(url != null ){
-                    list = ctrlPelicula.listarPeliculas();
+                    //list = ctrlFuncion.listarPeliculas();
                 }else{
-                    list = ctrlPelicula.listarPeliculasAdmin();
+                    //list = ctrlFuncion.listarPeliculasAdmin();
                 }                
                 flag = true;
             } else {
                 if (!idPelicula.equals("0")) {
                     list = new ArrayList<>();
-                    list.add(ctrlPelicula.existe(Integer.parseInt(idPelicula)));
+                    list.add(ctrlFuncion.existe(Integer.parseInt(idPelicula)));
                     flag = true;
                 }
             }
@@ -76,7 +89,11 @@ public class ServletFuncion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletFuncion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -90,7 +107,11 @@ public class ServletFuncion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletFuncion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

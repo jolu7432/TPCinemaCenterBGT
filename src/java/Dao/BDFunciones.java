@@ -74,16 +74,16 @@ public class BDFunciones implements IBD{
 
     @Override
     public Object existe(Object dato) throws SQLException {
-        Pelicula resp = null;
+        Funcion resp = null;
         Conexion oCon = new Conexion();
         ResultSet rs = null;       
         oCon.getConexion();
-        String consulta = "SELECT * FROM peliculas where idPelicula ="+((Pelicula)dato).getIdPelicula();      
+        String consulta = "SELECT * FROM funciones where idFuncion ="+((Funcion)dato).getIdFuncion();      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             rs = sentencia.executeQuery();            
             while (rs.next()) {
-                resp = new Pelicula(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
+                //resp = new Funcion(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
             }
             rs.close();
             sentencia.close();
@@ -98,17 +98,17 @@ public class BDFunciones implements IBD{
     @Override
     public ArrayList listado() throws SQLException {
         
-        Pelicula resp = null;
+        Funcion resp = null;
         Conexion oCon = new Conexion();
         ResultSet rs = null;
         ArrayList listaPeliculas = new ArrayList();
         oCon.getConexion();
-        String consulta = "SELECT * FROM peliculas where Estado = 1";      
+        String consulta = "SELECT * FROM funciones where Estado = 1";      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             rs = sentencia.executeQuery();            
             while (rs.next()) {
-                resp = new Pelicula(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
+                //resp = new Funcion(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
                 listaPeliculas.add(resp);
             }
             rs.close();
@@ -123,7 +123,7 @@ public class BDFunciones implements IBD{
     
     public ArrayList listadoAdmin() throws SQLException {
         
-        Pelicula resp = null;
+        Funcion resp = null;
         Conexion oCon = new Conexion();
         ResultSet rs = null;
         ArrayList listaPeliculas = new ArrayList();
@@ -133,7 +133,7 @@ public class BDFunciones implements IBD{
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             rs = sentencia.executeQuery();            
             while (rs.next()) {
-                resp = new Pelicula(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
+                //resp = new Funcion(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
                 listaPeliculas.add(resp);
             }
             rs.close();

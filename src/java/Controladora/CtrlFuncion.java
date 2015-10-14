@@ -5,6 +5,7 @@
  */
 package Controladora;
 
+import Dao.BDFunciones;
 import Modelo.Funcion;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,23 +15,23 @@ import java.util.ArrayList;
  * @author Jorge
  */
 public class CtrlFuncion {
-    private BDFunciones datosFunciones
+    private BDFunciones datosFunciones = BDFunciones.getInstance();
     
      public void altaFuncion(Funcion peli) throws SQLException{
-         datosFuncion.alta(peli);
+         datosFunciones.alta(peli);
      }
 
     public void bajaFuncion(int fun) throws SQLException{
-         datosFuncion.baja(fun);
+         datosFunciones.baja(fun);
     }
 
      public ArrayList listarFunciones() throws SQLException{
-         return datosFuncion.listado();
+         return datosFunciones.listado();
      }    
      
      public Funcion existe(int idFuncion) throws SQLException{
          Funcion fun = new Funcion(idFuncion);
-         return (Funcion)datosFuncion.existe(fun);
+         return (Funcion)datosFunciones.existe(fun);
      }
     
 }
