@@ -71,7 +71,7 @@ public class ServletPelicula extends HttpServlet {
                         item.write(fileFoto);
                     }
                 } else {
-                    datosPelicula.put(item.getFieldName(), item.getString());
+                    datosPelicula.put(item.getFieldName(), new String (item.getString().getBytes ("iso-8859-1"), "UTF-8") );
                 }
             }
             Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(), datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
