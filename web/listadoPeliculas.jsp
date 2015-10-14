@@ -37,7 +37,8 @@
                         $('#formAltaPelicula').load('altaPelicula.jsp?idPelicula='+this.id);
                     });
                     $('.borrar').click(function () {
-                        alert('prueba de boton borrar');
+                        //alert('prueba de boton borrar');
+                        $.post('ServletPelicula', {borrar: + this.id});
                     });
                 });
             });

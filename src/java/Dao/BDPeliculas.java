@@ -55,7 +55,18 @@ public class BDPeliculas implements IBD{
 
     @Override
     public void baja(Object dato) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Conexion oCon = new Conexion();      
+        oCon.getConexion();
+        String consulta = "UPDATE peliculas set Estado = false where idPelicula ="+((int)dato);      
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);         
+            sentencia.execute();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+        }  
     }
 
     @Override
