@@ -38,7 +38,7 @@
                     });
                     $('.borrar').click(function () {
                         //alert('prueba de boton borrar');
-                        $.post('ServletPelicula', {borrar: <%= request.getParameter("idPelicula")%>});
+                        $.post('ServletPelicula', {borrar: + this.id});
                     });
                 });
             });

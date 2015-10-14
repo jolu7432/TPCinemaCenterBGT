@@ -55,14 +55,12 @@ public class BDPeliculas implements IBD{
 
     @Override
     public void baja(Object dato) throws SQLException {
-        Conexion oCon = new Conexion();
-        ResultSet rs = null;       
+        Conexion oCon = new Conexion();      
         oCon.getConexion();
-        String consulta = "ALTER TABLE peliculas set estado = false where idPelicula ="+((int)dato);      
+        String consulta = "UPDATE peliculas set Estado = false where idPelicula ="+((int)dato);      
         try {
-            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
-            rs = sentencia.executeQuery();            
-            rs.close();
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);         
+            sentencia.execute();
             sentencia.close();
         } catch (SQLException e) {
             e.printStackTrace();
