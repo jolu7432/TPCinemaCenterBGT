@@ -64,7 +64,7 @@ public class ServletFuncion extends HttpServlet {
             } else {
                 if (!idPelicula.equals("0")) {
                     list = new ArrayList<>();
-                    list.add(ctrlFuncion.existe(Integer.parseInt(idPelicula)));
+                   // list.add(ctrlFuncion.existe(Integer.parseInt(idPelicula)));
                     flag = true;
                 }
             }
