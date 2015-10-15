@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,12 +26,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletCine", urlPatterns = {"/ServletCine"})
 public class ServletCine extends HttpServlet {
-
+    
+    private Cine cine;
     CtrlCine ctrlCine;
 
     public ServletCine() {
         this.ctrlCine = new CtrlCine();
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,36 +42,47 @@ public class ServletCine extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        
-            String idCine = request.getParameter("idCine");
-            if(idCine.equals("0"))
-            {
-                Cine nuevo = new Cine(datosPelicula.get("nombre").toString(), datosPelicula.get("direccion").toString(), Integer.parseInt(datosCine.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
-                ctrlPelicula.altaPelicula(nueva);
-                RequestDispatcher aux = request.getRequestDispatcher("/abmCine.jsp");
-                aux.include(request, response);
-            }
-            ArrayList<Cine> list = null;
-            boolean flag = false;
-            if (idCine == null) {
-                list = ctrlCine.listarCines();
-                flag = true;
-            } else {
-                if (!idCine.equals("0")) {
-                    list = new ArrayList<>();
-                    list.add(ctrlCine.existe(Integer.parseInt(idCine)));
-                    flag = true;
+
+        String idCine = request.getParameter("idCine");
+        if(request.getParameter("nombre") != null)
+        {
+            cine = new Cine(0, request.getParameter("nombre"), request.getParameter("direccion"), true );
+            Cine aux = ctrlCine.existe(cine.getIdCine());
+            if (aux == null) {
+                try {
+                    ctrlCine.altaCine(cine);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else {
+                cine.setIdCine(aux.getIdCine());
+               // ctrlCine.modificarCine(cine);
             }
-            if (flag) {
-                String json = new Gson().toJson(list);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(json);
+            RequestDispatcher rd = request.getRequestDispatcher("/abmCine.jsp");
+            rd.forward(request, response);
+        }
+        ArrayList<Cine> list = null;
+        boolean flag = false;
+        if (idCine == null) {
+            list = ctrlCine.listarCines();
+            flag = true;
+        } else {
+            if (!idCine.equals("0")) {
+                list = new ArrayList<>();
+                list.add(ctrlCine.existe(Integer.parseInt(idCine)));
+                flag = true;
             }
+        }
+        if (flag) {
+            String json = new Gson().toJson(list);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        }
 
     }
 

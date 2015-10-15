@@ -17,11 +17,11 @@ import java.util.ArrayList;
 public class CtrlCine {
      private BDCine datosCines = BDCine.getInstance();    
 
-     public void altaPelicula(Cine cine) throws SQLException{
+     public void altaCine(Cine cine) throws SQLException{
          datosCines.alta(cine);
      }
 
-    public void bajaPelicula(int cine) throws SQLException{
+    public void bajaCine(int cine) throws SQLException{
          datosCines.baja(cine);
     }
 

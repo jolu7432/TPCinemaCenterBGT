@@ -37,7 +37,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="txtDireccion">Direccion</label>
-                        <input type="text" class="form-control" id="txtDireccion" placeholder="Dirección" name="dirección" required>
+                        <input type="text" class="form-control" id="txtDireccion" placeholder="Dirección" name="direccion" required>
                     </div>
                     
                     <button type="submit" class="btn btn-primary btn-lg">Guardar</button>

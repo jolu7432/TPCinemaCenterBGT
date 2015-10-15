@@ -34,11 +34,12 @@ public class BDCine implements IBD{
         Conexion oCon = new Conexion();
         oCon.getConexion();
         Cine aux = (Cine) dato;
-        String insert = "INSERT INTO cines(nombre, direcccion) VALUES(?,?)";
+        String insert = "INSERT INTO cines(nombre, direccion, estado) VALUES(?,?,?)";
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
             sentencia.setString(1, aux.getNombre());  
             sentencia.setString(2, aux.getDireccion());          
+            sentencia.setBoolean(3, aux.isEstado());          
             sentencia.execute();
             sentencia.close();
         } catch (SQLException e) {
