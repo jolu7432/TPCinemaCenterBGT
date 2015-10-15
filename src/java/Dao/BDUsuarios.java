@@ -57,9 +57,9 @@ public class BDUsuarios implements IBD {
         Conexion oCon = new Conexion();
         oCon.getConexion();
         Usuario aux = (Usuario) dato;
-        String insert = "UPDATE usuarios SET  nombre = '" +aux.getNombre()+ "' and apellido = '" +aux.getApellido()+ "' and DNI = " +aux.getDni()+ " and Administrador = " +aux.isAdministrador()+ " and User = '" +aux.getUser()+ "' and Pass = '" +aux.getPass()+ "' and email = '"+aux.getEmail()+"' and Telefono = '"+aux.getTelefono()+ "'  WHERE idUsuario = " + aux.getId();
+        String update = "UPDATE usuarios SET  nombre = '" +aux.getNombre()+ "', apellido = '" +aux.getApellido()+ "', DNI = " +aux.getDni()+ ", Administrador = " +aux.isAdministrador()+ ", User = '" +aux.getUser()+ "', Pass = '" +aux.getPass()+ "', email = '"+aux.getEmail()+"', Telefono = '"+aux.getTelefono()+ "'  WHERE idUsuario = " + aux.getId();
         try {
-            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(update);
             sentencia.execute();
             sentencia.close();
         } catch (SQLException e) {
@@ -114,6 +114,28 @@ public class BDUsuarios implements IBD {
         } finally {
             oCon.close();
             return listaUsuarios;
+        }
+    }
+    
+    public Usuario traePorId(int id) throws SQLException{
+        Usuario resp = null;
+        Conexion oCon = new Conexion();
+        ResultSet rs = null;
+        oCon.getConexion();
+        String consulta = "SELECT * FROM usuarios where idUsuario = " + id;
+        try { 
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+            rs = sentencia.executeQuery();
+            while(rs.next()){
+                resp = new Usuario(rs.getInt("idUsuario"), rs.getString("Nombre"), rs.getString("Apellido"), rs.getInt("DNI"), rs.getBoolean("Administrador"), rs.getString("User"), rs.getString("Pass"), rs.getString("email"), rs.getString("Telefono"), rs.getString("UrlImg"));
+            }
+            rs.close();
+            sentencia.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+            return resp;
         }
     }
 

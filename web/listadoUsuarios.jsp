@@ -10,11 +10,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-                <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/css/jquery.dataTables.css">       
+        <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/css/jquery.dataTables.css">       
         <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>   
-         <script>
+        <script>
             $(document).ready(function () {
-                $.post('ServletRegistro', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {
+                 $.post('ServletRegistro', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
                         $('<td>').text(item.nombre).appendTo(tr);
@@ -27,23 +27,25 @@
                         $('<td>').text(item.telefono).appendTo(tr);
                         var img = $('<td>').appendTo(tr);
                         var div = $('<div id=d2"' + index + '" class="thumbnail">').appendTo(img);
-                        $('<img src="img/' + item.urlImg + '" alt="..." class="img-circle" style="height: 100px" ">').appendTo(div);
+                        $('<img src="img/imgUsuarios/' + item.urlImg + '" alt="..." class="img-circle" style="height: 100px" ">').appendTo(div);
                         var accion = $('<td class="center">').appendTo(tr);
-                        $('<button id="editar" title="Editar" class="btn14 mr5"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
-                        $('<button id="borrar" title="Borrar" class="btn14 mr5 removeBtn" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
+                        $('<button id="' + item.id + '" title="Editar" class="btn14 mr5 editar"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
+                        $('<button id="' + item.id + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
                     });
                     $('#example').dataTable();
-                    $('#editar').click(function () {
-                        divAltaUsuario();
-                        $('#txtNombre').innerHTML('Nombre del Usuario');
+                    $('.editar').click(function () {
+                        $('#altaUsuario').val('Subir Usuario');
+                        $('#formAltaUsuario').text('');
+                        $('#altaUsuario').val('Cancelar');
+                        $('#formAltaUsuario').load('altaUsuario.jsp?id=' + this.id);
                     });
-                    $('#borrar').click(function () {
+                    $('.borrar').click(function () {
                         alert('prueba de boton borrar');
                     });
                 });
-                $('#altaUsuario').click(function () {
-                    divAltaUsuario();
-                });
+            <%--$('#altaUsuario').click(function () {
+                divAltaUsuario();
+            });
 
                 function divAltaUsuario() {
                     if ($('#altaUsuario').val() == 'Cancelar') {
@@ -53,8 +55,7 @@
                         $('#altaUsuario').val('Cancelar');
                         $('#formAltaUsuario').load('registro.jsp');
                     }
-                }
-                ;
+                };--%>
             });
         </script>
         <style>
@@ -65,6 +66,12 @@
             }
             .mr5 {
                 margin-right: 5px;
+            }
+            .editar{
+
+            }
+            .borrar{
+
             }
         </style>
 

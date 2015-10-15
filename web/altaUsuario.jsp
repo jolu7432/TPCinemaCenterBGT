@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Prueba
-    Created on : Oct 2, 2015, 10:27:50 AM
+    Document   : altaUsuario
+    Created on : Oct 14, 2015, 5:58:19 PM
     Author     : microtik
 --%>
 
@@ -15,7 +15,7 @@
         <div id="menu">  
             <jsp:include page="menu.jsp"/>
         </div>
-        <form method="post" action="ServletRegistro" enctype="multipart/form-data" class="form-signup">
+        <form method="post" action="ServletUsuario" enctype="multipart/form-data" class="form-signup">
             <center><h1>Registro de usuario</h1></center>
             <div id="rcorners" class="container">
                 <div class="form-group">
@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <label for="txtApellido">Apellido</label>
-                    <input type="text" class="form-control" id="txtApeliido" placeholder="Apellido" name="apellido" required>
+                    <input type="text" class="form-control" id="txtApellido" placeholder="Apellido" name="apellido" required>
                 </div>
                 <div class="form-group">
                     <label for="txtDNI">DNI</label>
@@ -50,16 +50,16 @@
                 </div>
                 <div class="form-group">
                     <label for="UrlImagen"></label>
-                    <input type="file" id="UrlImagen" name="urlImagen">
+                    <input type="file" id="UrlImagen" name="urlImagen" value="bruno.png">
                     <p class="help-block">Cargue una imagen</p>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg">Registrate</button>
+                <button type="submit" class="btn btn-primary btn-lg">Cargar</button>
             </div>
         </form>
     </body>
     <script>
         $(document).ready(function () {
-            $.post('ServletRegistro', {id: <%= request.getParameter("id")%>}, function (responseJson) {
+            $.post('ServletUsuario', {id: <%= request.getParameter("id")%>}, function (responseJson) {
                 if (<%= request.getParameter("id")%> != null) {
                     $.each(responseJson, function (index, item) {
                         $('#txtNombre').val(item.nombre);
@@ -69,11 +69,11 @@
                         $('#txtPass').val(item.pass);
                         $('#txtEmail').val(item.email);
                         $('#txtTel').val(item.telefono);
+                        $('#UrlImagen').val(item.urlImg);
                         $('<input type="button" id="boton">').appendTo($('#chkAdm'));
                     });
-                }
+                } 
             });
         });
     </script>
 </html>
-
