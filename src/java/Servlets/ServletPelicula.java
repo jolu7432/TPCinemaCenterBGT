@@ -71,15 +71,23 @@ public class ServletPelicula extends HttpServlet {
                         item.write(fileFoto);
                     }
                 } else {
-                    datosPelicula.put(item.getFieldName(), item.getString());
+                    datosPelicula.put(item.getFieldName(), new String (item.getString().getBytes ("iso-8859-1"), "UTF-8") );
                 }
             }
             Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(), datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
             ctrlPelicula.altaPelicula(nueva);
             RequestDispatcher aux = request.getRequestDispatcher("/abmPelicula.jsp");
             aux.include(request, response);
-
-        } else {
+            
+        }
+        if(request.getParameter("borrar") != null)
+        {
+            String idPeli= request.getParameter("borrar");
+            ctrlPelicula.bajaPelicula(Integer.parseInt(idPeli));
+            RequestDispatcher aux = request.getRequestDispatcher("/abmPelicula.jsp");
+            aux.include(request, response);
+        }
+        else {
             String idPelicula = request.getParameter("idPelicula");
             ArrayList<Pelicula> list = null;
             boolean flag = false;

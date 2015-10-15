@@ -13,8 +13,8 @@
         <title>Alta de Peliculas</title>  
         <script>
             $(document).ready(function () {
-                 $.post('ServletPelicula', {idPelicula: <%= request.getParameter("idPelicula")%>}, function (responseJson) {
-                     if (<%= request.getParameter("idPelicula")%> != null) {
+                $.post('ServletPelicula', {idPelicula: <%= request.getParameter("idPelicula")%>}, function (responseJson) {
+                    if (<%= request.getParameter("idPelicula")%> != null) {
                         $.each(responseJson, function (index, item) {
                             $('#txtNombre').val(item.nombre);
                             $('#txtDirector').val(item.director);
@@ -23,36 +23,44 @@
                         });
                     }
                 });
+
             });
         </script>
     </head>
     <body>   
         <jsp:include page="ServletValidaLoginRol" flush="true"/> 
-        <form method="post" action="ServletPelicula" enctype="multipart/form-data" class="form-signup">            
-            <center><h1>Alta de Pelicula</h1></center>
-            <div id="rcorners" class="container">
-                <div class="form-group">
-                    <label for="txtNombre">Nombre</label>
-                    <input type="text" class="form-control" id="txtNombre" placeholder="Nombre" name="nombre" required autofocus>
+        <div id="rcorners" class="container">           
+            <form method="post" action="ServletPelicula" enctype="multipart/form-data" >           
+                <div class="col-md-8">
+                    <center><h1>Alta de Pelicula</h1></center>
+                    <div class="form-group col-md-2">
+                        <label for="txtNombre">Nombre</label>
+                        <input type="text" class="form-control" id="txtNombre" placeholder="Nombre" name="nombre" required autofocus>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="txtApellido">Director</label>
+                        <input type="text" class="form-control" id="txtDirector" placeholder="Director" name="director" required>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="txtDuracion">Duracion</label>
+                        <input type="text" class="form-control" id="txtDuracion" placeholder="Duracion" name="duracion" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="txtApellido">Director</label>
-                    <input type="text" class="form-control" id="txtDirector" placeholder="Director" name="director" required>
-                </div>
-                <div class="form-group">
-                    <label for="txtDuracion">Duracion</label>
-                    <input type="text" class="form-control" id="txtDuracion" placeholder="Duracion" name="duracion" required>
-                </div>
-                <div class="form-group">
-                    <label for="txtDescripcion">Descripcion</label>
-                    <textarea class="form-control" id="txtDescripcion" placeholder="Descripcion..." name="descripcion" col="25" row="30" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="UrlImagen"></label>
-                    <input type="file" id="UrlImagen" name="urlImagen">
-                    <p class="help-block">Cargue una imagen</p>
-                </div>
-                <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
-        </form>
+                <br>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="txtDescripcion">Descripcion</label>
+                        <textarea class="form-control" id="txtDescripcion" placeholder="Descripcion..." name="descripcion" col="25" row="30" required></textarea>
+                    </div>                
+                    <div class="form-group">
+                        <label for="UrlImagen"></label>
+                        <input type="file" id="UrlImagen" name="urlImagen">
+                        <p class="help-block">Cargue una imagen</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+                </div> 
+            </form>
+        </div>
+
     </body>
 </html>

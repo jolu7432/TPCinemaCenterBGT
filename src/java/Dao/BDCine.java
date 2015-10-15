@@ -5,8 +5,7 @@
  */
 package Dao;
 
-import Modelo.Pelicula;
-import com.sun.org.apache.xpath.internal.axes.AxesWalker;
+import Modelo.Cine;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,19 +13,19 @@ import java.util.ArrayList;
 
 /**
  *
- * @author hernan
+ * @author herna
  */
-public class BDPeliculas implements IBD{
-    private static BDPeliculas instance = null;
+public class BDCine implements IBD{
+    private static BDCine instance = null;
 
-    public static BDPeliculas getInstance() {
+    public static BDCine getInstance() {
         if (instance == null) {
-            instance = new BDPeliculas();
+            instance = new BDCine();
         }
         return instance;
     }
 
-    public BDPeliculas() {
+    public BDCine() {
     }
     
 
@@ -34,16 +33,12 @@ public class BDPeliculas implements IBD{
     public void alta(Object dato) throws SQLException {
         Conexion oCon = new Conexion();
         oCon.getConexion();
-        Pelicula aux = (Pelicula) dato;
-        String insert = "INSERT INTO peliculas(nombre, director, duracionPeli, descripcion, estado,UrlImagen) VALUES(?,?,?,?,?,?)";
+        Cine aux = (Cine) dato;
+        String insert = "INSERT INTO cines(nombre, direcccion) VALUES(?,?)";
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
             sentencia.setString(1, aux.getNombre());  
-            sentencia.setString(2, aux.getDirector());
-            sentencia.setInt(3, aux.getDuracion());
-            sentencia.setString(4, aux.getDescripcion());
-            sentencia.setBoolean(5, aux.isEstado());
-            sentencia.setString(6, aux.getUrlImagen());           
+            sentencia.setString(2, aux.getDireccion());          
             sentencia.execute();
             sentencia.close();
         } catch (SQLException e) {
@@ -57,7 +52,7 @@ public class BDPeliculas implements IBD{
     public void baja(Object dato) throws SQLException {
         Conexion oCon = new Conexion();      
         oCon.getConexion();
-        String consulta = "UPDATE peliculas set Estado = false where idPelicula ="+((int)dato);      
+        String consulta = "UPDATE Cines set Estado = false where idCines ="+((int)dato);      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);         
             sentencia.execute();
@@ -76,16 +71,16 @@ public class BDPeliculas implements IBD{
 
     @Override
     public Object existe(Object dato) throws SQLException {
-        Pelicula resp = null;
+        Cine resp = null;
         Conexion oCon = new Conexion();
         ResultSet rs = null;       
         oCon.getConexion();
-        String consulta = "SELECT * FROM peliculas where idPelicula ="+((Pelicula)dato).getIdPelicula();      
+        String consulta = "SELECT * FROM cines where idCines ="+((Cine)dato).getIdCine();      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             rs = sentencia.executeQuery();            
             while (rs.next()) {
-                resp = new Pelicula(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
+                resp = new Cine(rs.getInt("idCine"), rs.getString("Nombre"), rs.getString("Direccion"),rs.getBoolean("Estado"));
             }
             rs.close();
             sentencia.close();
@@ -100,17 +95,17 @@ public class BDPeliculas implements IBD{
     @Override
     public ArrayList listado() throws SQLException {
         
-        Pelicula resp = null;
+        Cine resp = null;
         Conexion oCon = new Conexion();
         ResultSet rs = null;
         ArrayList listaPeliculas = new ArrayList();
         oCon.getConexion();
-        String consulta = "SELECT * FROM peliculas where Estado = 1";      
+        String consulta = "SELECT * FROM cines";      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             rs = sentencia.executeQuery();            
             while (rs.next()) {
-                resp = new Pelicula(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
+                resp = new Cine(rs.getInt("idCine"), rs.getString("Nombre"), rs.getString("Direccion"),rs.getBoolean("Estado"));
                 listaPeliculas.add(resp);
             }
             rs.close();
@@ -123,19 +118,19 @@ public class BDPeliculas implements IBD{
         }        
     }
     
-    public ArrayList listadoAdmin() throws SQLException {
+    public ArrayList listadoActivos() throws SQLException {
         
-        Pelicula resp = null;
+        Cine resp = null;
         Conexion oCon = new Conexion();
         ResultSet rs = null;
         ArrayList listaPeliculas = new ArrayList();
         oCon.getConexion();
-        String consulta = "SELECT * FROM peliculas";      
+        String consulta = "SELECT * FROM cines where Estado = 1";      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             rs = sentencia.executeQuery();            
             while (rs.next()) {
-                resp = new Pelicula(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
+                resp = new Cine(rs.getInt("idCine"), rs.getString("Nombre"), rs.getString("Direccion"),rs.getBoolean("Estado"));
                 listaPeliculas.add(resp);
             }
             rs.close();

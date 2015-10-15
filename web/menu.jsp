@@ -31,7 +31,7 @@
          </div> 
          <!% }%>
         -->
-        <nav class="navbar-fixed-top"> 
+        <nav class="navbar-default navbar-fixed-top"> 
             <div class="container-fluid">            
                 <div class="navbar-right">
                     <form class="navbar-form" action="ServletLogin" method="post">
@@ -62,12 +62,12 @@
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="principal.jsp">Peliculas<span class="sr-only">(current)</span></a></li>
+                        <ul class="nav navbar-nav navbar-left ">
+                            <li class="btn-menu"><a href="principal.jsp">Peliculas<span class="sr-only">(current)</span></a></li>
                             <% if (usuarioLog.getId() != 0) {%>
                                 <%if (usuarioLog.isAdministrador()) {%>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Herramientas Administrador<span class="caret"></span></a>
+                                    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Herramientas Administrador<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="abmPelicula.jsp">ABM Peliculas</a></li>
                                         <li><a href="abmUsuario.jsp">ABM Usuarios</a></li>
@@ -80,13 +80,14 @@
                                 </li>
                                 <%}
                             }%>
+                            <form class="navbar-form navbar-left" role="search">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </div>
+                                <button type="submit" class="btn-success">Submit</button>
+                            </form>
                         </ul>
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </form>
+ 
                         <ul class="nav navbar-nav navbar-right">
                             <% if (usuarioLog.getId() != 0) {%>
                             <li class="dropdown">
