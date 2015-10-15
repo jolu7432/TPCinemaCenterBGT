@@ -5,7 +5,10 @@
  */
 package Dao;
 
+import Modelo.Cine;
 import Modelo.Funcion;
+import Modelo.Pelicula;
+import Modelo.Sala;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,7 +58,8 @@ public class BDFunciones implements IBD{
     public void baja(Object dato) throws SQLException {
         Conexion oCon = new Conexion();      
         oCon.getConexion();
-        String consulta = "UPDATE peliculas set Estado = false where idPelicula ="+((int)dato);      
+        Funcion fun = (Funcion)dato; 
+        String consulta = "UPDATE funciones set Estado = false where idSala ="+fun.getSala().getIdSala() + "and idPelicula ="+fun.getPelicula().getIdPelicula() +" and FechaYHora =" + fun.getFechaYHora();      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);         
             sentencia.execute();
@@ -75,15 +79,22 @@ public class BDFunciones implements IBD{
     @Override
     public Object existe(Object dato) throws SQLException {
         Funcion resp = null;
+        Sala sala = null;
+        Cine cine = null;
+        Pelicula peli = null;
         Conexion oCon = new Conexion();
         ResultSet rs = null;       
         oCon.getConexion();
-        String consulta = "SELECT * FROM funciones where idFuncion ="+((Funcion)dato).getIdFuncion();      
+        Funcion fun = (Funcion)dato;
+        String consulta = "SELECT * FROM funciones inner join cines on idCine="+fun.getSala().getCine().getIdCine()+" inner join salas on idSala =" +fun.getSala().getIdSala()+" inner join peliculas on idPelicula="+fun.getPelicula().getIdPelicula() + "where idSala ="+fun.getSala().getIdSala() + "and idPelicula ="+fun.getPelicula().getIdPelicula() +" and FechaYHora =" + fun.getFechaYHora();      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             rs = sentencia.executeQuery();            
             while (rs.next()) {
-                //resp = new Funcion(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
+                peli = new Pelicula(rs.getInt("idPelicula"),rs.getString("Nombre"),rs.getString("Director"),rs.getInt("Duracion"),rs.getString("Descripcion"),rs.getBoolean("Estado"),rs.getString("UrlImagen"));
+                cine = new Cine(rs.getInt("idCine"),rs.getString("Nombre"),rs.getString("Direccion"),rs.getBoolean("Estado"));
+                sala = new Sala(rs.getInt("idSala"),rs.getInt("NumSala"),cine,rs.getInt("Columna"),rs.getInt("Fila"),rs.getBoolean("Estado"));
+                resp = new Funcion(rs.getDate("FechaYHora"), rs.getInt("Duracion"), rs.getFloat("Precio"),sala, peli);
             }
             rs.close();
             sentencia.close();

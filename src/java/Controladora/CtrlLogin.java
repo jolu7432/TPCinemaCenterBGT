@@ -20,12 +20,4 @@ public class CtrlLogin {
     public Usuario validaUsuario(Usuario user) throws SQLException{        
        return (Usuario)datosUsuarios.existe(user);
     }
-    
-    public void registraUsuario(Usuario user) throws SQLException {
-        datosUsuarios.alta(user);
-    }
-    
-    public ArrayList listarUsuarios() throws SQLException{
-        return datosUsuarios.listado();
-    }
 }

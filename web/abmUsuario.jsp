@@ -25,4 +25,15 @@
             <jsp:include page="listadoUsuarios.jsp"/>
         </div>   
     </body>
+    <script>
+    $('#altaUsuario').click(function () {
+        if ($('#altaUsuario').val() == 'Cancelar') {
+            $('#altaUsuario').val('Subir Usuario');
+            $('#formAltaUsuario').text('');
+        } else {
+            $('#altaUsuario').val('Cancelar');
+            $('#formAltaUsuario').load('registro.jsp');
+        }
+    });  
+</script>
 </html>
