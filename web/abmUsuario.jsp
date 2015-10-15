@@ -32,7 +32,7 @@
             $('#formAltaUsuario').text('');
         } else {
             $('#altaUsuario').val('Cancelar');
-            $('#formAltaUsuario').load('registro.jsp');
+            $('#formAltaUsuario').load('altaUsuario.jsp');
         }
     });  
 </script>

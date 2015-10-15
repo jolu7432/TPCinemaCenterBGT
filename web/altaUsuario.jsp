@@ -31,6 +31,7 @@
                     <input type="text" class="form-control" id="txtDNI" placeholder="DNI" name="dni" required>
                 </div>
                 <div class="form-group" id="chkAdm">
+                    <label for="chkAdm">Administrador?</label><input type="checkbox" class="form-control" id="chkAdm" name="administrador">
                 </div>
                 <div class="form-group">
                     <label for="txtUsuario">Usuario</label>
@@ -65,14 +66,14 @@
                         $('#txtNombre').val(item.nombre);
                         $('#txtApellido').val(item.apellido);
                         $('#txtDNI').val(item.dni);
+                        $('#chkAdm  input[type=checkbox]').prop('checked',item.administrador);
                         $('#txtUsuario').val(item.user);
                         $('#txtPass').val(item.pass);
                         $('#txtEmail').val(item.email);
                         $('#txtTel').val(item.telefono);
                         $('#UrlImagen').val(item.urlImg);
-                        $('<input type="button" id="boton">').appendTo($('#chkAdm'));
                     });
-                } 
+                }
             });
         });
     </script>
