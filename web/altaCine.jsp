@@ -1,7 +1,7 @@
 <%-- 
     Document   : altaCine
     Created on : 14-oct-2015, 20:16:21
-    Author     : herna
+    Author     : hernan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,8 +13,8 @@
     <title>Alta de Cines</title>  
     <script>
         $(document).ready(function () {
-            $.post('ServletCine', {idCine: <%= request.getParameter("idCine")%>}, function (responseJson) {
-                if (<%= request.getParameter("idPelicula")%> != null) {
+           $.post('ServletCine', {idCine: <%= request.getParameter("idCine")%>}, function (responseJson) {
+                if (<%= request.getParameter("idCine")%> != null) {
                     $.each(responseJson, function (index, item) {
                         $('#txtNombre').val(item.nombre);
                         $('#txtDireccion').val(item.direccion);
@@ -22,21 +22,21 @@
                 }
             });
 
-        });
+        }); 
     </script>
 </head>
     <body>   
         <jsp:include page="ServletValidaLoginRol" flush="true"/> 
         <div id="rcorners" class="container">           
-            <form method="post" action="ServletPelicula" enctype="multipart/form-data" >           
+            <form method="post" action="ServletCine" >           
                 <div class="col-md-8">
-                    <center><h1>Alta de Pelicula</h1></center>
+                    <center><h1>Alta de Cine</h1></center>
                     <div class="form-group col-md-2">
                         <label for="txtNombre">Nombre</label>
                         <input type="text" class="form-control" id="txtNombre" placeholder="Nombre" name="nombre" required autofocus>
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="txtApellido">Direccion</label>
+                        <label for="txtDireccion">Direccion</label>
                         <input type="text" class="form-control" id="txtDireccion" placeholder="Dirección" name="dirección" required>
                     </div>
                     
