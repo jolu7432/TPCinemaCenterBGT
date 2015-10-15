@@ -29,9 +29,8 @@ public class CtrlFuncion {
          return datosFunciones.listado();
      }    
      
-     public Funcion existe(int idFuncion) throws SQLException{
-         Funcion fun = new Funcion(idFuncion);
-         return (Funcion)datosFunciones.existe(fun);
+     public Funcion existe(Funcion funcion) throws SQLException{         
+         return (Funcion)datosFunciones.existe(funcion);
      }
     
 }

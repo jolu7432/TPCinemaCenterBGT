@@ -11,21 +11,12 @@ import java.sql.Date;
  *
  * @author Jorge
  */
-public class Funcion {
-    private int idFuncion;
+public class Funcion {    
     private Date fechaYHora;
     private int duracion;
     private float precio;
     private Sala sala;
-    private Pelicula pelicula;
-
-    public int getIdFuncion() {
-        return idFuncion;
-    }
-
-    public void setIdFuncion(int idFuncion) {
-        this.idFuncion = idFuncion;
-    }
+    private Pelicula pelicula;   
 
     public Date getFechaYHora() {
         return fechaYHora;
@@ -65,14 +56,11 @@ public class Funcion {
 
     public void setPelicula(Pelicula pelicula) {
         this.pelicula = pelicula;
-    }
-    
-     public Funcion(int idFuncion) {
-        this.idFuncion = idFuncion;        
-    }
+    }   
+   
 
-    public Funcion(int idFuncion, Date fechaYHora, int duracion, float precio, Sala sala, Pelicula pelicula) {
-        this.idFuncion = idFuncion;
+    public Funcion(Date fechaYHora, int duracion, float precio, Sala sala, Pelicula pelicula) {
+        
         this.fechaYHora = fechaYHora;
         this.duracion = duracion;
         this.precio = precio;
