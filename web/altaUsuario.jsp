@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group">
                     <label for="UrlImagen"></label>
-                    <input type="file" id="UrlImagen" name="urlImagen" value="bruno.png">
+                    <input type="file" id="UrlImagen" name="urlImagen" value="">
                     <p class="help-block">Cargue una imagen</p>
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg">Cargar</button>
