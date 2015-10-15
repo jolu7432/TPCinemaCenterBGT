@@ -19,20 +19,20 @@
             <jsp:include page="menu.jsp"/>           
         </div> 
     <center><h1>Administrar Cines</h1></center>
-    <input type="button" id="altaPelicula" value="Subir Pelicula"/><br>     
-    <div id="formAltaPelicula"></div>         
-    <div id="listadoPeliculas">
-        <jsp:include page="listadoPeliculas.jsp"/>
+    <input type="button" id="altaCine" value="Alta Cine"/><br>     
+    <div id="formAltaCine"></div>         
+    <div id="listadoCines">
+        <jsp:include page="listadoCines.jsp"/>
     </div>    
 </body> 
 <script>
-    $('#altaPelicula').click(function () {
-        if ($('#altaPelicula').val() == 'Cancelar') {
-            $('#altaPelicula').val('Subir Pelicula');
-            $('#formAltaPelicula').text('');
+    $('#altaCine').click(function () {
+        if ($('#altaCine').val() == 'Cancelar') {
+            $('#altaCine').val('Subir Cine');
+            $('#formAltaCine').text('');
         } else {
-            $('#altaPelicula').val('Cancelar');
-            $('#formAltaPelicula').load('altaPelicula.jsp');
+            $('#altaCine').val('Cancelar');
+            $('#formAltaCine').load('altaCine.jsp');
         }
     });  
 </script>
