@@ -5,7 +5,7 @@
  */
 package Modelo;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
@@ -79,6 +79,10 @@ public class Funcion {
     public Funcion(int idFuncion) {
         this.idFuncion = idFuncion;
     }
+
+    public Funcion() {
+    }
+    
     
     
 }

@@ -17,7 +17,15 @@
                 $.post('ServletFuncion', function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
-                        $('<td>').text(item.fechaYHora).appendTo(tr);
+
+                        var formattedDate = new Date(item.fechaYHora);
+                        var y = formattedDate.getFullYear();
+                        var m = formattedDate.getMonth();
+                        var d = formattedDate.getDate();
+                        var h = formattedDate.getHours();
+                        var min = formattedDate.getMinutes();
+                        m += 1;  // JavaScript months are 0-11                    
+                        $('<td>').text(y + "-" + m + "-" + d + " " + h + ":" + min).appendTo(tr);
                         $('<td>').text(item.precio).appendTo(tr);
                         $('<td>').text(item.duracion).appendTo(tr);
                         $('<td>').text(item.sala.cine.nombre).appendTo(tr);

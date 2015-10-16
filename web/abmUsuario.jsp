@@ -18,14 +18,14 @@
         <div id="menu">  
             <jsp:include page="menu.jsp"/>           
         </div> 
-                <center><h1>ACA LE VOLAS LA CAPOCHA A LOS GILES</h1></center>
-        <input type="button" id="altaUsuario" value="Subir Usuario"/><br>     
-        <div id="formAltaUsuario"></div>         
-        <div id="listadoUsuarios">
-            <jsp:include page="listadoUsuarios.jsp"/>
-        </div>   
-    </body>
-    <script>
+    <center><h1>ACA LE VOLAS LA CAPOCHA A LOS GILES</h1></center>
+    <input type="button" id="altaUsuario" value="Subir Usuario"/><br>     
+    <div id="formAltaUsuario"></div>         
+    <div id="listadoUsuarios">
+        <jsp:include page="listadoUsuarios.jsp"/>
+    </div>   
+</body>
+<script>
     $('#altaUsuario').click(function () {
         if ($('#altaUsuario').val() == 'Cancelar') {
             $('#altaUsuario').val('Subir Usuario');
@@ -34,6 +34,6 @@
             $('#altaUsuario').val('Cancelar');
             $('#formAltaUsuario').load('altaUsuario.jsp');
         }
-    });  
+    });   
 </script>
 </html>

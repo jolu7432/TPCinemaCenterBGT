@@ -44,6 +44,11 @@ public class ServletFuncion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        if(request.getParameter("guardar") != null)
+        {
+            Funcion fun = new Funcion();
+            ctrlFuncion.altaFuncion(fun);
+        }
        if(request.getParameter("borrar") != null)
         {
             ctrlFuncion.bajaFuncion(Integer.parseInt(request.getParameter("borrar")));
