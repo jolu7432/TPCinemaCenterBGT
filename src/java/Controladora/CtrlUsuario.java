@@ -22,8 +22,12 @@ public class CtrlUsuario {
         datosUsuarios.alta(user);
     }
 
-    public void modificarusuario(Usuario user) throws SQLException {
+    public void modificarUsuario(Usuario user) throws SQLException {
         datosUsuarios.modificar(user);
+    }
+    
+    public void bajaUsuario(int id) throws SQLException{
+        datosUsuarios.baja(datosUsuarios.traePorId(id));
     }
     
     public ArrayList listarUsuarios() throws SQLException {
