@@ -49,8 +49,21 @@ public class BDUsuarios implements IBD {
 
     @Override
     public void baja(Object dato) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Conexion oCon = new Conexion();
+        oCon.getConexion();
+        Usuario aux = (Usuario) dato;
+        String borrar = "DELETE from usuarios WHERE idUsuario = " + aux.getId();
+        try{
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(borrar);
+            sentencia.execute();
+            sentencia.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+        }
     }
+    
 
     @Override
     public void modificar(Object dato) throws SQLException {

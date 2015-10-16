@@ -62,13 +62,20 @@ public class ServletUsuario extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         if (isMultipart) {
-            subirUsuario(request, response);
+            cargaUsuario(request, response);
+        } else if (request.getParameter("borrar") != null) {
+            String iduser = request.getParameter("borrar");
+            ctrlUsuario.bajaUsuario(Integer.parseInt(iduser));
+            RequestDispatcher aux = request.getRequestDispatcher("/abmUsuario.jsp");
+            aux.forward(request, response);
         } else {
-            modificaUsuario(request, response);
+                listaUsuario(request, response);
+            }
         }
-    }
 
-    private void subirUsuario(HttpServletRequest request, HttpServletResponse response) throws FileUploadException, Exception {
+    
+
+    private void cargaUsuario(HttpServletRequest request, HttpServletResponse response) throws FileUploadException, Exception {
         FileItemFactory file_factory = new DiskFileItemFactory();
         ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
         List items = servlet_up.parseRequest(request);
@@ -90,7 +97,12 @@ public class ServletUsuario extends HttpServlet {
                 datosUsuario.put(item.getFieldName(), item.getString());
             }
         }
-        user = new Usuario(0, (String) datosUsuario.get("nombre"), (String) datosUsuario.get("apellido"), Integer.parseInt((String) datosUsuario.get("dni")), false, (String) datosUsuario.get("user"), (String) datosUsuario.get("pass"), (String) datosUsuario.get("email"), (String) datosUsuario.get("telefono"), urlImg);
+        String adm = (String) datosUsuario.get("administrador");
+        boolean esAdm = false;
+        if (adm != null) {
+            esAdm = true;
+        }
+        user = new Usuario(0, (String) datosUsuario.get("nombre"), (String) datosUsuario.get("apellido"), Integer.parseInt((String) datosUsuario.get("dni")), esAdm, (String) datosUsuario.get("user"), (String) datosUsuario.get("pass"), (String) datosUsuario.get("email"), (String) datosUsuario.get("telefono"), urlImg);
         Usuario aux = ctrlLogin.validaUsuario(user);
         if (aux == null) {
             try {
@@ -100,13 +112,13 @@ public class ServletUsuario extends HttpServlet {
             }
         } else {
             user.setId(aux.getId());
-            ctrlUsuario.modificarusuario(user);
+            ctrlUsuario.modificarUsuario(user);
         }
         RequestDispatcher rd = request.getRequestDispatcher("/abmUsuario.jsp");
         rd.forward(request, response);
     }
 
-    private void modificaUsuario(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void listaUsuario(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         String idUsuario = request.getParameter("id");
         ArrayList<Usuario> list = null;
         boolean flag = false;

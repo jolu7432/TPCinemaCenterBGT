@@ -55,7 +55,14 @@ public class Cine {
         this.direccion = direccion;
         this.estado = estado;
     }
-
+    
+    public Cine(int idCine) {
+        this.idCine = idCine;
+        this.nombre = "";
+        this.direccion = "";
+        this.estado = false;
+    }
+    
     public Cine() {
     }
     
