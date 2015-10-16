@@ -10,9 +10,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Alta de Funciones</title>  
-        <script>
+        <title>Alta de Funciones</title> 
+        <link href="bootstrap/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css"/>
+
+        <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="bootstrap/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+        <script src="bootstrap/js/locales/bootstrap-datetimepicker.ar.js" type="text/javascript"></script>
+        <script>            
             $(document).ready(function () {
+                $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});   
                 $.post('ServletFuncion', {idFuncion: <%= request.getParameter("idFuncion")%>}, function (responseJson) {
                     if (<%= request.getParameter("idFuncion")%> != null) {
                         $.each(responseJson, function (index, item) {
@@ -20,13 +26,14 @@
                             $('#txtPrecio').val(item.precio);
                             $('#txtDuracion').val(item.duracion);
                             $('#txtCine').val(item.sala.cine.nombre);
-                            $('#txtSala').val(item.numSala);
-                            $('#txtPelicula').val(item.pelicula.nombre);                            
+                            $('#txtSala').val(item.sala.numSala);
+                            $('#txtPelicula').val(item.pelicula.nombre);
                         });
                     }
                 });
             });
-        </script>
+        </script>    
+
     </head>
     <body>   
         <jsp:include page="ServletValidaLoginRol" flush="true"/> 
@@ -34,9 +41,9 @@
             <form method="post" action="ServletFuncion" >           
                 <div class="col-md-8">
                     <center><h1>Alta de Funciones</h1></center>
-                    <div class="form-group col-md-2">
-                        <label for="txtFechaYHora">Fecha y Hora</label>
-                        <input type="text" class="form-control" id="txtFechaYHora" placeholder="FechaYHora" name="fechaYHora" required autofocus>
+                    <div class="form-group col-md-3">
+                        <label for="txtFechaYHora">Fecha y Hora</label>     
+                        <input size="20" type="text" readonly class="form_datetime form-control" id="txtFechaYHora" placeholder="Fecha Y Hora" name="fechaYHora" required>           
                     </div>
                     <div class="form-group col-md-2">
                         <label for="txtPrecio">Precio</label>
@@ -53,12 +60,12 @@
                         <label for="txtCine">Cine</label>
                         <input type="select" class="form-control" id="txtCine" placeholder="Cine" name="cine" required>
                     </div>                
-                   <div class="form-group">
+                    <div class="form-group">
                         <label for="txtSala">Sala</label>
                         <input type="select" class="form-control" id="txtSala" placeholder="Sala" name="sala" required>
                     </div>
                     <div class="form-group">
-                        <label for="txtPelicula">Sala</label>
+                        <label for="txtPelicula">Pelicula</label>
                         <input type="select" class="form-control" id="txtPelicula" placeholder="Pelicula" name="pelicula" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-lg">Guardar</button>

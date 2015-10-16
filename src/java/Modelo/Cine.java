@@ -50,7 +50,7 @@ public class Cine {
     }
 
     public Cine(int idCine, String nombre, String direccion, boolean estado) {
-        this.idCine = 0;
+        this.idCine = idCine;
         this.nombre = nombre;
         this.direccion = direccion;
         this.estado = estado;

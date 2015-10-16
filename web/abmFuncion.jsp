@@ -18,7 +18,7 @@
             <jsp:include page="menu.jsp"/>           
         </div> 
     <center><h1>ACA VA UN TITULO DESCRIPTIVO</h1></center>
-    <input type="button" id="altaFuncion" value="Subir Funcion"/><br>     
+    <input type="button" id="altaFuncion" value="Alta Funcion"/><br>     
     <div id="formAltaFuncion"></div>         
     <div id="listadoFunciones">
         <jsp:include page="listadoFunciones.jsp"/>
@@ -27,7 +27,7 @@
 <script>
     $('#altaFuncion').click(function () {
         if ($('#altaFuncion').val() == 'Cancelar') {
-            $('#altaFuncion').val('Subir Funcion');
+            $('#altaFuncion').val('Alta Funcion');
             $('#formAltaFuncion').text('');
         } else {
             $('#altaFuncion').val('Cancelar');
