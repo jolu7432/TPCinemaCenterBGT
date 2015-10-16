@@ -25,6 +25,10 @@ public class CtrlCine {
          datosCines.baja(cine);
     }
 
+    public void modificaCine(Cine cine) throws SQLException{
+         datosCines.modificar(cine);
+    }
+    
      public ArrayList listarCines() throws SQLException{
          return datosCines.listado();
      }

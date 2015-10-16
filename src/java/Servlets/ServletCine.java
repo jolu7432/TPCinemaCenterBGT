@@ -46,25 +46,34 @@ public class ServletCine extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-
         String idCine = request.getParameter("idCine");
         if(request.getParameter("nombre") != null)
         {
-            cine = new Cine(0, request.getParameter("nombre"), request.getParameter("direccion"), true );
-            Cine aux = ctrlCine.existe(cine.getIdCine());
-            if (aux == null) {
+            cine = new Cine(0, request.getParameter("nombre"), request.getParameter("direccion"), true );           
+            if(request.getParameter("idCine") == null)
+            {
                 try {
                     ctrlCine.altaCine(cine);
                 } catch (SQLException ex) {
-                    Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
-                cine.setIdCine(aux.getIdCine());
-               // ctrlCine.modificarCine(cine);
             }
+            else
+            {
+                cine.setIdCine(Integer.parseInt(idCine));
+                ctrlCine.modificaCine(cine);
+            }
+                RequestDispatcher rd = request.getRequestDispatcher("/abmCine.jsp");
+                rd.forward(request, response);
+            
+        }   
+        if(request.getParameter("borrar") != null)
+        {
+            ctrlCine.bajaCine(Integer.parseInt(request.getParameter("borrar")));
             RequestDispatcher rd = request.getRequestDispatcher("/abmCine.jsp");
             rd.forward(request, response);
         }
+        
         ArrayList<Cine> list = null;
         boolean flag = false;
         if (idCine == null) {
