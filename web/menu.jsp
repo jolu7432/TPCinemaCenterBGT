@@ -49,8 +49,11 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Herramientas Administrador<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="abmPelicula.jsp">ABM Peliculas</a></li>
                                     <li><a href="abmUsuario.jsp">ABM Usuarios</a></li>
+                                    <li><a href="abmFuncion.jsp">ABM Funcion</a></li>
+                                    <li role="separator" class="divider"></li>
                                     <li><a href="#">Something else here</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Separated link</a></li>

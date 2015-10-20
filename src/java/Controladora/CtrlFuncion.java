@@ -21,16 +21,17 @@ public class CtrlFuncion {
          datosFunciones.alta(peli);
      }
 
-    public void bajaFuncion(int fun) throws SQLException{
-         datosFunciones.baja(fun);
+    public void bajaFuncion(int idFuncion) throws SQLException{
+         datosFunciones.baja(idFuncion);
     }
 
      public ArrayList listarFunciones() throws SQLException{
          return datosFunciones.listado();
      }    
      
-     public Funcion existe(Funcion funcion) throws SQLException{         
-         return (Funcion)datosFunciones.existe(funcion);
+     public Funcion existe(int idFuncion) throws SQLException{ 
+         Funcion aux = new Funcion(idFuncion);
+         return (Funcion)datosFunciones.existe(aux);
      }
     
 }

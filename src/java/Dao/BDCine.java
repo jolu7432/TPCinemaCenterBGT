@@ -53,7 +53,7 @@ public class BDCine implements IBD{
     public void baja(Object dato) throws SQLException {
         Conexion oCon = new Conexion();      
         oCon.getConexion();
-        String consulta = "UPDATE Cines set Estado = false where idCines ="+((int)dato);      
+        String consulta = "UPDATE Cines set Estado = false where idCine ="+((int)dato);      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);         
             sentencia.execute();
@@ -67,7 +67,19 @@ public class BDCine implements IBD{
 
     @Override
     public void modificar(Object dato) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Conexion oCon = new Conexion();
+        oCon.getConexion();
+        Cine aux = (Cine) dato;
+        String update = "UPDATE cines SET  nombre = '" +aux.getNombre()+ "', direccion = '" +aux.getDireccion() + "', estado = '" + aux.isEstado();
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(update);
+            sentencia.execute();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+        }
     }
 
     @Override
@@ -76,7 +88,7 @@ public class BDCine implements IBD{
         Conexion oCon = new Conexion();
         ResultSet rs = null;       
         oCon.getConexion();
-        String consulta = "SELECT * FROM cines where idCines ="+((Cine)dato).getIdCine();      
+        String consulta = "SELECT * FROM cines where idCine ="+((Cine)dato).getIdCine();      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             rs = sentencia.executeQuery();            

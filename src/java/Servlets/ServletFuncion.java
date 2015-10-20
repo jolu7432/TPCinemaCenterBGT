@@ -44,27 +44,26 @@ public class ServletFuncion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        if(request.getParameter("guardar") != null)
+        {
+            Funcion fun = new Funcion();
+            ctrlFuncion.altaFuncion(fun);
+        }
        if(request.getParameter("borrar") != null)
         {
-            String idPeli= request.getParameter("borrar");
-            //ctrlFuncion.bajaPelicula(Integer.parseInt(idPeli));
+            ctrlFuncion.bajaFuncion(Integer.parseInt(request.getParameter("borrar")));
         }
         else {
-            String idPelicula = request.getParameter("idPelicula");
+            String idFuncion = request.getParameter("idFuncion");
             ArrayList<Funcion> list = null;
             boolean flag = false;
-            if (idPelicula == null) {
-                String url = request.getParameter("urlPage");
-                if(url != null ){
-                    //list = ctrlFuncion.listarPeliculas();
-                }else{
-                    //list = ctrlFuncion.listarPeliculasAdmin();
-                }                
+            if (idFuncion == null) {
+                list = ctrlFuncion.listarFunciones();
                 flag = true;
             } else {
-                if (!idPelicula.equals("0")) {
+                if (!idFuncion.equals("0")) {
                     list = new ArrayList<>();
-                   // list.add(ctrlFuncion.existe(Integer.parseInt(idPelicula)));
+                    list.add(ctrlFuncion.existe(Integer.parseInt(idFuncion)));
                     flag = true;
                 }
             }

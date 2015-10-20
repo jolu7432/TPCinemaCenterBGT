@@ -12,11 +12,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/css/jquery.dataTables.css">       
         <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>   
+        <link rel = "stylesheet" type = "text/css" href = "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/css/jquery.dataTables.css">
+        <script type = "text/javascript" charset = "UTF-8" src = "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js" ></script>   
         <script>
-            < link rel = "stylesheet" type = "text/css" href = "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/css/jquery.dataTables.css" >
-                    < script type = "text/javascript" charset = "UTF-8" src = "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js" ></script>   
-        <script>
-                    $(document).ready(function () {
+            $(document).ready(function () {
                 $.post('ServletRegistro', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
@@ -49,6 +48,25 @@
                         location.reload();
                     });
                 });
+                $('#example')
+                        .on('order.dt', function () {
+                            eventFired('Order');
+                        })
+                        .on('search.dt', function () {
+                            eventFired('Search');
+                        })
+                        .on('page.dt', function () {
+                            eventFired('Page');
+                        })
+                        .DataTable();
+                $('#example').finish(function () {
+                    $('#altaUsuario').val('Subir Usuario');
+                    $('#formAltaUsuario').text('');
+                    $('#altaUsuario').val('Cancelar');
+                    $('#formAltaUsuario').load('altaUsuario.jsp?id=' + this.id);
+                });
+
+
             <%--$('#altaUsuario').click(function () {
                 divAltaUsuario();
             });
