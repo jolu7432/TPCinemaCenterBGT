@@ -84,8 +84,6 @@ public class ServletPelicula extends HttpServlet {
         {
             String idPeli= request.getParameter("borrar");
             ctrlPelicula.bajaPelicula(Integer.parseInt(idPeli));
-            RequestDispatcher aux = request.getRequestDispatcher("/abmPelicula.jsp");
-            aux.include(request, response);
         }
         else {
             String idPelicula = request.getParameter("idPelicula");

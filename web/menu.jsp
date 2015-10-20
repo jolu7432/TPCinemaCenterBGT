@@ -16,40 +16,22 @@
         <script src="bootstrap/js/bootstrap.min.js"></script>       
     </head>
     <body>       
-        <!-- <!% String aux = usuarioLog.getUser();
-             if (aux.equals("jolu7432")) {%>
-         <div class="dropdown">
-             <h1>Jorge</h1> 
-             <button type="button">Menú desplegable</button>
- 
-         </div> 
-         <!% } else {%>
-         <div class="dropdown">
-             <h1>Hernan</h1> 
-             <button type="button">Menú desplegable</button>
- 
-         </div> 
-         <!% }%>
-        -->
-        <nav class="navbar-default navbar-fixed-top"> 
-            <div class="container-fluid">            
-                <div class="navbar-right">
-                    <form class="navbar-form" action="ServletLogin" method="post">
-                        <% if (usuarioLog.getId() == 0) {%>                  
-                        <label for="inputUsuario" >Usuario:</label>
-                        <input type="text" id="inputUsuario" name="user"  class="form-control" placeholder="Ingrese usuario" required autofocus>
-                        <label for="inputPassword" >Contraseña: </label>
-                        <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
-                        <button class="navbar-btn btn-primary " type="submit" name="ingresar" >Ingresar</button> 
-                        <button class="navbar-btn btn-primary " type="button" name="registrar" onclick="location.href = 'registro.jsp'">Registrar</button>                     
-                        <input type="hidden" name="accion" value="logIn"/>               
-                        <% }%>
-                    </form>
-                </div>  
-            </div>
+        <nav class="navbar-default navbar-fixed-top">     
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-right">
+                        <form class="navbar-form" action="ServletLogin" method="post">
+                            <% if (usuarioLog.getId() == 0) {%>                  
+                            <label for="inputUsuario" >Usuario:</label>
+                            <input type="text" id="inputUsuario" name="user"  class="form-control" placeholder="Ingrese usuario" required autofocus>
+                            <label for="inputPassword" >Contraseña: </label>
+                            <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                            <button class="navbar-btn btn-primary " type="submit" name="ingresar" >Ingresar</button> 
+                            <button class="navbar-btn btn-primary " type="button" name="registrar" onclick="location.href = 'registro.jsp'">Registrar</button>                     
+                            <input type="hidden" name="accion" value="logIn"/>               
+                            <% }%>
+                        </form>
+                    </div>  
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
@@ -59,27 +41,25 @@
                         </button>
                         <a class="navbar-brand" href="principal.jsp"><h2 style="margin-top: 0px;" class="navbar-header">CinemaCenter</h2></a>
                     </div>
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-left ">
                             <li class="btn-menu"><a href="principal.jsp">Peliculas<span class="sr-only">(current)</span></a></li>
-                            <% if (usuarioLog.getId() != 0) {%>
+                                <% if (usuarioLog.getId() != 0) {%>
                                 <%if (usuarioLog.isAdministrador()) {%>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Herramientas Administrador<span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="abmPelicula.jsp">ABM Peliculas</a></li>
-                                        <li><a href="abmUsuario.jsp">ABM Usuarios</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">One more separated link</a></li>
-                                    </ul>
-                                </li>
-                                <%}
-                            }%>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Herramientas Administrador<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="abmPelicula.jsp">ABM Peliculas</a></li>
+                                    <li><a href="abmUsuario.jsp">ABM Usuarios</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">One more separated link</a></li>
+                                </ul>
+                            </li>
+                            <%}
+                                    }%>
                             <form class="navbar-form navbar-left" role="search">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Search">
@@ -87,11 +67,11 @@
                                 <button type="submit" class="btn-success">Submit</button>
                             </form>
                         </ul>
- 
+
                         <ul class="nav navbar-nav navbar-right">
                             <% if (usuarioLog.getId() != 0) {%>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src=<%= "img/imgUsuarios/" + usuarioLog.getUrlImg()%>  style="height: 50px; width: 30px"><%= " " +usuarioLog.getUser()%><span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src=<%= "img/imgUsuarios/" + usuarioLog.getUrlImg()%>  style="height: 50px; width: 30px"><%= " " + usuarioLog.getUser()%><span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Action</a></li>
                                     <li><a href="#">Another action</a></li>
@@ -109,8 +89,5 @@
                 </div><!-- /.container-fluid -->
             </nav>
         </nav>     
-
-
-
     </body>
 </html>

@@ -66,14 +66,11 @@ public class ServletUsuario extends HttpServlet {
         } else if (request.getParameter("borrar") != null) {
             String iduser = request.getParameter("borrar");
             ctrlUsuario.bajaUsuario(Integer.parseInt(iduser));
-            RequestDispatcher aux = request.getRequestDispatcher("/abmUsuario.jsp");
-            aux.forward(request, response);
+            response.setIntHeader("Refresh", 0);
         } else {
-                listaUsuario(request, response);
-            }
+            listaUsuario(request, response);
         }
-
-    
+    }
 
     private void cargaUsuario(HttpServletRequest request, HttpServletResponse response) throws FileUploadException, Exception {
         FileItemFactory file_factory = new DiskFileItemFactory();
@@ -101,6 +98,9 @@ public class ServletUsuario extends HttpServlet {
         boolean esAdm = false;
         if (adm != null) {
             esAdm = true;
+        }
+        if (urlImg.equals("")) {
+            urlImg = (String) datosUsuario.get("imgdefecto");
         }
         user = new Usuario(0, (String) datosUsuario.get("nombre"), (String) datosUsuario.get("apellido"), Integer.parseInt((String) datosUsuario.get("dni")), esAdm, (String) datosUsuario.get("user"), (String) datosUsuario.get("pass"), (String) datosUsuario.get("email"), (String) datosUsuario.get("telefono"), urlImg);
         Usuario aux = ctrlLogin.validaUsuario(user);

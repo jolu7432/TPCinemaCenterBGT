@@ -20,6 +20,7 @@
                 $.post('ServletRegistro', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
+                        var actualizar = "abmUsuario.jsp";
                         $('<td>').text(item.nombre).appendTo(tr);
                         $('<td>').text(item.apellido).appendTo(tr);
                         $('<td>').text(item.dni).appendTo(tr);
@@ -45,6 +46,7 @@
                     $('.borrar').click(function () {
                         //alert('prueba de boton borrar');
                         $.post('ServletUsuario', {borrar: +this.id});
+                        location.reload();
                     });
                 });
             <%--$('#altaUsuario').click(function () {
