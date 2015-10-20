@@ -35,34 +35,22 @@
                         $('<button id="' + item.id + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
                     });
                     $('#example').dataTable();
-                    $('.editar').click(function () {
-                        $('#altaUsuario').val('Subir Usuario');
-                        $('#formAltaUsuario').text('');
-                        $('#altaUsuario').val('Cancelar');
-                        $('#formAltaUsuario').load('altaUsuario.jsp?id=' + this.id);
-                    });
-                    $('.borrar').click(function () {
-                        //alert('prueba de boton borrar');
-                        $.post('ServletUsuario', {borrar: +this.id});
-                    });
                 });
-                $('#example')
-                        .on('order.dt', function () {
-                            eventFired('Order');
-                        })
-                        .on('search.dt', function () {
-                            eventFired('Search');
-                        })
-                        .on('page.dt', function () {
-                            eventFired('Page');
-                        })
-                        .DataTable();
-                $('#example').finish(function () {
+                $('#example').on('click', '.editar', function () {
                     $('#altaUsuario').val('Subir Usuario');
                     $('#formAltaUsuario').text('');
                     $('#altaUsuario').val('Cancelar');
                     $('#formAltaUsuario').load('altaUsuario.jsp?id=' + this.id);
                 });
+                $('#example').on('click', '.borrar', function () {                 
+                    $.post('ServletUsuario', {borrar: +this.id});
+                    $('#example').dataTable();
+                });
+
+                //$('#example').on('page', function () {
+                 // alert('paginacion');
+               //});
+
 
 
             <%--$('#altaUsuario').click(function () {
