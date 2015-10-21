@@ -11,21 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alta de Peliculas</title>  
-        <script>
-            $(document).ready(function () {
-                $.post('ServletPelicula', {idPelicula: <%= request.getParameter("idPelicula")%>}, function (responseJson) {
-                    if (<%= request.getParameter("idPelicula")%> != null) {
-                        $.each(responseJson, function (index, item) {
-                            $('#txtNombre').val(item.nombre);
-                            $('#txtDirector').val(item.director);
-                            $('#txtDuracion').val(item.duracion);
-                            $('#txtDescripcion').val(item.descripcion);
-                        });
-                    }
-                });
-
-            });
-        </script>
+        
     </head>
     <body>   
         <jsp:include page="ServletValidaLoginRol" flush="true"/> 
@@ -45,22 +31,39 @@
                         <label for="txtDuracion">Duracion</label>
                         <input type="text" class="form-control" id="txtDuracion" placeholder="Duracion" name="duracion" required>
                     </div>
-                </div>
-                <br>
-                <div class="col-md-10">
-                    <div class="form-group">
-                        <label for="txtDescripcion">Descripcion</label>
-                        <textarea class="form-control" id="txtDescripcion" placeholder="Descripcion..." name="descripcion" col="25" row="30" required></textarea>
-                    </div>                
-                    <div class="form-group">
-                        <label for="UrlImagen"></label>
-                        <input type="file" id="UrlImagen" name="urlImagen">
-                        <p class="help-block">Cargue una imagen</p>
+                    <div class="form-group col-md-2">
+                        <label for="chkEstado">Disponible</label>
+                        <input type="checkbox" class="form-control" id="chkEstado" name="estado">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
-                </div> 
+                    <br>
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label for="txtDescripcion">Descripcion</label>
+                            <textarea class="form-control" id="txtDescripcion" placeholder="Descripcion..." name="descripcion" col="25" row="30" required></textarea>
+                        </div>                
+                        <div class="form-group">
+                            <label for="UrlImagen"></label>
+                            <input type="file" id="UrlImagen" name="urlImagen">
+                            <p class="help-block">Cargue una imagen</p>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+                    </div> 
             </form>
         </div>
-
     </body>
+    <script>
+            $(document).ready(function () {
+                $.post('ServletPelicula', {idPelicula: <%= request.getParameter("idPelicula")%>}, function (responseJson) {
+                    if (<%= request.getParameter("idPelicula")%> != null) {
+                        $.each(responseJson, function (index, item) {
+                            $('#txtNombre').val(item.nombre);
+                            $('#txtDirector').val(item.director);
+                            $('#txtDuracion').val(item.duracion);
+                            $('#chkEstado  input[type=checkbox]').prop('checked', item.estado);
+                            $('#txtDescripcion').val(item.descripcion);
+                        });
+                    }
+                });
+            });
+        </script>
 </html>
