@@ -71,7 +71,7 @@
 
     </head>
     <body> 
-        <jsp:include page="ServletValidaLoginRol" flush="true"/> 
+        <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> 
         <div class="table-responsive">
             <table id="example" class="dataTable" cellspacing="0" width="100%">
                 <thead>

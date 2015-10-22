@@ -47,6 +47,10 @@
                     $.post('ServletUsuario', {borrar: +this.id});                  
                     location.reload();
                 });
+                //al hacer paginacion en la tabla
+                //$('#example').on('page', function () {
+                 // alert('paginacion');
+               //});         
             });
         </script>
         <style>

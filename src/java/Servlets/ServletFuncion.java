@@ -61,7 +61,7 @@ public class ServletFuncion extends HttpServlet {
                 list = ctrlFuncion.listarFunciones();
                 flag = true;
             } else {
-                if (!idFuncion.equals("0")) {
+                if (!idFuncion.equals("")) {
                     list = new ArrayList<>();
                     list.add(ctrlFuncion.existe(Integer.parseInt(idFuncion)));
                     flag = true;

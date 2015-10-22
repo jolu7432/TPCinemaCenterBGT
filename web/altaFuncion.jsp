@@ -38,14 +38,43 @@
                         });
                     }
                 });
-                $('#')
+                $.post('ServletCargaComboBox', {Accion: "Cines"}, function (responseJson) {
+                    $.each(responseJson, function (index, item) {
+                        $('<option value="' + item.idCine + '">').text(item.nombre).appendTo($('#chkCine'));
+                    });
+                });
+                $('#chkCine').change(function () {
+                    $('#chkSala').val('');
+                    $.post('ServletCargaComboBox', {Accion: "Salas", idCine: $('#chkCine').val()}, function (responseJson) {
+                        if ($('#chkCine').val() != "") {
+                            $.each(responseJson, function (index, item) {
+                                $('<option value="' + item.idSala + '">').text(item.numSala).appendTo($('#chkSala'));
+                            });
+                        } else {
+                            $('#chkSala').find('option:gt(0)').remove();
+                            $('#chkPelicula').find('option:gt(0)').remove();
+                        }
+                    });
+                });
+                $('#chkSala').change(function () {
+                    $('#chkPelicula').val('');
+                    $.post('ServletCargaComboBox', {Accion: "Peliculas", idSala: $('#chkSala').val()}, function (responseJson) {
+                        if ($('#chkSala').val() != "") {
+                            $.each(responseJson, function (index, item) {
+                                $('<option value="' + item.idPelicula + '">').text(item.nombre).appendTo($('#chkPelicula'));
+                            });
+                        } else {
+                            $('#chkPelicula').find('option:gt(0)').remove();
+                        }
+                    });
+                });
             });
         </script>
     </head>
     <body>   
-        <jsp:include page="ServletValidaLoginRol" flush="true"/> 
-        <div id="rcorners" class="container">           
-            <form method="post" action="ServletFuncion" >           
+        <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> 
+        <form method="post" action="ServletFuncion" >   
+            <div id="rcorners" class="container">   
                 <div class="col-md-8">
                     <center><h1>Alta de Funciones</h1></center>
                     <div class="form-group col-md-3">
@@ -72,20 +101,19 @@
                     <div class="form-group">
                         <label for="txtSala">Sala</label>                       
                         <select class="form-control" id="chkSala" placeholder="Sala" name="sala" required>
-                            <option value="">Seleccionar...</option>   
+                            <option value="">Seleccionar...</option> 
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="txtPelicula">Pelicula</label>
-                        <select class="form-control" id="chkPelicula" placeholder="Pelicula" name="pelicula" required>
-                            <option value="">Seleccionar...</option>                            
+                        <select class="form-control" id="chkPelicula" placeholder="Pelicula" name="pelicula" required> 
+                            <option value="">Seleccionar...</option> 
                         </select>
                     </div>
                     <input type="hidden" name="guardar" value="guardar">
                     <button type="submit" class="btn btn-primary btn-lg">Guardar</button>                 
                 </div> 
-            </form>
-        </div>
-
+            </div>
+        </form>
     </body>
 </html>

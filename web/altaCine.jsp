@@ -18,6 +18,8 @@
                     $.each(responseJson, function (index, item) {
                         $('#txtNombre').val(item.nombre);
                         $('#txtDireccion').val(item.direccion);
+                        $('#idC').val(<%= request.getParameter("idCine") %>);
+                        
                     });
                 }
             });
@@ -39,7 +41,7 @@
                         <label for="txtDireccion">Direccion</label>
                         <input type="text" class="form-control" id="txtDireccion" placeholder="Dirección" name="direccion" required>
                     </div>
-                    
+                    <input type="hidden" name="idC" id="idC" >
                     <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
                 </div> 
             </form>

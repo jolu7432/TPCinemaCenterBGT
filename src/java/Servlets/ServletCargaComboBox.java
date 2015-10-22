@@ -5,8 +5,17 @@
  */
 package Servlets;
 
+import Controladora.CtrlCine;
+import Controladora.CtrlPelicula;
+import Controladora.CtrlSala;
+import Modelo.Cine;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +29,16 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ServletCargaComboBox", urlPatterns = {"/ServletCargaComboBox"})
 public class ServletCargaComboBox extends HttpServlet {
 
+    CtrlCine ctrlCine;
+    CtrlPelicula ctrlPelicula;
+    CtrlSala ctrlSala;
+
+    public ServletCargaComboBox() {
+        this.ctrlCine = new CtrlCine();
+        this.ctrlPelicula = new CtrlPelicula();
+        this.ctrlSala = new CtrlSala();
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,23 +49,37 @@ public class ServletCargaComboBox extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletCargaComboBox</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletCargaComboBox at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            throws ServletException, IOException, SQLException {
+        String accion = request.getParameter("Accion");
+        String dato;
+        ArrayList<Object> list = null;
+        switch (accion) {
+            case "Cines":
+                list = ctrlCine.listarCines();
+                break;
+            case "Salas":
+                dato = request.getParameter("idCine");
+                if (!dato.equals("")) {
+                    list = ctrlSala.listarSalasXCine(Integer.parseInt(dato));
+                }
+                break;
+            case "Peliculas":
+                dato = request.getParameter("idSala");
+                if (!dato.equals("")) {
+                    list = ctrlPelicula.listarPeliculasXSala(Integer.parseInt(dato));
+                }
+                break;
+            default:
+                break;
+
         }
+        String json = new Gson().toJson(list);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -58,7 +91,11 @@ public class ServletCargaComboBox extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletCargaComboBox.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -72,7 +109,11 @@ public class ServletCargaComboBox extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletCargaComboBox.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
