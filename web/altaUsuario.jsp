@@ -15,7 +15,7 @@
         <form method="post" action="ServletUsuario" enctype="multipart/form-data" class="form-signup">
             <center><h1>Registro de usuario</h1></center>
             <div id="rcorners" class="container">
-                <div class="form-group">
+                <div class="form-group ">
                     <label for="txtNombre">Nombre</label>
                     <input type="text" class="form-control" id="txtNombre" placeholder="Nombre" name="nombre" required autofocus>
                 </div>
@@ -52,27 +52,29 @@
                     <p class="help-block">Cargue una imagen</p>
                     <input type="hidden" id="ImgDefecto" name="imgdefecto" value="default-user.png">
                 </div>
+	<div id="moddiv"></div>
                 <button type="submit" class="btn btn-primary btn-lg">Cargar</button>
             </div>
         </form>
     </body>
     <script>
-        $(document).ready(function () {
-            $.post('ServletUsuario', {id: <%= request.getParameter("id")%>}, function (responseJson) {
-                if (<%= request.getParameter("id")%> != null) {
-                    $.each(responseJson, function (index, item) {
-                        $('#txtNombre').val(item.nombre);
-                        $('#txtApellido').val(item.apellido);
-                        $('#txtDNI').val(item.dni);
-                        $('#chkAdm  input[type=checkbox]').prop('checked', item.administrador);
-                        $('#txtUsuario').val(item.user);
-                        $('#txtPass').val(item.pass);
-                        $('#txtEmail').val(item.email);
-                        $('#txtTel').val(item.telefono);
-                        $('#UrlImagen').val(item.urlImg);
-                    });
-                }
-            });
-        });
+	$(document).ready(function () {
+	    $.post('ServletUsuario', {id: <%= request.getParameter("id")%>}, function (responseJson) {
+		if (<%= request.getParameter("id")%> != null) {
+		    $.each(responseJson, function (index, item) {
+			$('#txtNombre').val(item.nombre);
+			$('#txtApellido').val(item.apellido);
+			$('#txtDNI').val(item.dni);
+			$('#chkAdm  input[type=checkbox]').prop('checked', item.administrador);
+			$('#txtUsuario').val(item.user);
+			$('#txtPass').val(item.pass);
+			$('#txtEmail').val(item.email);
+			$('#txtTel').val(item.telefono);
+			$('<input type="hidden" id="modifica" name="Modifica" value="<%= request.getParameter("id")%>">').appendTo($('#moddiv'));
+			$('#ImgDefecto').val(item.urlImg);
+		    });
+		}
+	    });
+	});
     </script>
 </html>

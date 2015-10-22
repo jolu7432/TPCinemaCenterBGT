@@ -86,7 +86,7 @@ public class ServletUsuario extends HttpServlet {
 		    String dir = getServletContext().getRealPath("/");
 		    String dir2 = dir.replaceAll("web", "img");
 		    String dir3 = dir2.replaceAll("build", "web");
-		    dir3.concat("imgUsuarios/");
+		    dir3 =dir3.concat("imgUsuarios/");
 		    File fileFoto = new File(dir3, item.getName());
 		    item.write(fileFoto);
 		}
@@ -95,6 +95,7 @@ public class ServletUsuario extends HttpServlet {
 	    }
 	}
 	String adm = (String) datosUsuario.get("administrador");
+	String mod = (String) datosUsuario.get("Modifica");
 	boolean esAdm = false;
 	if (adm != null) {
 	    esAdm = true;
@@ -103,23 +104,25 @@ public class ServletUsuario extends HttpServlet {
 	    urlImg = (String) datosUsuario.get("imgdefecto");
 	}
 	user = new Usuario(0, (String) datosUsuario.get("nombre"), (String) datosUsuario.get("apellido"), Integer.parseInt((String) datosUsuario.get("dni")), esAdm, (String) datosUsuario.get("user"), (String) datosUsuario.get("pass"), (String) datosUsuario.get("email"), (String) datosUsuario.get("telefono"), urlImg);
-	RequestDispatcher rd = getServletContext().getRequestDispatcher("/ServletValidaUser?user=" + user.getUser() + "&email=" + user.getEmail());
-	rd.include(request, response);
-	valida = request.getSession(true);
-	if (valida.getAttribute("usuarioValid") == null) {
-	    try {
-		ctrlUsuario.registraUsuario(user);
-	    } catch (SQLException ex) {
-		Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
+	if (mod == null) {
+	    RequestDispatcher rd = getServletContext().getRequestDispatcher("/ServletValidaUser?user=" + user.getUser() + "&email=" + user.getEmail());
+	    rd.include(request, response);
+	    valida = request.getSession(true);
+	    if (valida.getAttribute("usuarioValid") == null) {
+		try {
+		    ctrlUsuario.registraUsuario(user);
+		} catch (SQLException ex) {
+		    Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	    }
 	} else {
-	    Usuario aux = (Usuario) valida.getAttribute("usuarioValid");
-	    user.setId(aux.getId());
+	    user.setId(Integer.parseInt(mod));
 	    ctrlUsuario.modificarUsuario(user);
 	}
-	RequestDispatcher rdfw = request.getRequestDispatcher("/abmUsuario.jsp");
-	rdfw.forward(request, response);
-	valida.invalidate();
+	//valida.invalidate();
+	Thread.sleep(2000);
+	RequestDispatcher volver = request.getRequestDispatcher("/abmUsuario.jsp");
+	volver.forward(request, response);
     }
 
     private void listaUsuario(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
