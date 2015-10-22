@@ -12,7 +12,6 @@ import Modelo.Sala;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -96,7 +95,8 @@ public class BDFunciones implements IBD {
                 peli = new Pelicula(rs.getInt("idPelicula"), rs.getString("NombrePeli"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("EstadoPeli"), rs.getString("UrlImagen"));
                 cine = new Cine(rs.getInt("idCine"), rs.getString("NombreCine"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
                 sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
-                resp = new Funcion(rs.getInt("idFuncion"), rs.getDate("FechaYHora"), rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli);
+                Date newDate = rs.getTimestamp("FechaYHora"); 
+                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli);
             }
             rs.close();
             sentencia.close();
@@ -126,17 +126,8 @@ public class BDFunciones implements IBD {
             while (rs.next()) {
                 peli = new Pelicula(rs.getInt("idPelicula"), rs.getString("NombrePeli"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("EstadoPeli"), rs.getString("UrlImagen"));
                 cine = new Cine(rs.getInt("idCine"), rs.getString("NombreCine"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
-                sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
-                //String f = rs. ("FechaYHora");
-                java.util.Date newDate = rs.getTimestamp("FechaYHora");
-                //SimpleDateFormat da = new SimpleDateFormat();
-                //Date d = da.parse();
-                //ZonedDateTime  date = ZonedDateTime.parse(f);
-                //long h = date.getTime();
-                //int m = date.getMinutes();
-                       
-               
-                
+                sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));              
+                Date newDate = rs.getTimestamp("FechaYHora");               
                 resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli);
                 listaFunciones.add(resp);
             }

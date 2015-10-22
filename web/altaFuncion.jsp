@@ -38,12 +38,9 @@
                         });
                     }
                 });
-                $('#prueba').click(function(){
-                    console.log( $('#txtFechaYHora').val());
-                });
+                $('#')
             });
-        </script>    
-
+        </script>
     </head>
     <body>   
         <jsp:include page="ServletValidaLoginRol" flush="true"/> 
@@ -67,24 +64,25 @@
                 <br>
                 <div class="col-md-10">
                     <div class="form-group">
-                        <label for="txtCine">Cine</label>
-                        <input type="select" class="form-control" id="txtCine" placeholder="Cine" name="cine" required>
+                        <label for="txtCine">Cine</label>                      
+                        <select class="form-control" id="chkCine" placeholder="Cine" name="cine" required>
+                            <option value="">Seleccionar...</option> 
+                        </select>
                     </div>                
                     <div class="form-group">
-                        <label for="txtSala">Sala</label>
-                        <input type="select" class="form-control" id="txtSala" placeholder="Sala" name="sala" required>
+                        <label for="txtSala">Sala</label>                       
+                        <select class="form-control" id="chkSala" placeholder="Sala" name="sala" required>
+                            <option value="">Seleccionar...</option>   
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="txtPelicula">Pelicula</label>
-                        <select class="form-control" id="txtPelicula" placeholder="Pelicula" name="pelicula" required>
-                            <option value="">Seleccionar...</option>      
-                            <option value="Peli">Peli</option>      
-                            <option value="Dos">Dos</option>
+                        <select class="form-control" id="chkPelicula" placeholder="Pelicula" name="pelicula" required>
+                            <option value="">Seleccionar...</option>                            
                         </select>
                     </div>
                     <input type="hidden" name="guardar" value="guardar">
-                    <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
-                    <input type="button" id="prueba">
+                    <button type="submit" class="btn btn-primary btn-lg">Guardar</button>                 
                 </div> 
             </form>
         </div>

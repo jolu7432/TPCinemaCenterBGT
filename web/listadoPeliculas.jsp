@@ -13,7 +13,7 @@
         <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/css/jquery.dataTables.css">       
         <script type="text/javascript" charset="UTF-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>        
         <script>
-            $(document).ready(function () {               
+            $(document).ready(function () {
                 $.post('ServletPelicula', function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
@@ -29,19 +29,22 @@
                         $('<button id="' + item.idPelicula + '" title="Editar" class="btn14 mr5 editar"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
                         $('<button id="' + item.idPelicula + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
                     });
-                    $('#example').dataTable();
-                    $('.editar').click(function () {
-                        $('#altaPelicula').val('Subir Pelicula');
-                        $('#formAltaPelicula').text('');
-                        $('#altaPelicula').val('Cancelar');
-                        $('#formAltaPelicula').load('altaPelicula.jsp?idPelicula=' + this.id);
-                    });
-                    $('.borrar').click(function () {
-                        //alert('prueba de boton borrar');
-                        $.post('ServletPelicula', {borrar: +this.id});
-                        location.reload();
-                    });
+                    $('#example').dataTable();                  
                 });
+                $('#example').on('click', '.editar', function () {
+                    $('#altaPelicula').val('Subir Pelicula');
+                    $('#formAltaPelicula').text('');
+                    $('#altaPelicula').val('Cancelar');
+                    $('#formAltaPelicula').load('altaPelicula.jsp?idPelicula=' + this.id);
+                });
+                $('#example').on('click', '.borrar', function () {
+                    $.post('ServletPelicula', {borrar: +this.id});
+                    location.reload();
+                });
+                //al hacer paginacion en la tabla
+                //$('#example').on('page', function () {
+                // alert('paginacion');
+                //});
             });
         </script>
         <style>

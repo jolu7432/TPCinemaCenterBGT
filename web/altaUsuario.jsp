@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alta de Usuarios</title>      
     </head>
-    <body>  
+    <body>      
         <form method="post" action="ServletUsuario" enctype="multipart/form-data" class="form-signup">
             <center><h1>Registro de usuario</h1></center>
             <div id="rcorners" class="container">
