@@ -70,7 +70,7 @@ public class BDCine implements IBD{
         Conexion oCon = new Conexion();
         oCon.getConexion();
         Cine aux = (Cine) dato;
-        String update = "UPDATE cines SET  nombre = '" +aux.getNombre()+ "', direccion = '" +aux.getDireccion() + "', estado = '" + aux.isEstado();
+        String update = "UPDATE cines SET  nombre = '" +aux.getNombre()+ "', direccion = '" +aux.getDireccion() + "', estado = " + aux.isEstado() + " WHERE idCine = " + aux.getIdCine();
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(update);
             sentencia.execute();

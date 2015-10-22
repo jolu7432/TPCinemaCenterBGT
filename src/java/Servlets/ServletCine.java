@@ -46,11 +46,12 @@ public class ServletCine extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        String idCineEditar = request.getParameter("idC");
         String idCine = request.getParameter("idCine");
         if(request.getParameter("nombre") != null)
         {
             cine = new Cine(0, request.getParameter("nombre"), request.getParameter("direccion"), true );           
-            if(request.getParameter("idCine") == null)
+            if(idCineEditar.equals(""))
             {
                 try {
                     ctrlCine.altaCine(cine);
@@ -60,7 +61,7 @@ public class ServletCine extends HttpServlet {
             }
             else
             {
-                cine.setIdCine(Integer.parseInt(idCine));
+                cine.setIdCine(Integer.parseInt(idCineEditar));
                 ctrlCine.modificaCine(cine);
             }
                 RequestDispatcher rd = request.getRequestDispatcher("/abmCine.jsp");
