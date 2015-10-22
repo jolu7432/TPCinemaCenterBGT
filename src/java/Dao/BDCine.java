@@ -25,7 +25,7 @@ public class BDCine implements IBD{
         return instance;
     }
 
-    public BDCine() {
+    private BDCine() {
     }
     
 

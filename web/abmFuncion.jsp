@@ -13,7 +13,7 @@
         <title>ABM Funcion</title>       
     </head>
     <body> 
-        <jsp:include page="ServletValidaLoginRol" flush="true"/> 
+        <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/>  
         <div id="menu">  
             <jsp:include page="menu.jsp"/>           
         </div> 

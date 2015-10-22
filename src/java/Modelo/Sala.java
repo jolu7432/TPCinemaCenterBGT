@@ -10,6 +10,7 @@ package Modelo;
  * @author Jorge
  */
 public class Sala {
+
     private int idSala;
     private int numSala;
     private Cine cine;
@@ -56,7 +57,7 @@ public class Sala {
     public void setFila(int fila) {
         this.fila = fila;
     }
-    
+
     public boolean isEstado() {
         return Estado;
     }
@@ -72,6 +73,10 @@ public class Sala {
         this.columna = columna;
         this.fila = fila;
         this.Estado = Estado;
-    }  
-    
+    }
+
+    public Sala(int idSala) {
+        this.idSala = idSala;
+    }
+
 }
