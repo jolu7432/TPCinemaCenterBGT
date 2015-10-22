@@ -17,24 +17,28 @@ import java.util.ArrayList;
 public class CtrlUsuario {
 
     private BDUsuarios datosUsuarios = BDUsuarios.getInstance();
-    
+
     public void registraUsuario(Usuario user) throws SQLException {
-        datosUsuarios.alta(user);
+	datosUsuarios.alta(user);
     }
 
     public void modificarUsuario(Usuario user) throws SQLException {
-        datosUsuarios.modificar(user);
+	datosUsuarios.modificar(user);
     }
-    
-    public void bajaUsuario(int id) throws SQLException{
-        datosUsuarios.baja(datosUsuarios.traePorId(id));
+
+    public void bajaUsuario(int id) throws SQLException {
+	datosUsuarios.baja(datosUsuarios.traePorId(id));
     }
-    
+
     public ArrayList listarUsuarios() throws SQLException {
-        return datosUsuarios.listado();
+	return datosUsuarios.listado();
     }
-    
+
     public Usuario traePorId(int id) throws SQLException {
-        return datosUsuarios.traePorId(id);
+	return datosUsuarios.traePorId(id);
+    }
+
+    public Usuario validaSIExiste(String user, String email) throws SQLException {
+	return datosUsuarios.validaUser(user, email);
     }
 }
