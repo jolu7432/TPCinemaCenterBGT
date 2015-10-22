@@ -44,29 +44,14 @@
                     $('#formAltaUsuario').load('altaUsuario.jsp?id=' + this.id);
                 });
                 $('#example').on('click', '.borrar', function () {                 
-                    $.post('ServletUsuario', {borrar: +this.id});
-                    $('#example').dataTable();
+                    $.post('ServletUsuario', {borrar: +this.id});                  
+                    location.reload();
                 });
-
+                //al hacer paginacion en la tabla
                 //$('#example').on('page', function () {
                  // alert('paginacion');
                //});
-
-
-
-            <%--$('#altaUsuario').click(function () {
-                divAltaUsuario();
-            });
-
-                function divAltaUsuario() {
-                    if ($('#altaUsuario').val() == 'Cancelar') {
-                        $('#altaUsuario').val('Subir Usuario');
-                        $('#formAltaUsuario').text('');
-                    } else {
-                        $('#altaUsuario').val('Cancelar');
-                        $('#formAltaUsuario').load('registro.jsp');
-                    }
-                };--%>
+            <
             });
         </script>
         <style>

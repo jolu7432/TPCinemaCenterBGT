@@ -24,19 +24,22 @@
                         $('<button id="' + item.idCine + '" title="Editar" class="btn14 mr5 editar"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
                         $('<button id="' + item.idCine + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
                     });
-                    $('#example').dataTable();
-                    $('.editar').click(function () {
-                        $('#altaCine').val('Alta Cine');
-                        $('#formAltaCine').text('');
-                        $('#altaCine').val('Cancelar');
-                        $('#formAltaCine').load('altaCine.jsp?idCine=' + this.id);
-                    });
-                    $('.borrar').click(function () {
-                        //alert('prueba de boton borrar');
-                        $.post('ServletCine', {borrar: +this.id});
-                        location.reload();
-                    });
+                    $('#example').dataTable();                
                 });
+                $('#example').on('click', '.editar', function () {
+                    $('#altaCine').val('Alta Cine');
+                    $('#formAltaCine').text('');
+                    $('#altaCine').val('Cancelar');
+                    $('#formAltaCine').load('altaCine.jsp?idCine=' + this.id);
+                });
+                $('#example').on('click', '.borrar', function () {
+                    $.post('ServletCine', {borrar: +this.id});
+                    location.reload();
+                });
+                //al hacer paginacion en la tabla
+                //$('#example').on('page', function () {
+                // alert('paginacion');
+                //});
             });
         </script>
         <style>

@@ -17,7 +17,6 @@
                 $.post('ServletFuncion', function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
-
                         var formattedDate = new Date(item.fechaYHora);
                         var y = formattedDate.getFullYear();
                         var m = formattedDate.getMonth();
@@ -42,22 +41,21 @@
                         $('<button id="' + item.idFuncion + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
                     });
                     $('#example').dataTable();
-                    $('.editar').click(function () {
-                        $('#altaPelicula').val('Subir Pelicula');
-                        $('#formAltaPelicula').text('');
-                        $('#altaPelicula').val('Cancelar');
-                        $('#formAltaPelicula').load('altaPelicula.jsp?idPelicula=' + this.id);
-                        $('#altaFuncion').val('Alta Funcion');
-                        $('#formAltaFuncion').text('');
-                        $('#altaFuncion').val('Cancelar');
-                        $('#formAltaFuncion').load('altaFuncion.jsp?idFuncion=' + this.id);
-                    });
-                    $('.borrar').click(function () {
-                        //alert('prueba de boton borrar');
-                        $.post('ServletFuncion', {borrar: +this.id});
-                        location.reload();
-                    });
                 });
+                $('#example').on('click', '.editar', function () {
+                    $('#altaFuncion').val('Alta Funcion');
+                    $('#formAltaFuncion').text('');
+                    $('#altaFuncion').val('Cancelar');
+                    $('#formAltaFuncion').load('altaFuncion.jsp?idFuncion=' + this.id);
+                });
+                $('#example').on('click', '.borrar', function () {
+                    $.post('ServletFuncion', {borrar: +this.id});
+                    location.reload();
+                });
+                //al hacer paginacion en la tabla
+                //$('#example').on('page', function () {
+                // alert('paginacion');
+                //});
             });
         </script>
         <style>
