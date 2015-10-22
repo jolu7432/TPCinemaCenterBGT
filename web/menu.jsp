@@ -53,8 +53,7 @@
                                     <li><a href="abmPelicula.jsp">ABM Peliculas</a></li>
                                     <li><a href="abmUsuario.jsp">ABM Usuarios</a></li>
                                     <li><a href="abmFuncion.jsp">ABM Funcion</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="abmCine.jsp">ABM Cines</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Separated link</a></li>
                                     <li role="separator" class="divider"></li>
