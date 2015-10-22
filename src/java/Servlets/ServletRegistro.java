@@ -82,6 +82,9 @@ public class ServletRegistro extends HttpServlet {
                     datosUsuario.put(item.getFieldName(), item.getString());
                 }
             }
+            if(urlImg.equals("")){
+                urlImg = (String)datosUsuario.get("imgdefecto");
+            }
             user = new Usuario(0, (String) datosUsuario.get("nombre"), (String) datosUsuario.get("apellido"), Integer.parseInt((String) datosUsuario.get("dni")), false, (String) datosUsuario.get("user"), (String) datosUsuario.get("pass"), (String) datosUsuario.get("email"), (String) datosUsuario.get("telefono"), urlImg);
             try {
                 ctrlUsuario.registraUsuario(user);

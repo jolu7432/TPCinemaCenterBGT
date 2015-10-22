@@ -34,12 +34,19 @@
                         //var img = $('<td>').appendTo(tr);
                         //var div = $('<div id=d2"' + index + '" class="thumbnail">').appendTo(img);
                         //$('<img src="img/' + item.urlImagen + '" alt="..." class="img-circle" style="height: 100px" ">').appendTo(div);
+                        // var accion = $('<td class="center">').appendTo(tr);
+                        //$('<button id="' + item.idPelicula + '" title="Editar" class="btn14 mr5 editar"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
+                        //$('<button id="' + item.idPelicula + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
                         var accion = $('<td class="center">').appendTo(tr);
                         $('<button id="' + item.idFuncion + '" title="Editar" class="btn14 mr5 editar"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
                         $('<button id="' + item.idFuncion + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
                     });
                     $('#example').dataTable();
                     $('.editar').click(function () {
+                        $('#altaPelicula').val('Subir Pelicula');
+                        $('#formAltaPelicula').text('');
+                        $('#altaPelicula').val('Cancelar');
+                        $('#formAltaPelicula').load('altaPelicula.jsp?idPelicula=' + this.id);
                         $('#altaFuncion').val('Alta Funcion');
                         $('#formAltaFuncion').text('');
                         $('#altaFuncion').val('Cancelar');
@@ -48,6 +55,7 @@
                     $('.borrar').click(function () {
                         //alert('prueba de boton borrar');
                         $.post('ServletFuncion', {borrar: +this.id});
+                        location.reload();
                     });
                 });
             });

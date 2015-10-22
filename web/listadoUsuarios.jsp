@@ -19,6 +19,7 @@
                 $.post('ServletRegistro', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
+                        var actualizar = "abmUsuario.jsp";
                         $('<td>').text(item.nombre).appendTo(tr);
                         $('<td>').text(item.apellido).appendTo(tr);
                         $('<td>').text(item.dni).appendTo(tr);

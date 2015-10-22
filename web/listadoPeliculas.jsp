@@ -34,11 +34,12 @@
                         $('#altaPelicula').val('Subir Pelicula');
                         $('#formAltaPelicula').text('');
                         $('#altaPelicula').val('Cancelar');
-                        $('#formAltaPelicula').load('altaPelicula.jsp?idPelicula='+this.id);
+                        $('#formAltaPelicula').load('altaPelicula.jsp?idPelicula=' + this.id);
                     });
                     $('.borrar').click(function () {
                         //alert('prueba de boton borrar');
-                        $.post('ServletPelicula', {borrar: + this.id});
+                        $.post('ServletPelicula', {borrar: +this.id});
+                        location.reload();
                     });
                 });
             });

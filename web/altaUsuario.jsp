@@ -50,6 +50,7 @@
                     <label for="UrlImagen"></label>
                     <input type="file" id="UrlImagen" name="urlImagen" value="">
                     <p class="help-block">Cargue una imagen</p>
+                    <input type="hidden" id="ImgDefecto" name="imgdefecto" value="default-user.png">
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg">Cargar</button>
             </div>
@@ -63,7 +64,7 @@
                         $('#txtNombre').val(item.nombre);
                         $('#txtApellido').val(item.apellido);
                         $('#txtDNI').val(item.dni);
-                        $('#chkAdm  input[type=checkbox]').prop('checked',item.administrador);
+                        $('#chkAdm  input[type=checkbox]').prop('checked', item.administrador);
                         $('#txtUsuario').val(item.user);
                         $('#txtPass').val(item.pass);
                         $('#txtEmail').val(item.email);

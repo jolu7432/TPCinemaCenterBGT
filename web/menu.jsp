@@ -16,40 +16,22 @@
         <script src="bootstrap/js/bootstrap.min.js"></script>       
     </head>
     <body>       
-        <!-- <!% String aux = usuarioLog.getUser();
-             if (aux.equals("jolu7432")) {%>
-         <div class="dropdown">
-             <h1>Jorge</h1> 
-             <button type="button">Menú desplegable</button>
- 
-         </div> 
-         <!% } else {%>
-         <div class="dropdown">
-             <h1>Hernan</h1> 
-             <button type="button">Menú desplegable</button>
- 
-         </div> 
-         <!% }%>
-        -->
-        <nav class="navbar-default navbar-fixed-top"> 
-            <div class="container-fluid">            
-                <div class="navbar-right">
-                    <form class="navbar-form" action="ServletLogin" method="post">
-                        <% if (usuarioLog.getId() == 0) {%>                  
-                        <label for="inputUsuario" >Usuario:</label>
-                        <input type="text" id="inputUsuario" name="user"  class="form-control" placeholder="Ingrese usuario" required autofocus>
-                        <label for="inputPassword" >Contraseña: </label>
-                        <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
-                        <button class="navbar-btn btn-primary " type="submit" name="ingresar" >Ingresar</button> 
-                        <button class="navbar-btn btn-primary " type="button" name="registrar" onclick="location.href = 'registro.jsp'">Registrar</button>                     
-                        <input type="hidden" name="accion" value="logIn"/>               
-                        <% }%>
-                    </form>
-                </div>  
-            </div>
+        <nav class="navbar-default navbar-fixed-top">     
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-right">
+                        <form class="navbar-form" action="ServletLogin" method="post">
+                            <% if (usuarioLog.getId() == 0) {%>                  
+                            <label for="inputUsuario" >Usuario:</label>
+                            <input type="text" id="inputUsuario" name="user"  class="form-control" placeholder="Ingrese usuario" required autofocus>
+                            <label for="inputPassword" >Contraseña: </label>
+                            <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                            <button class="navbar-btn btn-primary " type="submit" name="ingresar" >Ingresar</button> 
+                            <button class="navbar-btn btn-primary " type="button" name="registrar" onclick="location.href = 'registro.jsp'">Registrar</button>                     
+                            <input type="hidden" name="accion" value="logIn"/>               
+                            <% }%>
+                        </form>
+                    </div>  
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
@@ -59,8 +41,6 @@
                         </button>
                         <a class="navbar-brand" href="principal.jsp"><h2 style="margin-top: 0px;" class="navbar-header">CinemaCenter</h2></a>
                     </div>
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-left ">
                             <li class="btn-menu"><a href="principal.jsp">Peliculas<span class="sr-only">(current)</span></a></li>
@@ -112,8 +92,5 @@
                 </div><!-- /.container-fluid -->
             </nav>
         </nav>     
-
-
-
     </body>
 </html>

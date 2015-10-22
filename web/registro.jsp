@@ -50,8 +50,9 @@
                 </div>
                 <div class="form-group">
                     <label for="UrlImagen"></label>
-                    <input type="file" id="UrlImagen" name="urlImagen">
+                    <input type="file" id="UrlImagen" name="urlImagen" value="">
                     <p class="help-block">Cargue una imagen</p>
+                    <input type="hidden" id="ImgDefecto" name="imgdefecto" value="default-user.png">
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg">Registrate</button>
             </div>
@@ -69,6 +70,7 @@
                         $('#txtPass').val(item.pass);
                         $('#txtEmail').val(item.email);
                         $('#txtTel').val(item.telefono);
+                        $('#UrlImagen').val(item.urlImg);
                         $('<input type="button" id="boton">').appendTo($('#chkAdm'));
                     });
                 }

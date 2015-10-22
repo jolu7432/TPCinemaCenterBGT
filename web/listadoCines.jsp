@@ -29,11 +29,12 @@
                         $('#altaCine').val('Alta Cine');
                         $('#formAltaCine').text('');
                         $('#altaCine').val('Cancelar');
-                        $('#formAltaCine').load('altaCine.jsp?idCine='+this.id);
+                        $('#formAltaCine').load('altaCine.jsp?idCine=' + this.id);
                     });
                     $('.borrar').click(function () {
                         //alert('prueba de boton borrar');
-                        $.post('ServletCine', {borrar: + this.id});
+                        $.post('ServletCine', {borrar: +this.id});
+                        location.reload();
                     });
                 });
             });
