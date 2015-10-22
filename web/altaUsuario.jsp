@@ -12,6 +12,7 @@
         <title>Alta de Usuarios</title>      
     </head>
     <body>      
+	<jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> 
         <form method="post" action="ServletUsuario" enctype="multipart/form-data" class="form-signup">
             <center><h1>Registro de usuario</h1></center>
             <div id="rcorners" class="container">
@@ -52,7 +53,7 @@
                     <p class="help-block">Cargue una imagen</p>
                     <input type="hidden" id="ImgDefecto" name="imgdefecto" value="default-user.png">
                 </div>
-	<div id="moddiv"></div>
+		<div id="moddiv"></div>
                 <button type="submit" class="btn btn-primary btn-lg">Cargar</button>
             </div>
         </form>
