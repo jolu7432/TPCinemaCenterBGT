@@ -155,7 +155,7 @@ public class BDUsuarios implements IBD {
 	Usuario resp = null;
 	Conexion oCon = new Conexion();
 	ResultSet rs = null;
-	String consulta = "SELECT * FROM usuarios where User = '" + user + "' and email = '" + email + "'";
+	String consulta = "SELECT * FROM usuarios where User = '" + user + "' or email = '" + email + "'";
 	try {
 	    PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
 	    rs = sentencia.executeQuery();

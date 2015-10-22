@@ -44,13 +44,12 @@ public class ServletUsuario extends HttpServlet {
     private Usuario user;
 
     public ServletUsuario() {
-        ctrlUsuario = new CtrlUsuario();
-        ctrlLogin = new CtrlLogin();
+	ctrlUsuario = new CtrlUsuario();
+	ctrlLogin = new CtrlLogin();
     }
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -58,87 +57,92 @@ public class ServletUsuario extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, Exception {
-        response.setContentType("text/html;charset=UTF-8");
-        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        if (isMultipart) {
-            cargaUsuario(request, response);
-        } else if (request.getParameter("borrar") != null) {
-            String iduser = request.getParameter("borrar");
-            ctrlUsuario.bajaUsuario(Integer.parseInt(iduser));
-            response.setIntHeader("Refresh", 0);
-        } else {
-            listaUsuario(request, response);
-        }
+	    throws ServletException, IOException, SQLException, Exception {
+	response.setContentType("text/html;charset=UTF-8");
+	boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+	if (isMultipart) {
+	    cargaUsuario(request, response);
+	} else if (request.getParameter("borrar") != null) {
+	    String iduser = request.getParameter("borrar");
+	    ctrlUsuario.bajaUsuario(Integer.parseInt(iduser));
+	    response.setIntHeader("Refresh", 0);
+	} else {
+	    listaUsuario(request, response);
+	}
     }
 
     private void cargaUsuario(HttpServletRequest request, HttpServletResponse response) throws FileUploadException, Exception {
-        FileItemFactory file_factory = new DiskFileItemFactory();
-        ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
-        List items = servlet_up.parseRequest(request);
-        String urlImg = "";
-        Hashtable datosUsuario = new Hashtable();
-        for (int i = 0; i < items.size(); i++) {
-            FileItem item = (FileItem) items.get(i);
-            if (!item.isFormField()) {
-                urlImg = item.getName();
-                if (!urlImg.equals("")) {
-                    String dir = getServletContext().getRealPath("/");
-                    String dir2 = dir.replaceAll("web", "img");
-                    String dir3 = dir2.replaceAll("build", "web");
-                    dir3.concat("imgUsuarios/");
-                    File fileFoto = new File(dir3, item.getName());
-                    item.write(fileFoto);
-                }
-            } else {
-                datosUsuario.put(item.getFieldName(), item.getString());
-            }
-        }
-        String adm = (String) datosUsuario.get("administrador");
-        boolean esAdm = false;
-        if (adm != null) {
-            esAdm = true;
-        }
-        if (urlImg.equals("")) {
-            urlImg = (String) datosUsuario.get("imgdefecto");
-        }
-        user = new Usuario(0, (String) datosUsuario.get("nombre"), (String) datosUsuario.get("apellido"), Integer.parseInt((String) datosUsuario.get("dni")), esAdm, (String) datosUsuario.get("user"), (String) datosUsuario.get("pass"), (String) datosUsuario.get("email"), (String) datosUsuario.get("telefono"), urlImg);
-        Usuario aux = ctrlLogin.validaUsuario(user);
-        if (aux == null) {
-            try {
-                ctrlUsuario.registraUsuario(user);
-            } catch (SQLException ex) {
-                Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            user.setId(aux.getId());
-            ctrlUsuario.modificarUsuario(user);
-        }
-        RequestDispatcher rd = request.getRequestDispatcher("/abmUsuario.jsp");
-        rd.forward(request, response);
+	FileItemFactory file_factory = new DiskFileItemFactory();
+	ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
+	List items = servlet_up.parseRequest(request);
+	String urlImg = "";
+	Hashtable datosUsuario = new Hashtable();
+	HttpSession valida = null;
+	for (int i = 0; i < items.size(); i++) {
+	    FileItem item = (FileItem) items.get(i);
+	    if (!item.isFormField()) {
+		urlImg = item.getName();
+		if (!urlImg.equals("")) {
+		    String dir = getServletContext().getRealPath("/");
+		    String dir2 = dir.replaceAll("web", "img");
+		    String dir3 = dir2.replaceAll("build", "web");
+		    dir3.concat("imgUsuarios/");
+		    File fileFoto = new File(dir3, item.getName());
+		    item.write(fileFoto);
+		}
+	    } else {
+		datosUsuario.put(item.getFieldName(), item.getString());
+	    }
+	}
+	String adm = (String) datosUsuario.get("administrador");
+	boolean esAdm = false;
+	if (adm != null) {
+	    esAdm = true;
+	}
+	if (urlImg.equals("")) {
+	    urlImg = (String) datosUsuario.get("imgdefecto");
+	}
+	user = new Usuario(0, (String) datosUsuario.get("nombre"), (String) datosUsuario.get("apellido"), Integer.parseInt((String) datosUsuario.get("dni")), esAdm, (String) datosUsuario.get("user"), (String) datosUsuario.get("pass"), (String) datosUsuario.get("email"), (String) datosUsuario.get("telefono"), urlImg);
+	RequestDispatcher rd = getServletContext().getRequestDispatcher("/ServletValidaUser?user=" + user.getUser() + "&email=" + user.getEmail());
+	rd.include(request, response);
+	valida = request.getSession(true);
+	if (valida.getAttribute("usuarioValid") == null) {
+	    try {
+		ctrlUsuario.registraUsuario(user);
+	    } catch (SQLException ex) {
+		Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
+	    }
+	} else {
+	    Usuario aux = (Usuario) valida.getAttribute("usuarioValid");
+	    user.setId(aux.getId());
+	    ctrlUsuario.modificarUsuario(user);
+	}
+	RequestDispatcher rdfw = request.getRequestDispatcher("/abmUsuario.jsp");
+	rdfw.forward(request, response);
+	valida.invalidate();
     }
 
     private void listaUsuario(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        String idUsuario = request.getParameter("id");
-        ArrayList<Usuario> list = null;
-        boolean flag = false;
-        if (idUsuario == null) {
-            flag = true;
-        } else {
-            if (!idUsuario.equals("0")) {
-                list = new ArrayList<>();
-                list.add(ctrlUsuario.traePorId(Integer.parseInt(idUsuario)));
-                flag = true;
-            } else {
-                list = ctrlUsuario.listarUsuarios();
-            }
-            if (flag) {
-                String json = new Gson().toJson(list);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(json);
-            }
-        }
+	String idUsuario = request.getParameter("id");
+	ArrayList<Usuario> list = null;
+	boolean flag = false;
+	if (idUsuario == null) {
+	    flag = true;
+	} else {
+	    if (!idUsuario.equals("0")) {
+		list = new ArrayList<>();
+		list.add(ctrlUsuario.traePorId(Integer.parseInt(idUsuario)));
+		flag = true;
+	    } else {
+		list = ctrlUsuario.listarUsuarios();
+	    }
+	    if (flag) {
+		String json = new Gson().toJson(list);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);
+	    }
+	}
 
     }
 
@@ -153,12 +157,12 @@ public class ServletUsuario extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(ServletUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	    throws ServletException, IOException {
+	try {
+	    processRequest(request, response);
+	} catch (Exception ex) {
+	    Logger.getLogger(ServletUsuario.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
     /**
@@ -171,12 +175,12 @@ public class ServletUsuario extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(ServletUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	    throws ServletException, IOException {
+	try {
+	    processRequest(request, response);
+	} catch (Exception ex) {
+	    Logger.getLogger(ServletUsuario.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
     /**
@@ -186,7 +190,7 @@ public class ServletUsuario extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+	return "Short description";
     }// </editor-fold>
 
 }
