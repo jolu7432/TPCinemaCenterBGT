@@ -13,7 +13,10 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="bootstrap/css/style.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>       
+        <script src="bootstrap/js/bootstrap.min.js"></script>   
+        <link href="bootstrap/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css"/>       
+        <script src="bootstrap/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+        <script src="bootstrap/js/locales/bootstrap-datetimepicker.ar.js" type="text/javascript"></script>
     </head>
     <body>       
         <nav class="navbar-default navbar-fixed-top">     
