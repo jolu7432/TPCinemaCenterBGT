@@ -7,9 +7,11 @@ package Servlets;
 
 import Controladora.CtrlFuncion;
 import Modelo.Funcion;
+import Modelo.Sala;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -28,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletFuncion extends HttpServlet {
     
     CtrlFuncion ctrlFuncion;
+    
+    Funcion funcion;
 
     public ServletFuncion(){
         this.ctrlFuncion = new CtrlFuncion();
@@ -44,36 +48,53 @@ public class ServletFuncion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        if(request.getParameter("guardar") != null)
+        String idCineEditar = request.getParameter("idC");
+        String idCine = request.getParameter("idCine");
+        if(request.getParameter("nombre") != null)
         {
-            Funcion fun = new Funcion();
-            ctrlFuncion.altaFuncion(fun);
-        }
-       if(request.getParameter("borrar") != null)
-        {
-            ctrlFuncion.bajaFuncion(Integer.parseInt(request.getParameter("borrar")));
-        }
-        else {
-            String idFuncion = request.getParameter("idFuncion");
-            ArrayList<Funcion> list = null;
-            boolean flag = false;
-            if (idFuncion == null) {
-                list = ctrlFuncion.listarFunciones();
-                flag = true;
-            } else {
-                if (!idFuncion.equals("")) {
-                    list = new ArrayList<>();
-                    list.add(ctrlFuncion.existe(Integer.parseInt(idFuncion)));
-                    flag = true;
+            Sala s = 
+            funcion = new Funcion(0, Date.valueOf(request.getParameter("fechaYHora")), Integer.parseInt(request.getParameter("duracion")), Float.parseFloat(request.getParameter("precio")), request.getParameter("sala"), request.getParameter("pelicula"));           
+            if(idCineEditar.equals(""))
+            {
+                try {
+                    ctrlCine.altaCine(cine);
+                } catch (SQLException ex) {
+                Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            if (flag) {
-                String json = new Gson().toJson(list);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(json);             
+            else
+            {
+                cine.setIdCine(Integer.parseInt(idCineEditar));
+                ctrlCine.modificaCine(cine);
+            }
+                RequestDispatcher rd = request.getRequestDispatcher("/abmCine.jsp");
+                rd.forward(request, response);
+            
+        }   
+        if(request.getParameter("borrar") != null)
+        {
+            ctrlCine.bajaCine(Integer.parseInt(request.getParameter("borrar")));
+        }
+        
+        ArrayList<Cine> list = null;
+        boolean flag = false;
+        if (idCine == null) {
+            list = ctrlCine.listarCines();
+            flag = true;
+        } else {
+            if (!idCine.equals("0")) {
+                list = new ArrayList<>();
+                list.add(ctrlCine.existe(Integer.parseInt(idCine)));
+                flag = true;
             }
         }
+        if (flag) {
+            String json = new Gson().toJson(list);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
