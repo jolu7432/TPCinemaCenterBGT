@@ -6,7 +6,10 @@
 package Servlets;
 
 import Controladora.CtrlFuncion;
+import Controladora.CtrlPelicula;
+import Controladora.CtrlSala;
 import Modelo.Funcion;
+import Modelo.Pelicula;
 import Modelo.Sala;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -16,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +34,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletFuncion extends HttpServlet {
     
     CtrlFuncion ctrlFuncion;
+    CtrlSala ctrlSala;
+    CtrlPelicula ctrlPelicula;
     
     Funcion funcion;
 
@@ -48,24 +54,25 @@ public class ServletFuncion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        String idCineEditar = request.getParameter("idC");
-        String idCine = request.getParameter("idCine");
+        String idFuncionEditar = request.getParameter("idF");
+        String idFuncion = request.getParameter("idFuncion");
         if(request.getParameter("nombre") != null)
         {
-            Sala s = 
-            funcion = new Funcion(0, Date.valueOf(request.getParameter("fechaYHora")), Integer.parseInt(request.getParameter("duracion")), Float.parseFloat(request.getParameter("precio")), request.getParameter("sala"), request.getParameter("pelicula"));           
-            if(idCineEditar.equals(""))
+            Sala s = ctrlSala.existe(Integer.parseInt(request.getParameter("sala")));
+            Pelicula p = ctrlPelicula.existe(Integer.parseInt(request.getParameter("pelicula")));
+            funcion = new Funcion(0, Date.valueOf(request.getParameter("fechaYHora")), Integer.parseInt(request.getParameter("duracion")), Float.parseFloat(request.getParameter("precio")), s, p, Boolean.parseBoolean("estado"));           
+            if(idFuncionEditar.equals(""))
             {
                 try {
-                    ctrlCine.altaCine(cine);
+                    ctrlFuncion.altaFuncion(funcion);
                 } catch (SQLException ex) {
                 Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             else
             {
-                cine.setIdCine(Integer.parseInt(idCineEditar));
-                ctrlCine.modificaCine(cine);
+                funcion.setIdFuncion(Integer.parseInt(idFuncionEditar));
+                ctrlFuncion.modificaFuncion(funcion);
             }
                 RequestDispatcher rd = request.getRequestDispatcher("/abmCine.jsp");
                 rd.forward(request, response);
@@ -73,18 +80,18 @@ public class ServletFuncion extends HttpServlet {
         }   
         if(request.getParameter("borrar") != null)
         {
-            ctrlCine.bajaCine(Integer.parseInt(request.getParameter("borrar")));
+            ctrlFuncion.bajaFuncion(Integer.parseInt(request.getParameter("borrar")));
         }
         
-        ArrayList<Cine> list = null;
+        ArrayList<Funcion> list = null;
         boolean flag = false;
-        if (idCine == null) {
-            list = ctrlCine.listarCines();
+        if (idFuncion == null) {
+            list = ctrlFuncion.listarFunciones();
             flag = true;
         } else {
-            if (!idCine.equals("0")) {
+            if (!idFuncion.equals("0")) {
                 list = new ArrayList<>();
-                list.add(ctrlCine.existe(Integer.parseInt(idCine)));
+                list.add(ctrlFuncion.existe(Integer.parseInt(idFuncion)));
                 flag = true;
             }
         }

@@ -59,7 +59,7 @@ public class ServletSala extends HttpServlet {
 	    Sala s = new Sala(0,num, c,col,fil,true);
 	    ctrlsala.altaSala(s);
 	}
-                RequestDispatcher rd = request.getRequestDispatcher("/abmCine.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/abmSala.jsp");
                 rd.forward(request, response);
         ArrayList<Sala> list = null;
         boolean flag = false;

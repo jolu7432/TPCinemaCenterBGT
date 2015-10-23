@@ -65,7 +65,29 @@ public class BDSala implements IBD {
 
     @Override
     public Object existe(Object dato) throws SQLException {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	Sala resp = null;
+        Conexion oCon = new Conexion();
+        ResultSet rs = null;
+        oCon.getConexion();
+        Cine cine = null;
+        String consulta = "SELECT S.idSala,S.NumSala,S.idCine,S.Columna,S.Fila,S.Estado as EstadoSala,C.idCine,C.Nombre,C.Direccion,C.Estado as EstadoCine FROM salas as S \n"
+		+ "inner join cines C on C.idCine = S.idCine\n"
+		+ "where S.idSala = " + ((Sala)dato).getIdSala();
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+            rs = sentencia.executeQuery();
+            while (rs.next()) {
+                cine = new Cine(rs.getInt("idCine"), rs.getString("Nombre"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
+                resp = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
+            }
+            rs.close();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+            return resp;
+        }
     }
 
     @Override
