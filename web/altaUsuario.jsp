@@ -53,7 +53,7 @@
                     <p class="help-block">Cargue una imagen</p>
                     <input type="hidden" id="ImgDefecto" name="imgdefecto" value="default-user.png">
                 </div>
-	<div id="moddiv"></div>
+		<div id="moddiv"></div>
                 <button type="submit" class="btn btn-primary btn-lg">Cargar</button>
             </div>
         </form>
