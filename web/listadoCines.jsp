@@ -34,7 +34,7 @@
                 });
                 $('#example').on('click', '.borrar', function () {
                     $.post('ServletCine', {borrar: +this.id});
-                    location.reload();
+                    location.href = "/TPCinemaCenterBGT/abmCine.jsp";  //sii, capaz es un poco chancho... by Hernan
                 });
                 //al hacer paginacion en la tabla
                 //$('#example').on('page', function () {

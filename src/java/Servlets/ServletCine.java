@@ -71,8 +71,6 @@ public class ServletCine extends HttpServlet {
         if(request.getParameter("borrar") != null)
         {
             ctrlCine.bajaCine(Integer.parseInt(request.getParameter("borrar")));
-            RequestDispatcher rd = request.getRequestDispatcher("/abmCine.jsp");
-            rd.forward(request, response);
         }
         
         ArrayList<Cine> list = null;
