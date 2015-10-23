@@ -6,9 +6,12 @@
 package Servlets;
 
 import Controladora.CtrlCine;
+import Controladora.CtrlSala;
 import Modelo.Cine;
+import Modelo.Sala;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -22,67 +25,51 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author herna
+ * @author microtik
  */
-@WebServlet(name = "ServletCine", urlPatterns = {"/ServletCine"})
-public class ServletCine extends HttpServlet {
+@WebServlet(name = "ServletSala", urlPatterns = {"/ServletSala"})
+public class ServletSala extends HttpServlet {
     
-    private Cine cine;
-    CtrlCine ctrlCine;
+    private CtrlCine ctrlcine = null;
+    private CtrlSala ctrlsala = null;
 
-    public ServletCine() {
-        this.ctrlCine = new CtrlCine();
+    public ServletSala() {
+	ctrlcine = new CtrlCine();
+	ctrlsala = new CtrlSala();
     }
+    
+    
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
-        String idCineEditar = request.getParameter("idC");
-        String idCine = request.getParameter("idCine");
-        if(request.getParameter("nombre") != null)
-        {
-            cine = new Cine(0, request.getParameter("nombre"), request.getParameter("direccion"), true );           
-            if(idCineEditar.equals(""))
-            {
-                try {
-                    ctrlCine.altaCine(cine);
-                } catch (SQLException ex) {
-                Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            else
-            {
-                cine.setIdCine(Integer.parseInt(idCineEditar));
-                ctrlCine.modificaCine(cine);
-            }
+	    throws ServletException, IOException, SQLException {
+	        String idSala = request.getParameter("idSala");
+	if(request.getParameter("guardar") != null){
+	    Cine c = ctrlcine.existe(Integer.parseInt(request.getParameter("cine")));
+	    int num = Integer.parseInt(request.getParameter("numero"));
+	    int col = Integer.parseInt(request.getParameter("columnas"));
+	    int fil = Integer.parseInt(request.getParameter("filas"));
+	    Sala s = new Sala(0,num, c,col,fil,true);
+	    ctrlsala.altaSala(s);
+	}
                 RequestDispatcher rd = request.getRequestDispatcher("/abmCine.jsp");
                 rd.forward(request, response);
-            
-        }   
-        if(request.getParameter("borrar") != null)
-        {
-            ctrlCine.bajaCine(Integer.parseInt(request.getParameter("borrar")));
-
-        }
-        
-        ArrayList<Cine> list = null;
+        ArrayList<Sala> list = null;
         boolean flag = false;
-        if (idCine == null) {
-            list = ctrlCine.listarCines();
+        if (idSala == null) {
+            list = ctrlsala.listarSalas();
             flag = true;
         } else {
-            if (!idCine.equals("0")) {
+            if (!idSala.equals("0")) {
                 list = new ArrayList<>();
-                list.add(ctrlCine.existe(Integer.parseInt(idCine)));
+                list.add(ctrlsala.existe(Integer.parseInt(idSala)));
                 flag = true;
             }
         }
@@ -92,7 +79,7 @@ public class ServletCine extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
         }
-
+	
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -106,12 +93,12 @@ public class ServletCine extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletCine.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	    throws ServletException, IOException {
+	try {
+	    processRequest(request, response);
+	} catch (SQLException ex) {
+	    Logger.getLogger(ServletSala.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
     /**
@@ -124,12 +111,12 @@ public class ServletCine extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletCine.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	    throws ServletException, IOException {
+	try {
+	    processRequest(request, response);
+	} catch (SQLException ex) {
+	    Logger.getLogger(ServletSala.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
     /**
@@ -139,7 +126,7 @@ public class ServletCine extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+	return "Short description";
     }// </editor-fold>
 
 }

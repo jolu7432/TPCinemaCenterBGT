@@ -55,7 +55,7 @@ public class ServletCargaComboBox extends HttpServlet {
         ArrayList<Object> list = null;
         switch (accion) {
             case "Cines":
-                list = ctrlCine.listarCines();
+                list = ctrlCine.listarCinesActivos();
                 break;
             case "Salas":
                 dato = request.getParameter("idCine");
