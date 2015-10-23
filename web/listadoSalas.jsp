@@ -13,8 +13,10 @@
         <script type="text/javascript" charset="UTF-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>        
         <script>
             $(document).ready(function () {
-                $.post('ServletSala', function (responseJson) {
-                    $.each(responseJson, function (index, item) {
+		console.log("puto");
+                $.post('ServletSala', function (responseSala) {
+		    console.log(responseSala);
+                    $.each(responseSala, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
                         $('<td>').text(item.numSala).appendTo(tr);
                         $('<td>').text(item.cine.nombre).appendTo(tr);
@@ -58,7 +60,7 @@
 
     </head>
     <body> 
-        <jsp:include page="ServletValidaLoginRol" flush="true"/> 
+        <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/>  
         <div class="table-responsive">
             <table id="example" class="dataTable" cellspacing="0" width="100%">
                 <thead>

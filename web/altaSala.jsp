@@ -31,7 +31,7 @@
 	</script>
     </head>
     <body>
-        <jsp:include page="ServletValidaLoginRol" flush="true"/> 
+        <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> 
         <div id="rcorners" class="container">           
             <form method="post" action="ServletSala" >           
                 <div class="col-md-8">
