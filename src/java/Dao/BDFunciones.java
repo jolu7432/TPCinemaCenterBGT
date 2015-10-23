@@ -74,7 +74,19 @@ public class BDFunciones implements IBD {
 
     @Override
     public void modificar(Object dato) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Conexion oCon = new Conexion();
+        oCon.getConexion();
+        Funcion aux = (Funcion) dato;
+        String update = "UPDATE funciones SET  FechaYHora = '" +aux.getFechaYHora() + "', Duracion = '" +aux.getDuracion() + "', Precio = " + aux.getPrecio() + "', idSala = '" +aux.getSala().getIdSala() + "', idPelicula = '" +aux.getPelicula().getIdPelicula() + "', Estado = '" +aux.isEstado() + " WHERE idFuncion = " + aux.getIdFuncion();
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(update);
+            sentencia.execute();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+        }
     }
 
     @Override
@@ -96,7 +108,7 @@ public class BDFunciones implements IBD {
                 cine = new Cine(rs.getInt("idCine"), rs.getString("NombreCine"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
                 sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
                 Date newDate = rs.getTimestamp("FechaYHora"); 
-                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli);
+                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli, rs.getBoolean("Estado"));
             }
             rs.close();
             sentencia.close();
@@ -128,7 +140,7 @@ public class BDFunciones implements IBD {
                 cine = new Cine(rs.getInt("idCine"), rs.getString("NombreCine"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
                 sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));              
                 Date newDate = rs.getTimestamp("FechaYHora");               
-                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli);
+                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli, rs.getBoolean("Estado") );
                 listaFunciones.add(resp);
             }
             rs.close();
