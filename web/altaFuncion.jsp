@@ -10,12 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Alta de Funciones</title> 
-        <link href="bootstrap/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css"/>
-
-        <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="bootstrap/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
-        <script src="bootstrap/js/locales/bootstrap-datetimepicker.ar.js" type="text/javascript"></script>
+        <title>Alta de Funciones</title>       
         <script>
             $(document).ready(function () {
                 $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
