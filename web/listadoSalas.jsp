@@ -37,7 +37,7 @@
                 });
                 $('#example').on('click', '.borrar', function () {
                     $.post('ServletSala', {borrar: +this.id});
-                    location.reload();
+                    location.href = "/TPCinemaCenterBGT/abmSala.jsp";
                 });
             });
         </script>
