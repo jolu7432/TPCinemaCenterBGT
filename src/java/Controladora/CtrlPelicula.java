@@ -33,11 +33,7 @@ public class CtrlPelicula {
 
     public ArrayList listarPeliculasAdmin() throws SQLException {
         return datosPeliculas.listadoAdmin();
-    }
-    
-    public ArrayList listarPeliculasXSala(int idSala) throws SQLException {
-        return datosPeliculas.listadoXSala(idSala);
-    }
+    }    
 
     public Pelicula existe(int idPelicula) throws SQLException {
         Pelicula peli = new Pelicula(idPelicula);

@@ -12,6 +12,7 @@ import Modelo.Sala;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -38,14 +39,15 @@ public class BDFunciones implements IBD {
         Conexion oCon = new Conexion();
         oCon.getConexion();
         Funcion aux = (Funcion) dato;
-        String insert = "INSERT INTO funciones(FechaYHora, Duracion, Precio, idSala, idPelicula) VALUES(?,?,?,?,?)";
+        String insert = "INSERT INTO funciones(FechaYHora, Duracion, Precio, idSala, idPelicula,Estado) VALUES(?,?,?,?,?,?)";
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
-            // sentencia.setDate(1, new java.sql.Date(aux.getFechaYHora()));  
+            sentencia.setTimestamp(1, new Timestamp(aux.getFechaYHora().getTime()));
             sentencia.setInt(2, aux.getDuracion());
             sentencia.setFloat(3, aux.getPrecio());
             sentencia.setInt(4, aux.getSala().getIdSala());
             sentencia.setInt(5, aux.getPelicula().getIdPelicula());
+            sentencia.setBoolean(6, true);
             sentencia.execute();
             sentencia.close();
         } catch (SQLException e) {
@@ -59,8 +61,7 @@ public class BDFunciones implements IBD {
     public void baja(Object dato) throws SQLException {
         Conexion oCon = new Conexion();
         oCon.getConexion();
-        Funcion fun = (Funcion) dato;
-        String consulta = "UPDATE funciones set Estado = false where idFuncion =" + fun.getIdFuncion();
+        String consulta = "UPDATE funciones set Estado = false where idFuncion =" + (int) dato;
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             sentencia.execute();
@@ -74,7 +75,19 @@ public class BDFunciones implements IBD {
 
     @Override
     public void modificar(Object dato) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Conexion oCon = new Conexion();
+        oCon.getConexion();
+        Funcion aux = (Funcion) dato;
+        String update = "UPDATE funciones SET FechaYHora = '" + new Timestamp(aux.getFechaYHora().getTime()) + "', Duracion = '" + aux.getDuracion() + "', Precio = " + aux.getPrecio() + ", idSala = " + aux.getSala().getIdSala() + ", idPelicula = " + aux.getPelicula().getIdPelicula() + ", Estado = true WHERE idFuncion = " + aux.getIdFuncion();
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(update);
+            sentencia.execute();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+        }
     }
 
     @Override
@@ -87,7 +100,7 @@ public class BDFunciones implements IBD {
         ResultSet rs = null;
         oCon.getConexion();
         Funcion fun = (Funcion) dato;
-        String consulta = "SELECT P.idPelicula,P.Nombre as NombrePeli,P.Director,P.DuracionPeli,P.Descripcion,P.Estado as EstadoPeli, P.UrlImagen,C.idCine,C.Nombre as NombreCine,C.Direccion,C.Estado as EstadoCine,S.idSala,S.NumSala,S.Columna,S.Fila,S.Estado as EstadoSala,funciones.idFuncion,funciones.FechaYHora,funciones.Duracion as DuracionFuncion,funciones.Precio FROM funciones inner join salas S on S.idSala = funciones.idSala inner join cines C on C.idCine = S.idCine inner join peliculas P on P.idPelicula = funciones.idPelicula where funciones.idFuncion =" + fun.getIdFuncion();
+        String consulta = "SELECT P.idPelicula,P.Nombre as NombrePeli,P.Director,P.DuracionPeli,P.Descripcion,P.Estado as EstadoPeli, P.UrlImagen,C.idCine,C.Nombre as NombreCine,C.Direccion,C.Estado as EstadoCine,S.idSala,S.NumSala,S.Columna,S.Fila,S.Estado as EstadoSala,funciones.idFuncion,funciones.FechaYHora,funciones.Duracion as DuracionFuncion,funciones.Precio,funciones.Estado as EstadoFuncion FROM funciones inner join salas S on S.idSala = funciones.idSala inner join cines C on C.idCine = S.idCine inner join peliculas P on P.idPelicula = funciones.idPelicula where funciones.idFuncion =" + fun.getIdFuncion();
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             rs = sentencia.executeQuery();
@@ -95,8 +108,8 @@ public class BDFunciones implements IBD {
                 peli = new Pelicula(rs.getInt("idPelicula"), rs.getString("NombrePeli"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("EstadoPeli"), rs.getString("UrlImagen"));
                 cine = new Cine(rs.getInt("idCine"), rs.getString("NombreCine"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
                 sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
-                Date newDate = rs.getTimestamp("FechaYHora"); 
-                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli);
+                Date newDate = rs.getTimestamp("FechaYHora");
+                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli, rs.getBoolean("EstadoFuncion"));
             }
             rs.close();
             sentencia.close();
@@ -110,7 +123,6 @@ public class BDFunciones implements IBD {
 
     @Override
     public ArrayList listado() throws SQLException {
-
         Funcion resp = null;
         Sala sala = null;
         Cine cine = null;
@@ -119,16 +131,58 @@ public class BDFunciones implements IBD {
         ResultSet rs = null;
         ArrayList listaFunciones = new ArrayList();
         oCon.getConexion();
-        String consulta = "SELECT P.idPelicula,P.Nombre as NombrePeli,P.Director,P.DuracionPeli,P.Descripcion,P.Estado as EstadoPeli, P.UrlImagen,C.idCine,C.Nombre as NombreCine,C.Direccion,C.Estado as EstadoCine,S.idSala,S.NumSala,S.Columna,S.Fila,S.Estado as EstadoSala,funciones.idFuncion,funciones.FechaYHora,funciones.Duracion as DuracionFuncion,funciones.Precio FROM funciones inner join salas S on S.idSala = funciones.idSala inner join cines C on C.idCine = S.idCine inner join peliculas P on P.idPelicula = funciones.idPelicula where funciones.Estado = 1";
+        String consulta = "SELECT P.idPelicula,P.Nombre as NombrePeli,P.Director,P.DuracionPeli,P.Descripcion,P.Estado as EstadoPeli, P.UrlImagen,C.idCine,C.Nombre as NombreCine,C.Direccion,C.Estado as EstadoCine,S.idSala,S.NumSala,S.Columna,S.Fila,S.Estado as EstadoSala,funciones.idFuncion,funciones.FechaYHora,funciones.Duracion as DuracionFuncion,funciones.Precio,funciones.Estado as EstadoFuncion FROM funciones inner join salas S on S.idSala = funciones.idSala inner join cines C on C.idCine = S.idCine inner join peliculas P on P.idPelicula = funciones.idPelicula where funciones.Estado = 1";
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
             rs = sentencia.executeQuery();
             while (rs.next()) {
                 peli = new Pelicula(rs.getInt("idPelicula"), rs.getString("NombrePeli"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("EstadoPeli"), rs.getString("UrlImagen"));
                 cine = new Cine(rs.getInt("idCine"), rs.getString("NombreCine"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
-                sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));              
-                Date newDate = rs.getTimestamp("FechaYHora");               
-                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli);
+                sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
+                Date newDate = rs.getTimestamp("FechaYHora");
+                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli, rs.getBoolean("EstadoFuncion"));
+                listaFunciones.add(resp);
+            }
+            rs.close();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+            return listaFunciones;
+        }
+    }
+
+    public ArrayList validaFuncion(Object dato) throws SQLException {
+        Funcion resp = null;
+        Sala sala = null;
+        Cine cine = null;
+        Pelicula peli = null;
+        Conexion oCon = new Conexion();
+        ResultSet rs = null;
+        ArrayList listaFunciones = new ArrayList();
+        oCon.getConexion();
+        Funcion fun = (Funcion) dato;
+        String consulta = "SELECT P.idPelicula,P.Nombre as NombrePeli,P.Director,P.DuracionPeli,P.Descripcion,P.Estado as EstadoPeli, P.UrlImagen,C.idCine,C.Nombre as NombreCine,\n"
+                + "C.Direccion,C.Estado as EstadoCine,S.idSala,S.NumSala,S.Columna,S.Fila,S.Estado as EstadoSala,F.idFuncion,F.FechaYHora,\n"
+                + "F.Duracion as DuracionFuncion,F.Precio,F.Estado as EstadoFuncion \n"
+                + "FROM funciones as F\n"
+                + "inner join salas S on S.idSala = F.idSala \n"
+                + "inner join cines C on C.idCine = S.idCine \n"
+                + "inner join peliculas P on P.idPelicula = F.idPelicula \n"
+                + "where F.Estado = 1\n"
+                + "and F.idSala = " + fun.getSala().getIdSala() + "\n"
+                + "and F.idFuncion <> " + fun.getIdFuncion() + "\n"
+                + "and (TIMESTAMPADD(MINUTE, F.Duracion, F.FechaYHora) >= '" + new Timestamp(fun.getFechaYHora().getTime()) + "' and TIMESTAMPADD(MINUTE, " + fun.getDuracion() + ", '" + new Timestamp(fun.getFechaYHora().getTime()) + "') >= F.FechaYHora);";
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+            rs = sentencia.executeQuery();
+            while (rs.next()) {
+                peli = new Pelicula(rs.getInt("idPelicula"), rs.getString("NombrePeli"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("EstadoPeli"), rs.getString("UrlImagen"));
+                cine = new Cine(rs.getInt("idCine"), rs.getString("NombreCine"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
+                sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
+                Date newDate = rs.getTimestamp("FechaYHora");
+                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli, rs.getBoolean("EstadoFuncion"));
                 listaFunciones.add(resp);
             }
             rs.close();

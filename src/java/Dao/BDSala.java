@@ -82,7 +82,7 @@ public class BDSala implements IBD{
         ResultSet rs = null;
         ArrayList listaSalas = new ArrayList();
         oCon.getConexion();
-        String consulta = "SELECT S.idSala,S.NumSala,S.idCine,S.Columna,S.Fila,S.Estado as EstadoSala,C.idCine,C.Nombre,C.Direccion,C.Estado as EstadoCine FROM salas as S \n"
+        String consulta = "SELECT DISTINCT S.idSala,S.NumSala,S.idCine,S.Columna,S.Fila,S.Estado as EstadoSala,C.idCine,C.Nombre,C.Direccion,C.Estado as EstadoCine FROM salas as S \n"
                 + "inner join cines C on C.idCine = S.idCine\n"               
                 + "where S.Estado = 1\n"
                 + "and S.idCine =" + idCine;
