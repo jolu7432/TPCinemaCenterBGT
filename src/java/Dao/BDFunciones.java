@@ -138,6 +138,18 @@ public class BDFunciones implements IBD {
             while (rs.next()) {
                 peli = new Pelicula(rs.getInt("idPelicula"), rs.getString("NombrePeli"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("EstadoPeli"), rs.getString("UrlImagen"));
                 cine = new Cine(rs.getInt("idCine"), rs.getString("NombreCine"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
+                listaFunciones.add(resp);
+            }
+            rs.close();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+            return listaFunciones;
+        }
+    }
+}
                 sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
                 Date newDate = rs.getTimestamp("FechaYHora");
                 resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli, rs.getBoolean("EstadoFuncion"));
@@ -183,15 +195,3 @@ public class BDFunciones implements IBD {
                 sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
                 Date newDate = rs.getTimestamp("FechaYHora");
                 resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli, rs.getBoolean("EstadoFuncion"));
-                listaFunciones.add(resp);
-            }
-            rs.close();
-            sentencia.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            oCon.close();
-            return listaFunciones;
-        }
-    }
-}

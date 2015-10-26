@@ -34,6 +34,10 @@ public class CtrlFuncion {
         return datosFunciones.listado();
     }
 
+    public void modificaFuncion(Funcion funcion) throws SQLException{
+         datosFunciones.modificar(funcion);
+    }    
+    
     public Funcion existe(int idFuncion) throws SQLException {
         Funcion aux = new Funcion(idFuncion);
         return (Funcion) datosFunciones.existe(aux);

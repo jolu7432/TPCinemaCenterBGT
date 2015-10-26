@@ -53,7 +53,7 @@ public class BDCine implements IBD{
     public void baja(Object dato) throws SQLException {
         Conexion oCon = new Conexion();      
         oCon.getConexion();
-        String consulta = "UPDATE Cines set Estado = false where idCine ="+((int)dato);      
+        String consulta = "UPDATE Cines set Estado = 0 where idCine ="+((int)dato);      
         try {
             PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);         
             sentencia.execute();

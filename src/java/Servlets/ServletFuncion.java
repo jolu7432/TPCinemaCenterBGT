@@ -6,6 +6,8 @@
 package Servlets;
 
 import Controladora.CtrlFuncion;
+import Controladora.CtrlPelicula;
+import Controladora.CtrlSala;
 import Modelo.Funcion;
 import Modelo.Pelicula;
 import Modelo.Sala;
@@ -34,6 +36,10 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletFuncion extends HttpServlet {
 
     CtrlFuncion ctrlFuncion;
+    CtrlSala ctrlSala;
+    CtrlPelicula ctrlPelicula;
+    
+    Funcion funcion;
 
     public ServletFuncion() {
         this.ctrlFuncion = new CtrlFuncion();
@@ -91,6 +97,13 @@ public class ServletFuncion extends HttpServlet {
                 }
             }
         }
+        if (flag) {
+            String json = new Gson().toJson(list);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
