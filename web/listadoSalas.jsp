@@ -7,27 +7,27 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">      
         <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/css/jquery.dataTables.css">       
         <script type="text/javascript" charset="UTF-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>        
         <script>
             $(document).ready(function () {
-		console.log("puto");
+                console.log("puto");
                 $.post('ServletSala', function (responseSala) {
-		    console.log(responseSala);
+                    console.log(responseSala);
                     $.each(responseSala, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
                         $('<td>').text(item.numSala).appendTo(tr);
                         $('<td>').text(item.cine.nombre).appendTo(tr);
                         $('<td>').text(item.columna).appendTo(tr);
-	      $('<td>').text(item.fila).appendTo(tr);
-	      $('<td>').text(item.Estado).appendTo(tr);
+                        $('<td>').text(item.fila).appendTo(tr);
+                        $('<td>').text(item.Estado).appendTo(tr);
                         var accion = $('<td class="center">').appendTo(tr);
                         $('<button id="' + item.idSala + '" title="Editar" class="btn14 mr5 editar"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
                         $('<button id="' + item.idSala + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
                     });
-                    $('#example').dataTable();                
+                    $('#example').dataTable();
                 });
                 $('#example').on('click', '.editar', function () {
                     $('#altaSala').val('Alta Sala');
@@ -69,7 +69,8 @@
                         <th>Cine</th>
                         <th>Columnas</th>
                         <th>Filas</th>
-	      <th>Estado</th>
+                        <th>Estado</th>
+                        <th>Accion</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -78,7 +79,8 @@
                         <th>Cine</th>
                         <th>Columnas</th>
                         <th>Filas</th>
-	      <th>Estado</th>
+                        <th>Estado</th>
+                        <th>Accion</th>
                     </tr>
                 </tfoot>
                 <tbody id="tbody">                   

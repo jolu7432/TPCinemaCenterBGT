@@ -32,10 +32,6 @@ public class CtrlFuncion {
 
     public ArrayList listarFunciones() throws SQLException {
         return datosFunciones.listado();
-    }
-
-    public void modificaFuncion(Funcion funcion) throws SQLException{
-         datosFunciones.modificar(funcion);
     }    
     
     public Funcion existe(int idFuncion) throws SQLException {

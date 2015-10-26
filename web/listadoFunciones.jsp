@@ -16,7 +16,7 @@
             $(document).ready(function () {
                 $.post('ServletFuncion', function (responseJson) {
                     $.each(responseJson, function (index, item) {
-                        var tr = $('<tr>').appendTo($('#tbody'));
+                        var tr = $('<tr>').appendTo($('#tbody'));                     
                         var formattedDate = new Date(item.fechaYHora);
                         var y = formattedDate.getFullYear();
                         var m = formattedDate.getMonth();

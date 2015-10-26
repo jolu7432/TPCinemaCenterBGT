@@ -15,9 +15,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +36,7 @@ public class ServletFuncion extends HttpServlet {
     CtrlFuncion ctrlFuncion;
     CtrlSala ctrlSala;
     CtrlPelicula ctrlPelicula;
-    
+
     Funcion funcion;
 
     public ServletFuncion() {
@@ -96,12 +94,6 @@ public class ServletFuncion extends HttpServlet {
                     response.getWriter().write(json);
                 }
             }
-        }
-        if (flag) {
-            String json = new Gson().toJson(list);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
         }
 
     }
