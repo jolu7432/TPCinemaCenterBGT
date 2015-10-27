@@ -45,7 +45,7 @@
                 });
                 $('#example').on('click', '.borrar', function () {                 
                     $.post('ServletUsuario', {borrar: +this.id});                  
-                    location.reload();
+                    location.href = "/TPCinemaCenterBGT/abmUsuario.jsp";
                 });
                 //al hacer paginacion en la tabla
                 //$('#example').on('page', function () {

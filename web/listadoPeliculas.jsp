@@ -39,7 +39,7 @@
                 });
                 $('#example').on('click', '.borrar', function () {
                     $.post('ServletPelicula', {borrar: +this.id});
-                    location.reload();
+                    location.href = "/TPCinemaCenterBGT/abmPelicula.jsp";
                 });
                 //al hacer paginacion en la tabla
                 //$('#example').on('page', function () {

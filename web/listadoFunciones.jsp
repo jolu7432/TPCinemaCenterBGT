@@ -16,7 +16,7 @@
             $(document).ready(function () {
                 $.post('ServletFuncion', function (responseJson) {
                     $.each(responseJson, function (index, item) {
-                        var tr = $('<tr>').appendTo($('#tbody'));                     
+                        var tr = $('<tr>').appendTo($('#tbody'));
                         var formattedDate = new Date(item.fechaYHora);
                         var y = formattedDate.getFullYear();
                         var m = formattedDate.getMonth();
@@ -44,7 +44,7 @@
                 });
                 $('#example').on('click', '.borrar', function () {
                     $.post('ServletFuncion', {borrar: +this.id});
-                    location.reload();
+                    location.href = "/TPCinemaCenterBGT/abmFuncion.jsp";
                 });
                 //al hacer paginacion en la tabla
                 //$('#example').on('page', function () {
