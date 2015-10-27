@@ -15,27 +15,36 @@ import java.util.ArrayList;
  * @author Jorge
  */
 public class CtrlSala {
+
     private BDSala datosSalas = BDSala.getInstance();
-
+    
     public void altaSala(Sala peli) throws SQLException {
-        datosSalas.alta(peli);
-    }
-
-    public void bajaSala(int idFuncion) throws SQLException {
-        datosSalas.baja(idFuncion);
-    }
-
-    public ArrayList listarSalas() throws SQLException {
-        return datosSalas.listado();
+	datosSalas.alta(peli);
     }
     
-    public ArrayList listarSalasXCine(int idCine) throws SQLException {
-        return datosSalas.listadoXCine(idCine);
+    public void modificaSala(Sala peli) throws SQLException {
+	datosSalas.modificar(peli);
     }
-
+    
+    public void bajaSala(Sala peli) throws SQLException {
+	datosSalas.baja(peli);
+    }
+    
+    public ArrayList listarSalas() throws SQLException {
+	return datosSalas.listado();
+    }
+    
+     public ArrayList listarSalasAdmin() throws SQLException {
+	return datosSalas.listadoAdmin();
+    }
+     
+    public ArrayList listarSalasXCine(int idCine) throws SQLException {
+	return datosSalas.listadoXCine(idCine);
+    }
+    
     public Sala existe(int idSala) throws SQLException {
-        Sala aux = new Sala(idSala);
-        return (Sala) datosSalas.existe(aux);
+	Sala aux = new Sala(idSala);
+	return (Sala) datosSalas.existe(aux);
     }
     
 }
