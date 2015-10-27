@@ -55,39 +55,61 @@ public class BDSala implements IBD {
 
     @Override
     public void baja(Object dato) throws SQLException {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	Conexion oCon = new Conexion();
+	oCon.getConexion();
+	String update = "UPDATE Salas SET Estado= false Where idSala=" + ((Sala) dato).getIdSala();
+	try {
+	    PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(update);
+	    sentencia.execute();
+	    sentencia.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} finally {
+	    oCon.close();
+	}
     }
 
     @Override
     public void modificar(Object dato) throws SQLException {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	Conexion oCon = new Conexion();
+	oCon.getConexion();
+	String update = "UPDATE Salas SET NumSala= " + ((Sala) dato).getNumSala() + ",idCine= " + ((Sala) dato).getCine().getIdCine() + ",Columna=" + ((Sala) dato).getColumna() + ",Fila= " + ((Sala) dato).getFila() + " Where idSala=" + ((Sala) dato).getIdSala();
+	try {
+	    PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(update);
+	    sentencia.execute();
+	    sentencia.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} finally {
+	    oCon.close();
+	}
     }
 
     @Override
     public Object existe(Object dato) throws SQLException {
 	Sala resp = null;
-        Conexion oCon = new Conexion();
-        ResultSet rs = null;
-        oCon.getConexion();
-        Cine cine = null;
-        String consulta = "SELECT S.idSala,S.NumSala,S.idCine,S.Columna,S.Fila,S.Estado as EstadoSala,C.idCine,C.Nombre,C.Direccion,C.Estado as EstadoCine FROM salas as S \n"
+	Conexion oCon = new Conexion();
+	ResultSet rs = null;
+	oCon.getConexion();
+	Cine cine = null;
+	String consulta = "SELECT S.idSala,S.NumSala,S.idCine,S.Columna,S.Fila,S.Estado as EstadoSala,C.idCine,C.Nombre,C.Direccion,C.Estado as EstadoCine FROM salas as S \n"
 		+ "inner join cines C on C.idCine = S.idCine\n"
-		+ "where S.idSala = " + ((Sala)dato).getIdSala();
-        try {
-            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
-            rs = sentencia.executeQuery();
-            while (rs.next()) {
-                cine = new Cine(rs.getInt("idCine"), rs.getString("Nombre"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
-                resp = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
-            }
-            rs.close();
-            sentencia.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            oCon.close();
-            return resp;
-        }
+		+ "where S.idSala = " + ((Sala) dato).getIdSala();
+	try {
+	    PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+	    rs = sentencia.executeQuery();
+	    while (rs.next()) {
+		cine = new Cine(rs.getInt("idCine"), rs.getString("Nombre"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
+		resp = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
+	    }
+	    rs.close();
+	    sentencia.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} finally {
+	    oCon.close();
+	    return resp;
+	}
     }
 
     @Override
@@ -118,9 +140,6 @@ public class BDSala implements IBD {
 	    return listaSalas;
 	}
     }
-    
-
-    
 
     public ArrayList listadoXCine(int idCine) throws SQLException {
 
@@ -142,6 +161,33 @@ public class BDSala implements IBD {
 		cine = new Cine(rs.getInt("idCine"), rs.getString("Nombre"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
 		resp = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
 		listaSalas.add(resp);
+	    }
+	    rs.close();
+	    sentencia.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} finally {
+	    oCon.close();
+	    return listaSalas;
+	}
+    }
+    
+    public ArrayList listadoAdmin() throws SQLException {
+	Cine cine = null;
+	Sala sala = null;
+	ArrayList listaSalas = new ArrayList();
+	ResultSet rs = null;
+	Conexion oCon = new Conexion();
+	oCon.getConexion();
+	String consulta = "SELECT S.idSala,S.NumSala,S.idCine,S.Columna,S.Fila,S.Estado as EstadoSala,C.idCine,C.Nombre,C.Direccion,C.Estado as EstadoCine FROM salas as S \n"
+		+ "inner join cines C on C.idCine = S.idCine";
+	try {
+	    PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+	    rs = sentencia.executeQuery();
+	    while (rs.next()) {
+		cine = new Cine(rs.getInt("idCine"), rs.getString("Nombre"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
+		sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
+		listaSalas.add(sala);
 	    }
 	    rs.close();
 	    sentencia.close();

@@ -11,22 +11,31 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Alta de Sala</title>  
 	<script>
+	    var global;
+	    function cargarCamposForm(item) {
+		$('#txtNumero').val(item.numSala);
+		$('#txtColumnas').val(item.columna);
+		$('#txtFilas').val(item.fila);
+		$('#chkCine').val(item.cine.idCine);
+	    }
 	    $(document).ready(function () {
-		$.post('ServletSala', {idSala: <%= request.getParameter("idSala")%>}, function (responseJson) {
-		    if (<%= request.getParameter("idSala")%> != null) {
-			$.each(responseJson, function (index, item) {
-			    $('#txtNumero').val(item.numSala);
-			    $('#txtColumna').val(item.columna);
-			    $('#txtFila').val(item.fila);
-			    $('#txtCine').val(item.sala.cine.nombre);
-			});
-		    }
-		});
+
 		$.post('ServletCargaComboBox', {Accion: "Cines"}, function (responseJson) {
 		    $.each(responseJson, function (index, item) {
 			$('<option value="' + item.idCine + '">').text(item.nombre).appendTo($('#chkCine'));
 		    });
 		});
+		if (<%= request.getParameter("idSala")%> != null) {
+		    $('[name=accion]').val('editar');
+		    $('[name=idSalaEditar]').val(<%= request.getParameter("idSala")%>);
+		    $.post('ServletSala', {idSala: <%= request.getParameter("idSala")%>}, function (responseJson) {
+			$.each(responseJson, function (index, item) {
+			    global = item;
+			});
+			setTimeout('cargarCamposForm(global)', 500);
+		    });
+		}
+
 	    });
 	</script>
     </head>
@@ -45,7 +54,7 @@
                         <input type="text" class="form-control" id="txtColumnas" placeholder="Columnas" name="columnas" required>
                     </div>
 		    <div class="form-group col-md-2">
-                        <label for="txtColumnas">Cantidad de Filas</label>
+                        <label for="txtFilas">Cantidad de Filas</label>
                         <input type="text" class="form-control" id="txtFilas" placeholder="Filas" name="filas" required>
                     </div>
                 </div>
@@ -57,7 +66,8 @@
                             <option value="">Seleccionar...</option> 
                         </select>
                     </div>
-		    <input type="hidden" name="guardar" value="guardar">
+		    <input type="hidden" name="accion" value="guardar">
+		    <input type="hidden" name="idSalaEditar" value="">
 		    <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
             </form>
         </div>
