@@ -77,6 +77,10 @@ public class Sala {
 
     public Sala(int idSala) {
         this.idSala = idSala;
+    }    
+    public Sala(int idSala,Cine cine) {
+        this.idSala = idSala;
+        this.cine = cine;
     }
 
 }

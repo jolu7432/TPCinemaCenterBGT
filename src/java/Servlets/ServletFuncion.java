@@ -13,9 +13,9 @@ import Modelo.Pelicula;
 import Modelo.Sala;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,14 +32,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletFuncion", urlPatterns = {"/ServletFuncion"})
 public class ServletFuncion extends HttpServlet {
-    
+
     CtrlFuncion ctrlFuncion;
     CtrlSala ctrlSala;
     CtrlPelicula ctrlPelicula;
-    
+
     Funcion funcion;
 
-    public ServletFuncion(){
+    public ServletFuncion() {
         this.ctrlFuncion = new CtrlFuncion();
     }
 
@@ -53,53 +53,47 @@ public class ServletFuncion extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
-        String idFuncionEditar = request.getParameter("idF");
+            throws ServletException, IOException, SQLException, ParseException {
+        String accion = request.getParameter("accion");
         String idFuncion = request.getParameter("idFuncion");
-        if(request.getParameter("nombre") != null)
-        {
-            Sala s = ctrlSala.existe(Integer.parseInt(request.getParameter("sala")));
-            Pelicula p = ctrlPelicula.existe(Integer.parseInt(request.getParameter("pelicula")));
-            funcion = new Funcion(0, Date.valueOf(request.getParameter("fechaYHora")), Integer.parseInt(request.getParameter("duracion")), Float.parseFloat(request.getParameter("precio")), s, p, Boolean.parseBoolean("estado"));           
-            if(idFuncionEditar.equals(""))
-            {
-                try {
-                    ctrlFuncion.altaFuncion(funcion);
-                } catch (SQLException ex) {
-                Logger.getLogger(ServletRegistro.class.getName()).log(Level.SEVERE, null, ex);
+        if (accion != null) {
+            String fechaRequest = request.getParameter("fechaYHora").replace(" ", "-").replace(":", "-");
+            String[] f = fechaRequest.split("-");
+            java.util.Date fecha = new Timestamp(Integer.parseInt(f[0]) - 1900, Integer.parseInt(f[1]) - 1, Integer.parseInt(f[2]), Integer.parseInt(f[3]), Integer.parseInt(f[4]), 0, 0);
+            Funcion fun = new Funcion(0, fecha, Integer.parseInt(request.getParameter("duracion")), Float.parseFloat(request.getParameter("precio")), new Sala(Integer.parseInt(request.getParameter("sala"))), new Pelicula(Integer.parseInt(request.getParameter("pelicula"))), true);
+            if (accion.equals("guardar")) {
+                ctrlFuncion.altaFuncion(fun);
+            }
+            if (accion.equals("editar")) {
+                fun.setIdFuncion(Integer.parseInt(request.getParameter("idFuncionEditar")));
+                ctrlFuncion.modificaFuncion(fun);
+            }
+            RequestDispatcher rd = request.getRequestDispatcher("/abmFuncion.jsp");
+            rd.forward(request, response);
+
+        } else {
+            if (request.getParameter("borrar") != null) {
+                ctrlFuncion.bajaFuncion(Integer.parseInt(request.getParameter("borrar")));
+            } else {
+                ArrayList<Funcion> list = null;
+                boolean flag = false;
+                if (idFuncion == null) {
+                    list = ctrlFuncion.listarFunciones();
+                    flag = true;
+                } else {
+                    if (!idFuncion.equals("")) {
+                        list = new ArrayList<>();
+                        list.add(ctrlFuncion.existe(Integer.parseInt(idFuncion)));
+                        flag = true;
+                    }
+                }
+                if (flag) {
+                    String json = new Gson().toJson(list);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
                 }
             }
-            else
-            {
-                funcion.setIdFuncion(Integer.parseInt(idFuncionEditar));
-                ctrlFuncion.modificaFuncion(funcion);
-            }
-                RequestDispatcher rd = request.getRequestDispatcher("/abmCine.jsp");
-                rd.forward(request, response);
-            
-        }   
-        if(request.getParameter("borrar") != null)
-        {
-            ctrlFuncion.bajaFuncion(Integer.parseInt(request.getParameter("borrar")));
-        }
-        
-        ArrayList<Funcion> list = null;
-        boolean flag = false;
-        if (idFuncion == null) {
-            list = ctrlFuncion.listarFunciones();
-            flag = true;
-        } else {
-            if (!idFuncion.equals("0")) {
-                list = new ArrayList<>();
-                list.add(ctrlFuncion.existe(Integer.parseInt(idFuncion)));
-                flag = true;
-            }
-        }
-        if (flag) {
-            String json = new Gson().toJson(list);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
         }
 
     }
@@ -120,6 +114,8 @@ public class ServletFuncion extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(ServletFuncion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(ServletFuncion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -137,6 +133,8 @@ public class ServletFuncion extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
+            Logger.getLogger(ServletFuncion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(ServletFuncion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

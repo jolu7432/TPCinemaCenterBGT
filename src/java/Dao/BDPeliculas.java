@@ -147,34 +147,4 @@ public class BDPeliculas implements IBD {
             return listaPeliculas;
         }
     }
-
-    public ArrayList listadoXSala(int idSala) throws SQLException {
-
-        Pelicula resp = null;
-        Conexion oCon = new Conexion();
-        ResultSet rs = null;
-        ArrayList listaPeliculas = new ArrayList();
-        oCon.getConexion();
-        String consulta = "SELECT P.idPelicula,P.Nombre,P.Director,P.DuracionPeli,P.Descripcion,P.Estado,P.UrlImagen FROM peliculas as P \n"
-                + "inner join funciones F on F.idPelicula = P.idPelicula\n"
-                + "inner join salas S on S.idSala = F.idSala\n"
-                + "where P.Estado = 1\n"
-                + "and S.idSala =" + idSala;
-        try {
-            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
-            rs = sentencia.executeQuery();
-            while (rs.next()) {
-                resp = new Pelicula(rs.getInt("idPelicula"), rs.getString("Nombre"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("Estado"), rs.getString("UrlImagen"));
-                listaPeliculas.add(resp);
-            }
-            rs.close();
-            sentencia.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            oCon.close();
-            return listaPeliculas;
-        }
-    }
-
 }

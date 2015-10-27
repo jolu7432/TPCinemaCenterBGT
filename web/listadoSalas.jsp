@@ -21,8 +21,8 @@
                         $('<td>').text(item.numSala).appendTo(tr);
                         $('<td>').text(item.cine.nombre).appendTo(tr);
                         $('<td>').text(item.columna).appendTo(tr);
-	      $('<td>').text(item.fila).appendTo(tr);
-	      $('<td>').text(item.Estado).appendTo(tr);
+                        $('<td>').text(item.fila).appendTo(tr);
+                        $('<td>').text(item.Estado).appendTo(tr);
                         var accion = $('<td class="center">').appendTo(tr);
                         $('<button id="' + item.idSala + '" title="Editar" class="btn14 mr5 editar"><img src="iconos/editar.png" alt="Editar">').appendTo(accion);
                         $('<button id="' + item.idSala + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);

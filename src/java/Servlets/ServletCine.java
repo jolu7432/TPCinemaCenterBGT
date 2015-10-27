@@ -70,8 +70,7 @@ public class ServletCine extends HttpServlet {
         }   
         if(request.getParameter("borrar") != null)
         {
-            ctrlCine.bajaCine(Integer.parseInt(request.getParameter("borrar")));
-
+            ctrlCine.bajaCine(Integer.parseInt(request.getParameter("borrar")));           
         }
         
         ArrayList<Cine> list = null;

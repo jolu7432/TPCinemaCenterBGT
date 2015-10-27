@@ -11,13 +11,14 @@ import java.util.Date;
  *
  * @author Jorge
  */
-public class Funcion {  
+public class Funcion {
+
     private int idFuncion;
     private Date fechaYHora;
     private int duracion;
     private float precio;
     private Sala sala;
-    private Pelicula pelicula; 
+    private Pelicula pelicula;
     private boolean estado;
 
     public Date getFechaYHora() {
@@ -58,17 +59,25 @@ public class Funcion {
 
     public void setPelicula(Pelicula pelicula) {
         this.pelicula = pelicula;
-    }   
-    
+    }
+
     public int getIdFuncion() {
         return idFuncion;
     }
 
     public void setIdFuncion(int idFuncion) {
         this.idFuncion = idFuncion;
-    }   
+    }
 
-    public Funcion(int idFuncion, Date fechaYHora, int duracion, float precio, Sala sala, Pelicula pelicula, boolean estado) {
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public Funcion(int idFuncion, Date fechaYHora, int duracion, float precio, Sala sala, Pelicula pelicula,boolean estado) {
         this.idFuncion = idFuncion;
         this.fechaYHora = fechaYHora;
         this.duracion = duracion;
@@ -85,14 +94,5 @@ public class Funcion {
     public Funcion() {
     }
 
-    public boolean isEstado() {
-        return estado;
-    }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
-    
-    
-    
 }
