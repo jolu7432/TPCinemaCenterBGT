@@ -31,7 +31,7 @@
                         <label for="txtDuracion">Duracion</label>
                         <input type="text" class="form-control" id="txtDuracion" placeholder="Duracion" name="duracion" required>
                     </div>
-                    <div class="form-group col-md-2" id="chkEstado">
+                    <div class="form-group col-md-1">
                         <label for="chkEstado">Disponible</label>
                         <input type="checkbox" class="form-control" id="chkEstado" name="chkestado">
                     </div>

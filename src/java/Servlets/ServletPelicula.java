@@ -57,6 +57,7 @@ public class ServletPelicula extends HttpServlet {
 	    ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
 	    List items = servlet_up.parseRequest(request);
 	    String urlImg = "";
+	    String mirar = "";
 	    Hashtable datosPelicula = new Hashtable();
 	    for (int i = 0; i < items.size(); i++) {
 		FileItem item = (FileItem) items.get(i);
@@ -70,12 +71,16 @@ public class ServletPelicula extends HttpServlet {
 			item.write(fileFoto);
 		    }
 		} else {
+		    //if(item.getFieldName().equals("chkestado"))
+		    mirar += " " +item.getFieldName();
 		    datosPelicula.put(item.getFieldName(), new String(item.getString().getBytes("iso-8859-1"), "UTF-8"));
 		}
 	    }
 	    if (urlImg.equals("")) {
 		urlImg = (String) datosPelicula.get("imgdefecto");
 	    }
+	    if(mirar != " ")
+		mirar += " ";
 	    Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(), datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
 	    String estado = (String) datosPelicula.get("chkestado");
 	    boolean disponible = false;
