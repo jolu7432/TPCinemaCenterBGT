@@ -46,7 +46,9 @@
                                 var tr = $('<tr>').appendTo($('#salita'));
                                 for (f = 0; f < item.sala.columna ; f++) {
                                     var td = $('<td>').appendTo(tr); 
-                                    $('<img src="img/butacaD.png">').appendTo(td);
+                                    $('<img src="img/butacaD.png">').appendTo(td); 
+                                    //lo puse para armar la sala pero habria q fijarse las butacas ocupadas y ponerle la img butacaOcu.png
+                                    // admas de todo lo demas je
                                 }
                             }
                         });
