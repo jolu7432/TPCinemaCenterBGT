@@ -77,14 +77,20 @@ public class ServletFuncion extends HttpServlet {
             } else {
                 ArrayList<Funcion> list = null;
                 boolean flag = false;
-                if (idFuncion == null) {
-                    list = ctrlFuncion.listarFunciones();
+
+                if (request.getParameter("idPelicula") != null) {
+                    list = ctrlFuncion.listarFuncionesXPelicula(Integer.parseInt(request.getParameter("idPelicula")));
                     flag = true;
                 } else {
-                    if (!idFuncion.equals("")) {
-                        list = new ArrayList<>();
-                        list.add(ctrlFuncion.existe(Integer.parseInt(idFuncion)));
+                    if (idFuncion == null) {
+                        list = ctrlFuncion.listarFunciones();
                         flag = true;
+                    } else {
+                        if (!idFuncion.equals("")) {
+                            list = new ArrayList<>();
+                            list.add(ctrlFuncion.existe(Integer.parseInt(idFuncion)));
+                            flag = true;
+                        }
                     }
                 }
                 if (flag) {

@@ -61,6 +61,9 @@ public class ServletCargaComboBox extends HttpServlet {
                     list = ctrlSala.listarSalasXCine(Integer.parseInt(dato));
                 }
                 break;
+            case "SalasTodas":
+                list = ctrlSala.listarSalas();
+                break;
             case "Peliculas":
                 list = ctrlPelicula.listarPeliculas();
                 break;

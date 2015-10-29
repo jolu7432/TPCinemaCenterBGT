@@ -42,5 +42,9 @@ public class CtrlFuncion {
     public ArrayList validaFuncion(Funcion funcion) throws SQLException{       
         return datosFunciones.validaFuncion(funcion);
     }
+    
+    public ArrayList listarFuncionesXPelicula(int idPelicula) throws SQLException {
+        return datosFunciones.listadoXPelicula(idPelicula);
+    }    
 
 }

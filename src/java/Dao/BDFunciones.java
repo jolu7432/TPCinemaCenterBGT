@@ -195,4 +195,35 @@ public class BDFunciones implements IBD {
             return listaFunciones;
         }
     }
+    
+    public ArrayList listadoXPelicula(int idPelicula) throws SQLException {
+        Funcion resp = null;
+        Sala sala = null;
+        Cine cine = null;
+        Pelicula peli = null;
+        Conexion oCon = new Conexion();
+        ResultSet rs = null;
+        ArrayList listaFunciones = new ArrayList();
+        oCon.getConexion();
+        String consulta = "SELECT P.idPelicula,P.Nombre as NombrePeli,P.Director,P.DuracionPeli,P.Descripcion,P.Estado as EstadoPeli, P.UrlImagen,C.idCine,C.Nombre as NombreCine,C.Direccion,C.Estado as EstadoCine,S.idSala,S.NumSala,S.Columna,S.Fila,S.Estado as EstadoSala,funciones.idFuncion,funciones.FechaYHora,funciones.Duracion as DuracionFuncion,funciones.Precio,funciones.Estado as EstadoFuncion FROM funciones inner join salas S on S.idSala = funciones.idSala inner join cines C on C.idCine = S.idCine inner join peliculas P on P.idPelicula = funciones.idPelicula where funciones.Estado = 1 and funciones.IdPelicula = "+idPelicula;
+        try {
+            PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+            rs = sentencia.executeQuery();
+            while (rs.next()) {
+                peli = new Pelicula(rs.getInt("idPelicula"), rs.getString("NombrePeli"), rs.getString("Director"), rs.getInt("DuracionPeli"), rs.getString("Descripcion"), rs.getBoolean("EstadoPeli"), rs.getString("UrlImagen"));
+                cine = new Cine(rs.getInt("idCine"), rs.getString("NombreCine"), rs.getString("Direccion"), rs.getBoolean("EstadoCine"));
+                sala = new Sala(rs.getInt("idSala"), rs.getInt("NumSala"), cine, rs.getInt("Columna"), rs.getInt("Fila"), rs.getBoolean("EstadoSala"));
+                Date newDate = rs.getTimestamp("FechaYHora");
+                resp = new Funcion(rs.getInt("idFuncion"), newDate, rs.getInt("DuracionFuncion"), rs.getFloat("Precio"), sala, peli, rs.getBoolean("EstadoFuncion"));
+                listaFunciones.add(resp);
+            }
+            rs.close();
+            sentencia.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            oCon.close();
+            return listaFunciones;
+        }
+    }
 }
