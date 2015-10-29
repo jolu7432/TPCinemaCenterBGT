@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alta de Peliculas</title>  
-        
+
     </head>
     <body>   
         <jsp:include page="ServletValidaLoginRol" flush="true"/> 
@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group col-md-2" id="chkEstado">
                         <label for="chkEstado">Disponible</label>
-                        <input type="checkbox" class="form-control" id="chkEstado" name="estado">
+                        <input type="checkbox" class="form-control" id="chkEstado" name="chkestado">
                     </div>
                     <br>
                     <div class="col-md-10">
@@ -43,27 +43,31 @@
                         </div>                
                         <div class="form-group">
                             <label for="UrlImagen"></label>
-                            <input type="file" id="UrlImagen" name="urlImagen">
+                            <input type="file" id="UrlImagen" name="urlImagen" value="">
                             <p class="help-block">Cargue una imagen</p>
+	         <input type="hidden" id="ImgDefecto" name="imgdefecto" value="movie-default.png">
                         </div>
+			<div id="moddiv"></div>
                         <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
                     </div> 
             </form>
         </div>
     </body>
     <script>
-            $(document).ready(function () {
-                $.post('ServletPelicula', {idPelicula: <%= request.getParameter("idPelicula")%>}, function (responseJson) {
-                    if (<%= request.getParameter("idPelicula")%> != null) {
-                        $.each(responseJson, function (index, item) {
-                            $('#txtNombre').val(item.nombre);
-                            $('#txtDirector').val(item.director);
-                            $('#txtDuracion').val(item.duracion);
-                            $('#chkEstado  input[type=checkbox]').prop('checked', item.estado);
-                            $('#txtDescripcion').val(item.descripcion);
-                        });
-                    }
-                });
-            });
-        </script>
+	$(document).ready(function () {
+	    $.post('ServletPelicula', {idPelicula: <%= request.getParameter("idPelicula")%>}, function (responseJson) {
+		if (<%= request.getParameter("idPelicula")%> != null) {
+		    $.each(responseJson, function (index, item) {
+			$('#txtNombre').val(item.nombre);
+			$('#txtDirector').val(item.director);
+			$('#txtDuracion').val(item.duracion);
+			$('#chkEstado  input[type=checkbox]').prop('checked', item.estado);
+			$('#txtDescripcion').val(item.descripcion);
+			$('<input type="hidden" id="modifica" name="Modifica" value="<%= request.getParameter("idPelicula")%>">').appendTo($('#moddiv'));
+			$('#ImgDefecto').val(item.urlImagen);
+		    });
+		}
+	    });
+	});
+    </script>
 </html>
