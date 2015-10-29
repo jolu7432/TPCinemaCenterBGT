@@ -10,7 +10,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Busqueda Avanzada</title> 
-
     </head>    
     <body>
         <%--<jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> --%> 
@@ -24,25 +23,25 @@
                     <div class="form-group">
                         <label for="chkCine">Cine</label>                      
                         <select class="form-control" id="chkCine" placeholder="Cine" name="cine">
-                            <option value="">Seleccionar...</option> 
+                            <option value="0">Seleccionar...</option> 
                         </select>
                     </div>                
                     <div class="form-group">
                         <label for="chkSala">Sala</label>                       
                         <select class="form-control" id="chkSala" placeholder="Sala" name="sala">
-                            <option value="">Seleccionar...</option> 
+                            <option value="0">Seleccionar...</option> 
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="chkPelicula">Pelicula</label>
                         <select class="form-control" id="chkPelicula" placeholder="Pelicula" name="pelicula"> 
-                            <option value="">Seleccionar...</option> 
+                            <option value="0">Seleccionar...</option> 
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="chkNumeroButacas">Numero Butacas</label>
-                        <select class="form-control" id="chkFunciones" placeholder="NumeroButacas" name="numeroButacas"> 
-                            <option value="">Seleccionar...</option> 
+                        <select class="form-control" id="chkNumeroButacas" placeholder="NumeroButacas" name="numeroButacas"> 
+                            <option value="0">Seleccionar...</option> 
                             <option value="1">1</option> 
                             <option value="2">2</option> 
                             <option value="3">3</option> 
@@ -70,40 +69,12 @@
             </div>
         </form>
         <div class="table-responsive">
-            <table id="example" class="dataTable" cellspacing="0" width="100%">
-                <thead>
-                    <tr>                        
-                        <th>Fecha Y Hora</th>
-                        <th>Precio</th>
-                        <th>Duracion</th>
-                        <th>Cine</th>
-                        <th>Sala</th>
-                        <th>Pelicula</th>  
-                        <th>Butacas Disponibles</th>
-                        <th>Accion</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>                        
-                        <th>Fecha Y Hora</th>
-                        <th>Precio</th>
-                        <th>Duracion</th>
-                        <th>Cine</th>
-                        <th>Sala</th>
-                        <th>Pelicula</th> 
-                        <th>Butacas Disponibles</th> 
-                        <th>Accion</th>
-                    </tr>
-                </tfoot>
-                <tbody id="tbody">                   
-                </tbody>
-            </table>
+            <div id="divTabla"></div>          
         </div>    
     </body>
     <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/css/jquery.dataTables.css">       
     <script type="text/javascript" charset="UTF-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>   
     <script>
-        var idPelicula;
         function cargarComboCines() {
             $.post('ServletCargaComboBox', {Accion: "Cines"}, function (responseJson) {
                 $.each(responseJson, function (index, item) {
@@ -136,8 +107,9 @@
             cargarComboSalas();
             cargarComboPeliculas();
             $('#btnBuscar').click(function () {
-                $('#example td').remove();
-                $.post('ServletFuncion', function (responseJson) {
+                $('#divTabla').html("");
+                crearTabla();
+                $.post('ServletBusquedaAvanzada', {idCine: $('#chkCine').val(), idSala: $('#chkSala').val(), idPelicula: $('#chkPelicula').val() , NumeroButacas: $('#chkNumeroButacas').val()}, function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
                         var formattedDate = new Date(item.fechaYHora);
@@ -157,19 +129,39 @@
                         var accion = $('<td class="center">').appendTo(tr);
                         $('<input type="button" id="' + item.idFuncion + '" title="Reservar" value="Reservar" class="btn btn-primary btn-lg reservar">').appendTo(accion);
                         // $('<button id="' + item.idFuncion + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
-                        idPelicula = item.pelicula.idPelicula;
                     });
                     $('#example').dataTable();
                 });
-            });
-            $('#example').on('click', '.reservar', function () {
-                //$('#altaFuncion').val('Alta Funcion');
-                //$('#formAltaFuncion').text('');
-                //$('#altaFuncion').val('Cancelar');
-                //$('#formAltaFuncion').load('altaFuncion.jsp?idFuncion=' + this.id);
-                location.href = "/TPCinemaCenterBGT/elegirButaca.jsp?idFuncion=" + this.id + "&idPelicula=" + idPelicula;
+                $('#example').on('click', '.reservar', function () {
+                    location.href = "/TPCinemaCenterBGT/elegirButaca.jsp?idFuncion=" + this.id;
+                });
             });
         });
+
+        function crearTabla() {
+            var tabla = $('<table id="example" class="dataTable" cellspacing="0" width="100%">').appendTo($('#divTabla'));
+            var thead = $('<thead>').appendTo(tabla);
+            var tr = $('<tr>').appendTo(thead);
+            $('<th>Fecha Y Hora</th>').appendTo(tr);
+            $('<th>Precio</th>').appendTo(tr);
+            $('<th>Duracion</th>').appendTo(tr);
+            $('<th>Cine</th>').appendTo(tr);
+            $('<th>Sala</th>').appendTo(tr);
+            $('<th>Pelicula</th>').appendTo(tr);
+            $('<th>Butacas Disponibles</th>').appendTo(tr);
+            $('<th>Accion</th>').appendTo(tr);
+            var tfoot = $('<tfoot>').appendTo(tabla);
+            var trf = $('<tr>').appendTo(tfoot);
+            $('<th>Fecha Y Hora</th>').appendTo(trf);
+            $('<th>Precio</th>').appendTo(trf);
+            $('<th>Duracion</th>').appendTo(trf);
+            $('<th>Cine</th>').appendTo(trf);
+            $('<th>Sala</th>').appendTo(trf);
+            $('<th>Pelicula</th>').appendTo(trf);
+            $('<th>Butacas Disponibles</th>').appendTo(trf);
+            $('<th>Accion</th>').appendTo(trf);
+            $('<tbody id="tbody">').appendTo(tabla);
+        }
     </script>
     <style>
         .reservar{
