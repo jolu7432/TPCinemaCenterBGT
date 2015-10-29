@@ -44,7 +44,7 @@ public class CtrlFuncion {
     }
     
     public ArrayList listarFuncionesXPelicula(int idPelicula) throws SQLException {
-        return datosFunciones.listado();
+        return datosFunciones.listadoXPelicula(idPelicula);
     }    
 
 }
