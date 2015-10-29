@@ -26,6 +26,10 @@ public class CtrlPelicula {
     public void bajaPelicula(int peli) throws SQLException {
         datosPeliculas.baja(peli);
     }
+    
+    public void modificapelicula(Pelicula peli) throws SQLException{
+	datosPeliculas.modificar(peli);
+    }
 
     public ArrayList listarPeliculas() throws SQLException {
         return datosPeliculas.listado();

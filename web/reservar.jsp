@@ -55,7 +55,7 @@
                         $('<td>').text(item.sala.cine.nombre).appendTo(tr);
                         $('<td>').text(item.sala.numSala).appendTo(tr);
                         var accion = $('<td class="center">').appendTo(tr);
-                        $('<a href="#sala1" id="' + item.idFuncion + '"  class="btn btn-secondary reservar">Reservar</a>').appendTo(accion);
+                        $('<a href="elegirButaca.jsp?idFuncion=' + item.idFuncion  + '"  id="' + item.idFuncion + '"  class="btn btn-secondary reservar">Reservar</a>').appendTo(accion);
                        
                     });
                     $('#example').dataTable();
@@ -92,12 +92,7 @@
             </table>
             </div>
             </div>
-                
-                
-            <div class="col-md-12" id="sala" ><br><br>
-                <a name="sala1"> asdasdasdasdasda</a>
-                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            </div>            
+                           
             
         </div>
         

@@ -29,7 +29,8 @@
                     <input type="text" class="form-control" id="txtDNI" placeholder="DNI" name="dni" required>
                 </div>
                 <div class="form-group" id="chkAdm">
-                    <label for="chkAdm">Administrador?</label><input type="checkbox" class="form-control" id="chkAdm" name="administrador">
+                    <label for="chkAdm">Administrador?</label>
+	<input type="checkbox" class="form-control" id="chkAdm" name="administrador">
                 </div>
                 <div class="form-group">
                     <label for="txtUsuario">Usuario</label>

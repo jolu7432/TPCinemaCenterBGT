@@ -38,12 +38,11 @@ public class ServletPelicula extends HttpServlet {
     CtrlPelicula ctrlPelicula;
 
     public ServletPelicula() {
-        this.ctrlPelicula = new CtrlPelicula();
+	this.ctrlPelicula = new CtrlPelicula();
     }
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -51,66 +50,80 @@ public class ServletPelicula extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, FileUploadException, Exception {
-        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        if (isMultipart) {
-            FileItemFactory file_factory = new DiskFileItemFactory();
-            ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
-            List items = servlet_up.parseRequest(request);
-            String urlImg = "";
-            Hashtable datosPelicula = new Hashtable();
-            for (int i = 0; i < items.size(); i++) {
-                FileItem item = (FileItem) items.get(i);
-                if (!item.isFormField()) {
-                    urlImg = item.getName();
-                    if (!urlImg.equals("")) {
-                        String dir = getServletContext().getRealPath("/");
-                        String dir2 = dir.replaceAll("web", "img");
-                        String dir3 = dir2.replaceAll("build", "web");
-                        File fileFoto = new File(dir3, item.getName());
-                        item.write(fileFoto);
-                    }
-                } else {
-                    datosPelicula.put(item.getFieldName(), new String (item.getString().getBytes ("iso-8859-1"), "UTF-8") );
-                }
-            }
-            Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(), datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
-            ctrlPelicula.altaPelicula(nueva);
-            RequestDispatcher aux = request.getRequestDispatcher("/abmPelicula.jsp");
-            aux.include(request, response);
-            
-        }
-        if(request.getParameter("borrar") != null)
-        {
-            String idPeli= request.getParameter("borrar");
-            ctrlPelicula.bajaPelicula(Integer.parseInt(idPeli));
-        }
-        else {
-            String idPelicula = request.getParameter("idPelicula");
-            ArrayList<Pelicula> list = null;
-            boolean flag = false;
-            if (idPelicula == null) {
-                String url = request.getParameter("urlPage");
-                if(url != null ){
-                    list = ctrlPelicula.listarPeliculas();
-                }else{
-                    list = ctrlPelicula.listarPeliculasAdmin();
-                }                
-                flag = true;
-            } else {
-                if (!idPelicula.equals("0")) {
-                    list = new ArrayList<>();
-                    list.add(ctrlPelicula.existe(Integer.parseInt(idPelicula)));
-                    flag = true;
-                }
-            }
-            if (flag) {
-                String json = new Gson().toJson(list);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(json);
-            }
-        }
+	    throws ServletException, IOException, SQLException, FileUploadException, Exception {
+	boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+	if (isMultipart) {
+	    FileItemFactory file_factory = new DiskFileItemFactory();
+	    ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
+	    List items = servlet_up.parseRequest(request);
+	    String urlImg = "";
+	    Hashtable datosPelicula = new Hashtable();
+	    for (int i = 0; i < items.size(); i++) {
+		FileItem item = (FileItem) items.get(i);
+		if (!item.isFormField()) {
+		    urlImg = item.getName();
+		    if (!urlImg.equals("")) {
+			String dir = getServletContext().getRealPath("/");
+			String dir2 = dir.replaceAll("web", "img");
+			String dir3 = dir2.replaceAll("build", "web");
+			File fileFoto = new File(dir3, item.getName());
+			item.write(fileFoto);
+		    }
+		} else {
+		    datosPelicula.put(item.getFieldName(), new String(item.getString().getBytes("iso-8859-1"), "UTF-8"));
+		}
+	    }
+	    if (urlImg.equals("")) {
+		urlImg = (String) datosPelicula.get("imgdefecto");
+	    }
+	    Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(), datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
+	    String estado = (String) datosPelicula.get("chkestado");
+	    boolean disponible = false;
+	    if(estado != null){
+		disponible = true;
+		nueva.setEstado(disponible);
+	    }
+	    String mod = (String) datosPelicula.get("Modifica");
+	    if (mod == null) {
+		ctrlPelicula.altaPelicula(nueva);
+	    } else {
+		int id = Integer.parseInt((String) datosPelicula.get("Modifica"));
+		nueva.setIdPelicula(id);
+		ctrlPelicula.modificapelicula(nueva);
+	    }
+	    RequestDispatcher aux = request.getRequestDispatcher("/abmPelicula.jsp");
+	    aux.include(request, response);
+
+	}
+	if (request.getParameter("borrar") != null) {
+	    String idPeli = request.getParameter("borrar");
+	    ctrlPelicula.bajaPelicula(Integer.parseInt(idPeli));
+	} else {
+	    String idPelicula = request.getParameter("idPelicula");
+	    ArrayList<Pelicula> list = null;
+	    boolean flag = false;
+	    if (idPelicula == null) {
+		String url = request.getParameter("urlPage");
+		if (url != null) {
+		    list = ctrlPelicula.listarPeliculas();
+		} else {
+		    list = ctrlPelicula.listarPeliculasAdmin();
+		}
+		flag = true;
+	    } else {
+		if (!idPelicula.equals("0")) {
+		    list = new ArrayList<>();
+		    list.add(ctrlPelicula.existe(Integer.parseInt(idPelicula)));
+		    flag = true;
+		}
+	    }
+	    if (flag) {
+		String json = new Gson().toJson(list);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);
+	    }
+	}
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -124,14 +137,14 @@ public class ServletPelicula extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	    throws ServletException, IOException {
+	try {
+	    processRequest(request, response);
+	} catch (SQLException ex) {
+	    Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
+	} catch (Exception ex) {
+	    Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
     /**
@@ -144,14 +157,14 @@ public class ServletPelicula extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	    throws ServletException, IOException {
+	try {
+	    processRequest(request, response);
+	} catch (SQLException ex) {
+	    Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
+	} catch (Exception ex) {
+	    Logger.getLogger(ServletPelicula.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
     /**
@@ -161,7 +174,7 @@ public class ServletPelicula extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+	return "Short description";
     }// </editor-fold>
 
 }
