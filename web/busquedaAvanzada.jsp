@@ -103,6 +103,7 @@
     <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/css/jquery.dataTables.css">       
     <script type="text/javascript" charset="UTF-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>   
     <script>
+        var idPelicula;
         function cargarComboCines() {
             $.post('ServletCargaComboBox', {Accion: "Cines"}, function (responseJson) {
                 $.each(responseJson, function (index, item) {
@@ -135,7 +136,7 @@
             cargarComboSalas();
             cargarComboPeliculas();
             $('#btnBuscar').click(function () {
-                $('#example td').remove();                 
+                $('#example td').remove();
                 $.post('ServletFuncion', function (responseJson) {
                     $.each(responseJson, function (index, item) {
                         var tr = $('<tr>').appendTo($('#tbody'));
@@ -156,6 +157,7 @@
                         var accion = $('<td class="center">').appendTo(tr);
                         $('<input type="button" id="' + item.idFuncion + '" title="Reservar" value="Reservar" class="btn btn-primary btn-lg reservar">').appendTo(accion);
                         // $('<button id="' + item.idFuncion + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
+                        idPelicula = item.pelicula.idPelicula;
                     });
                     $('#example').dataTable();
                 });
@@ -165,7 +167,7 @@
                 //$('#formAltaFuncion').text('');
                 //$('#altaFuncion').val('Cancelar');
                 //$('#formAltaFuncion').load('altaFuncion.jsp?idFuncion=' + this.id);
-                location.href = "/TPCinemaCenterBGT/reservar.jsp?idFuncion=" + this.id;
+                location.href = "/TPCinemaCenterBGT/elegirButaca.jsp?idFuncion=" + this.id + "&idPelicula=" + idPelicula;
             });
         });
     </script>
