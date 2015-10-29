@@ -20,8 +20,6 @@
 
        
         <h1>Elegir Butaca</h1>
-        <form>
-            <label>Cantidad de butacas:</label>
             <form method="post" action="#">
                 <div class="row">
                 <div class="col-md-12">
@@ -39,16 +37,25 @@
     </body>
         <script>
             $(document).ready(function () {
-                    $.post('ServletFuncion',{ idFuncion: <%= request.getParameter("idFuncion") %> }, function (responseJson) {
+                    $.post('ServletReservar',{ idFuncion: <%= request.getParameter("idFuncion") %> }, function (responseJson) {
                         $.each(responseJson, function (index, item) {
+                            // falta que te traiga la sala que seria item.sala
+                            // y hacer el metodo que te traiga las reservas de esa funcion item.reserva
+                            
+                            
+                            
+                            var numButaca;
                             for (i = 0; i < item.sala.fila; i++) {
                                 $('<br>').appendTo($('#salita'));
                                 var tr = $('<tr>').appendTo($('#salita'));
                                 for (f = 0; f < item.sala.columna ; f++) {
                                     var td = $('<td>').appendTo(tr); 
-                                    $('<img src="img/butacaD.png">').appendTo(td); 
-                                    //lo puse para armar la sala pero habria q fijarse las butacas ocupadas y ponerle la img butacaOcu.png
-                                    // admas de todo lo demas je
+                                    numButaca++;
+                                    if(item.reserva.butaca === numButaca)
+                                        $('<img src="img/butacaOcu.png">').appendTo(td); 
+                                    else
+                                        $('<img src="img/butacaD.png">').appendTo(td); 
+ 
                                 }
                             }
                         });
