@@ -86,6 +86,9 @@ public class ServletFuncion extends HttpServlet {
                         list.add(ctrlFuncion.existe(Integer.parseInt(idFuncion)));
                         flag = true;
                     }
+                    if (request.getParameter("idPelicula") != null) {
+                        list = ctrlFuncion.listarFuncionesXPelicula(Integer.parseInt(request.getParameter("idPelicula")));
+                    }
                 }
                 if (flag) {
                     String json = new Gson().toJson(list);
