@@ -125,7 +125,7 @@
                         $('<td>').text(item.sala.cine.nombre).appendTo(tr);
                         $('<td>').text(item.sala.numSala).appendTo(tr);
                         $('<td>').text(item.pelicula.nombre).appendTo(tr);
-                        $('<td>').text("0").appendTo(tr); //cantidad de butacas disponibles
+                        //$('<td>').text("0").appendTo(tr); //cantidad de butacas disponibles
                         var accion = $('<td class="center">').appendTo(tr);
                         $('<input type="button" id="' + item.idFuncion + '" title="Reservar" value="Reservar" class="btn btn-primary btn-lg reservar">').appendTo(accion);
                         // $('<button id="' + item.idFuncion + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
@@ -148,7 +148,7 @@
             $('<th>Cine</th>').appendTo(tr);
             $('<th>Sala</th>').appendTo(tr);
             $('<th>Pelicula</th>').appendTo(tr);
-            $('<th>Butacas Disponibles</th>').appendTo(tr);
+            //$('<th>Butacas Disponibles</th>').appendTo(tr);
             $('<th>Accion</th>').appendTo(tr);
             var tfoot = $('<tfoot>').appendTo(tabla);
             var trf = $('<tr>').appendTo(tfoot);
@@ -158,7 +158,7 @@
             $('<th>Cine</th>').appendTo(trf);
             $('<th>Sala</th>').appendTo(trf);
             $('<th>Pelicula</th>').appendTo(trf);
-            $('<th>Butacas Disponibles</th>').appendTo(trf);
+            //$('<th>Butacas Disponibles</th>').appendTo(trf);
             $('<th>Accion</th>').appendTo(trf);
             $('<tbody id="tbody">').appendTo(tabla);
         }
