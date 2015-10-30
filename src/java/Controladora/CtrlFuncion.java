@@ -45,6 +45,10 @@ public class CtrlFuncion {
     
     public ArrayList listarFuncionesXPelicula(int idPelicula) throws SQLException {
         return datosFunciones.listadoXPelicula(idPelicula);
+    }  
+    
+    public ArrayList listarFuncionesBusquedaAvanzada(int idCine,int idSala,int idPelicula,int NumeroButacas) throws SQLException {
+        return datosFunciones.listadoBusquedaAvanzada(idCine, idSala, idPelicula, NumeroButacas);
     }    
 
 }

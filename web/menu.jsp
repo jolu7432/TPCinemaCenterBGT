@@ -64,11 +64,8 @@
                             </li>
                             <%}
                                     }%>
-                            <form class="navbar-form navbar-left" role="search">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                </div>
-                                <button type="submit" class="btn-success">Submit</button>
+                            <form class="navbar-form navbar-left" role="search">                               
+                                <button type="button" class="navbar-btn btn-primary"><a href="busquedaAvanzada.jsp">Busqueda Avanzada</a></button>
                             </form>
                         </ul>
 
