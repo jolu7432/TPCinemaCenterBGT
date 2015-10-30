@@ -38,6 +38,7 @@
         <script>
             $(document).ready(function () {
                     $.post('ServletReservar',{ idFuncion: <%= request.getParameter("idFuncion") %> }, function (responseJson) {
+			console.log(responseJson);
                         $.each(responseJson, function (index, item) {
                             // falta que te traiga la sala que seria item.sala
                             // y hacer el metodo que te traiga las reservas de esa funcion item.reserva

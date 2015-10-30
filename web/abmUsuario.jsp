@@ -18,7 +18,7 @@
         <div id="menu">  
             <jsp:include page="menu.jsp"/>           
         </div> 
-    <center><h1>ACA LE VOLAS LA CAPOCHA A LOS GILES</h1></center>
+    <center><h1>Administrar Usuarios</h1></center>
     <input type="button" id="altaUsuario" value="Subir Usuario"/><br>     
     <div id="formAltaUsuario"></div>         
     <div id="listadoUsuarios">
@@ -37,4 +37,5 @@
         }
     });   
 </script>
+<div id="errorUser"><h1 align= "center" ><%if(request.getParameter("errorUser") !=null)%><%=request.getParameter("errorUser")%></h1>></div>
 </html>
