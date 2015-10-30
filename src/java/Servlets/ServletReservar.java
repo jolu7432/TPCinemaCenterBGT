@@ -47,6 +47,7 @@ public class ServletReservar extends HttpServlet {
         String accion = request.getParameter("accion");
         String idReserva = request.getParameter("idReserva");
         String idFuncion = request.getParameter("idFuncion");
+        String idUsuario = request.getParameter("idUsuario");
         String butacas = request.getParameter("ReservaButacas");       
         if (request.getParameter("ReservaButacas") != null) {
             butacasReserva = new String[butacas.split("-").length];
@@ -67,10 +68,16 @@ public class ServletReservar extends HttpServlet {
                 //            list = ctrlFuncion.listarFuncionesXPelicula(Integer.parseInt(request.getParameter("idPelicula")));
                 //            flag = true;
                 //            } else {
-                if (request.getParameter("idReserva") == null) {
-                    if (idFuncion != null) {
-                        list = ctrlReservas.listarXFuncion(Integer.parseInt(idFuncion)); // faltaHacerlo la idea esta! creo... jeje
+                if (request.getParameter("idUsuario") != null) {
+                        list = ctrlReservas.listarXUsuario(Integer.parseInt(idUsuario)); 
                         flag = true;
+                } else {
+
+                    if (request.getParameter("idReserva") == null) {
+                        if (idFuncion != null) {
+                            list = ctrlReservas.listarXFuncion(Integer.parseInt(idFuncion)); // faltaHacerlo la idea esta! creo... jeje
+                            flag = true;
+                        }
                     }
                 }
                 if (flag) {

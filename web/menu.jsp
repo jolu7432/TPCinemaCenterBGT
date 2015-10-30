@@ -64,19 +64,16 @@
                             </li>
                             <%}
                                     }%>
-                            <form class="navbar-form navbar-left" role="search">                               
-                                <button type="button" class="navbar-btn btn-primary"><a href="busquedaAvanzada.jsp">Busqueda Avanzada</a></button>
-                            </form>
+                            <li class="btn-menu"><a href="busquedaAvanzada.jsp">Busqueda Avanzada</a></li>                                    
+
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
                             <% if (usuarioLog.getId() != 0) {%>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src=<%= "img/imgUsuarios/" + usuarioLog.getUrlImg()%>  style="height: 50px; width: 30px"><%= " " + usuarioLog.getUser()%><span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src=<%= "img/imgUsuarios/" + usuarioLog.getUrlImg()%>  style="height: 40px; width: 30px"><%= " " + usuarioLog.getUser()%><span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="reservasUsuario.jsp">Mis Reservas</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li>  <form class="navbar-form" action="ServletLogin" method="post">
                                             <input type="hidden" name="accion" value="logOut"/>

@@ -30,4 +30,9 @@ public class CtrlReservas {
     public ArrayList listarXFuncion(int idFuncion) throws SQLException {
         return datosReservas.listadoXFuncion(idFuncion);
     }    
+    
+    public ArrayList listarXUsuario(int idUsuario) throws SQLException {
+        return datosReservas.listadoXUsuario(idUsuario);
+    }    
+
 }
