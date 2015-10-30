@@ -58,7 +58,7 @@ public class BDUsuarios implements IBD {
 	    sentencia.execute();
 	    sentencia.close();
 	} catch (SQLException e) {
-	    e.printStackTrace();
+	    throw e;
 	} finally {
 	    oCon.close();
 	}
