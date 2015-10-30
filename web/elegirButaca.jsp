@@ -36,31 +36,60 @@
             </form>
     </body>
         <script>
+            var funcion;
+            function traerSala(idSala)
+            {
+                var sala;
+                $.post('ServletSala',{ idSala: idSala }, function (responseJson) {
+                    $.each(responseJson, function (index, item) {
+                        sala = item;
+                    });
+                });
+                return sala;
+            };
+            function traerFuncion(idFuncion)
+            {
+                $.post('ServletFuncion',{ idFuncion: idFuncion}, function (responseJson) {
+                    $.each(responseJson, function (index, item) {
+                        funcion = item;
+                    });
+                });
+            };      
+            
+            function traerReservas(idFuncion)
+            {
+                $.post('ServletReservar',{ idFuncion: idFuncion}, function (responseJson) {
+                    var listaReservas = [];
+                    $.each(responseJson, function (index, item) {
+                         listaReservas.push(item);
+                    });
+                });
+                return listaReservas;
+            };             
+            
+            
             $(document).ready(function () {
-                    $.post('ServletReservar',{ idFuncion: <%= request.getParameter("idFuncion") %> }, function (responseJson) {
-                        $.each(responseJson, function (index, item) {
+                traerFuncion(<%= request.getParameter("idFuncion") %>);
+                console.log(funcion);
+                var sala = traerSala()
                             // falta que te traiga la sala que seria item.sala
-                            // y hacer el metodo que te traiga las reservas de esa funcion item.reserva
-                            
-                            
-                            
-                            var numButaca;
-                            for (i = 0; i < item.sala.fila; i++) {
-                                $('<br>').appendTo($('#salita'));
-                                var tr = $('<tr>').appendTo($('#salita'));
-                                for (f = 0; f < item.sala.columna ; f++) {
-                                    var td = $('<td>').appendTo(tr); 
-                                    numButaca++;
-                                    if(item.reserva.butaca === numButaca)
-                                        $('<img src="img/butacaOcu.png">').appendTo(td); 
-                                    else
-                                        $('<img src="img/butacaD.png">').appendTo(td); 
- 
-                                }
-                            }
-                        });
-                    });  
-            });
+                            // y hacer el metodo que te traiga las reservas de esa funcion item.reserva                            
+                var numButaca;
+                for (i = 0; i < sala.fila; i++) {
+                    $('<br>').appendTo($('#salita'));
+                    var tr = $('<tr>').appendTo($('#salita'));
+                    for (f = 0; f < sala.columna ; f++) {
+                        var td = $('<td>').appendTo(tr); 
+                        numButaca++;
+                        if(reserva.butaca === numButaca)
+                            $('<img src="img/butacaOcu.png">').appendTo(td); 
+                        else
+                            $('<img src="img/butacaD.png">').appendTo(td); 
+
+                    }
+                }
+            });  
+            
         </script>
         
 </html>
