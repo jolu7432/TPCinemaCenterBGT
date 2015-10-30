@@ -64,7 +64,12 @@ public class ServletUsuario extends HttpServlet {
 	    cargaUsuario(request, response);
 	} else if (request.getParameter("borrar") != null) {
 	    String iduser = request.getParameter("borrar");
+	    try{
 	    ctrlUsuario.bajaUsuario(Integer.parseInt(iduser));
+	    } catch (SQLException e){
+		RequestDispatcher error = request.getRequestDispatcher("/error.jsp?msg='No puede eliminar usuario, tiene reservas'");
+		error.include(request, response);
+	    }
 	    response.setIntHeader("Refresh", 0);
 	} else {
 	    listaUsuario(request, response);
