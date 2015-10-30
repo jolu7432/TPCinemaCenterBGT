@@ -44,7 +44,7 @@
                     $('#formAltaUsuario').load('altaUsuario.jsp?id=' + this.id);
                 });
                 $('#example').on('click', '.borrar', function () {                 
-                    $.post('ServletUsuario', {borrar: +this.id});                  
+                    $.post('ServletUsuario', {borrar: +this.id});
                     location.href = "/TPCinemaCenterBGT/abmUsuario.jsp";
                 });
                 //al hacer paginacion en la tabla
