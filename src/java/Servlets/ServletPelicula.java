@@ -34,9 +34,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 @WebServlet(name = "ServletPelicula", urlPatterns = {"/ServletPelicula"})
 public class ServletPelicula extends HttpServlet {
-
+    
     CtrlPelicula ctrlPelicula;
-
+    
     public ServletPelicula() {
 	this.ctrlPelicula = new CtrlPelicula();
     }
@@ -53,81 +53,89 @@ public class ServletPelicula extends HttpServlet {
 	    throws ServletException, IOException, SQLException, FileUploadException, Exception {
 	boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 	if (isMultipart) {
-	    FileItemFactory file_factory = new DiskFileItemFactory();
-	    ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
-	    List items = servlet_up.parseRequest(request);
-	    String urlImg = "";
-	    String mirar = "";
-	    Hashtable datosPelicula = new Hashtable();
-	    for (int i = 0; i < items.size(); i++) {
-		FileItem item = (FileItem) items.get(i);
-		if (!item.isFormField()) {
-		    urlImg = item.getName();
-		    if (!urlImg.equals("")) {
-			String dir = getServletContext().getRealPath("/");
-			String dir2 = dir.replaceAll("web", "img");
-			String dir3 = dir2.replaceAll("build", "web");
-			File fileFoto = new File(dir3, item.getName());
-			item.write(fileFoto);
-		    }
-		} else {
-		    //if(item.getFieldName().equals("chkestado"))
-		    mirar += " " +item.getFieldName();
-		    datosPelicula.put(item.getFieldName(), new String(item.getString().getBytes("iso-8859-1"), "UTF-8"));
-		}
-	    }
-	    if (urlImg.equals("")) {
-		urlImg = (String) datosPelicula.get("imgdefecto");
-	    }
-	    if(mirar != " ")
-		mirar += " ";
-	    Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(), datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
-	    String estado = (String) datosPelicula.get("chkestado");
-	    boolean disponible = false;
-	    if(estado != null){
-		disponible = true;
-		nueva.setEstado(disponible);
-	    }
-	    String mod = (String) datosPelicula.get("Modifica");
-	    if (mod == null) {
-		ctrlPelicula.altaPelicula(nueva);
-	    } else {
-		int id = Integer.parseInt((String) datosPelicula.get("Modifica"));
-		nueva.setIdPelicula(id);
-		ctrlPelicula.modificapelicula(nueva);
-	    }
-	    RequestDispatcher aux = request.getRequestDispatcher("/abmPelicula.jsp");
-	    aux.include(request, response);
-
-	}
-	if (request.getParameter("borrar") != null) {
+	    cargarPelicula(request, response);
+	    
+	} else if (request.getParameter("borrar") != null) {
 	    String idPeli = request.getParameter("borrar");
 	    ctrlPelicula.bajaPelicula(Integer.parseInt(idPeli));
 	} else {
-	    String idPelicula = request.getParameter("idPelicula");
-	    ArrayList<Pelicula> list = null;
-	    boolean flag = false;
-	    if (idPelicula == null) {
-		String url = request.getParameter("urlPage");
-		if (url != null) {
-		    list = ctrlPelicula.listarPeliculas();
-		} else {
-		    list = ctrlPelicula.listarPeliculasAdmin();
+	    listarPeliculas(request, response);
+	}
+    }
+    
+    private void cargarPelicula(HttpServletRequest request, HttpServletResponse response) throws FileUploadException, Exception {
+	FileItemFactory file_factory = new DiskFileItemFactory();
+	ServletFileUpload servlet_up = new ServletFileUpload(file_factory);
+	List items = servlet_up.parseRequest(request);
+	String urlImg = "";
+	String mirar = "";
+	Hashtable datosPelicula = new Hashtable();
+	for (int i = 0; i < items.size(); i++) {
+	    FileItem item = (FileItem) items.get(i);
+	    if (!item.isFormField()) {
+		urlImg = item.getName();
+		if (!urlImg.equals("")) {
+		    String dir = getServletContext().getRealPath("/");
+		    String dir2 = dir.replaceAll("web", "img");
+		    String dir3 = dir2.replaceAll("build", "web");
+		    File fileFoto = new File(dir3, item.getName());
+		    item.write(fileFoto);
 		}
-		flag = true;
 	    } else {
-		if (!idPelicula.equals("0")) {
-		    list = new ArrayList<>();
-		    list.add(ctrlPelicula.existe(Integer.parseInt(idPelicula)));
-		    flag = true;
-		}
+		//if(item.getFieldName().equals("chkestado"))
+		mirar += " " + item.getFieldName();
+		datosPelicula.put(item.getFieldName(), new String(item.getString().getBytes("iso-8859-1"), "UTF-8"));
 	    }
-	    if (flag) {
-		String json = new Gson().toJson(list);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(json);
+	}
+	if (urlImg.equals("")) {
+	    urlImg = (String) datosPelicula.get("imgdefecto");
+	}
+	if (mirar != " ") {
+	    mirar += " ";
+	}
+	Pelicula nueva = new Pelicula(datosPelicula.get("nombre").toString(), datosPelicula.get("director").toString(), Integer.parseInt(datosPelicula.get("duracion").toString()), datosPelicula.get("descripcion").toString(), true, urlImg);
+	String estado = (String) datosPelicula.get("chbestado");
+	boolean disponible = false;
+	if (estado != null) {
+	    disponible = true;
+	    nueva.setEstado(disponible);
+	}
+	String mod = (String) datosPelicula.get("Modifica");
+	if (mod == null) {
+	    ctrlPelicula.altaPelicula(nueva);
+	} else {
+	    int id = Integer.parseInt((String) datosPelicula.get("Modifica"));
+	    nueva.setIdPelicula(id);
+	    ctrlPelicula.modificapelicula(nueva);
+	}
+	RequestDispatcher aux = request.getRequestDispatcher("/abmPelicula.jsp");
+	aux.include(request, response);
+    }
+    
+    private void listarPeliculas(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+	String idPelicula = request.getParameter("idPelicula");
+	ArrayList<Pelicula> list = null;
+	boolean flag = false;
+	if (idPelicula == null) {
+	    String url = request.getParameter("urlPage");
+	    if (url != null) {
+		list = ctrlPelicula.listarPeliculas();
+	    } else {
+		list = ctrlPelicula.listarPeliculasAdmin();
 	    }
+	    flag = true;
+	} else {
+	    if (!idPelicula.equals("0")) {
+		list = new ArrayList<>();
+		list.add(ctrlPelicula.existe(Integer.parseInt(idPelicula)));
+		flag = true;
+	    }
+	}
+	if (flag) {
+	    String json = new Gson().toJson(list);
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(json);
 	}
     }
 

@@ -31,9 +31,9 @@
                         <label for="txtDuracion">Duracion</label>
                         <input type="text" class="form-control" id="txtDuracion" placeholder="Duracion" name="duracion" required>
                     </div>
-                    <div class="form-group col-md-1">
-                        <label for="chkEstado">Disponible</label>
-                        <input type="checkbox" class="form-control" id="chkEstado" name="chkestado">
+                    <div class="form-group col-md-1" id="chbEstado">
+                        <label for="chbEstado">Disponible</label>
+                        <input type="checkbox" class="form-control" id="chbEstado" name="chbestado">
                     </div>
                     <br>
                     <div class="col-md-10">
@@ -61,7 +61,7 @@
 			$('#txtNombre').val(item.nombre);
 			$('#txtDirector').val(item.director);
 			$('#txtDuracion').val(item.duracion);
-			$('#chkEstado  input[type=checkbox]').prop('checked', item.estado);
+			$('#chbEstado  input[type=checkbox]').prop('checked', item.estado);
 			$('#txtDescripcion').val(item.descripcion);
 			$('<input type="hidden" id="modifica" name="Modifica" value="<%= request.getParameter("idPelicula")%>">').appendTo($('#moddiv'));
 			$('#ImgDefecto').val(item.urlImagen);
