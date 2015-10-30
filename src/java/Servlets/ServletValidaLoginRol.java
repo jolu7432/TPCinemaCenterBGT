@@ -70,7 +70,7 @@ public class ServletValidaLoginRol extends HttpServlet {
                         out.println("<!DOCTYPE html>");
                         out.println("<html>");
                         out.println("<head>");
-                        out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=error.jsp'>");
+                        out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=error.jsp?msg=No tenes permiso de administrador'>");
                         out.println("</head>");
                         out.println("<body>");                       
                         out.println("</body>");
