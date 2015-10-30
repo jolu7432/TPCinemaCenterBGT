@@ -71,7 +71,7 @@
             $(document).ready(function () {
                 traerFuncion(<%= request.getParameter("idFuncion") %>);
                 console.log(funcion);
-                var sala = traerSala()
+                var sala = traerSala();
                             // falta que te traiga la sala que seria item.sala
                             // y hacer el metodo que te traiga las reservas de esa funcion item.reserva                            
                 var numButaca;

@@ -37,5 +37,5 @@
         }
     });   
 </script>
-<div id="errorUser"><h1 align= "center" ><%if(request.getParameter("errorUser") !=null)%><%=request.getParameter("errorUser")%></h1>></div>
+<div id="errorUser"><h1 align= "center" ><%if(request.getParameter("errorUser") !=null)%><%=request.getParameter("errorUser")%></h1></div>
 </html>

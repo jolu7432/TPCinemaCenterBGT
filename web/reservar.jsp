@@ -60,12 +60,12 @@
                     });
                     $('#example').dataTable();
                 });
-                $('#example').on('click', '.reservar', function () {
-                    $('#altaFuncion').val('Alta Funcion');
-                    $('#formAltaFuncion').text('');
-                    $('#altaFuncion').val('Cancelar');
-                    $('#formAltaFuncion').load('reservar.jsp?idFuncion=' + this.id);
-                });
+               // $('#example').on('click', '.reservar', function () {
+                 //   $('#altaFuncion').val('Alta Funcion');
+                  //  $('#formAltaFuncion').text('');
+                   // $('#altaFuncion').val('Cancelar');
+                   // $('#formAltaFuncion').load('reservar.jsp?idFuncion=' + this.id);
+                //});
                 //al hacer paginacion en la tabla
                 //$('#example').on('page', function () {
                 // alert('paginacion');
