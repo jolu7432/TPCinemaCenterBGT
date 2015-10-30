@@ -27,6 +27,11 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletReservar extends HttpServlet {
 
     CtrlReservas ctrlReservas;
+    String[] butacasReserva;
+    
+    public ServletReservar() {
+        this.ctrlReservas = new CtrlReservas();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,6 +47,11 @@ public class ServletReservar extends HttpServlet {
         String accion = request.getParameter("accion");
         String idReserva = request.getParameter("idReserva");
         String idFuncion = request.getParameter("idFuncion");
+        String butacas = request.getParameter("ReservaButacas");       
+        if (request.getParameter("ReservaButacas") != null) {
+            butacasReserva = new String[butacas.split("-").length];
+            butacasReserva = butacas.split("-");          
+        }
         if (accion != null) {
             //reservar jeje
 
@@ -53,15 +63,15 @@ public class ServletReservar extends HttpServlet {
                 ArrayList<Reserva> list = null;
                 boolean flag = false;
 
-     //           if (request.getParameter("idReserva") != null) {
-        //            list = ctrlFuncion.listarFuncionesXPelicula(Integer.parseInt(request.getParameter("idPelicula")));
-        //            flag = true;
-    //            } else {
+                //           if (request.getParameter("idReserva") != null) {
+                //            list = ctrlFuncion.listarFuncionesXPelicula(Integer.parseInt(request.getParameter("idPelicula")));
+                //            flag = true;
+                //            } else {
                 if (request.getParameter("idReserva") == null) {
                     if (idFuncion != null) {
                         list = ctrlReservas.listarXFuncion(Integer.parseInt(idFuncion)); // faltaHacerlo la idea esta! creo... jeje
                         flag = true;
-                    }                
+                    }
                 }
                 if (flag) {
                     String json = new Gson().toJson(list);
@@ -71,7 +81,7 @@ public class ServletReservar extends HttpServlet {
                 }
             }
         }
-       
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

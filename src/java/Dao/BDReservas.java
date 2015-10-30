@@ -112,7 +112,7 @@ public class BDReservas implements IBD {
     }
 
     public ArrayList listadoXFuncion(int idFuncion) throws SQLException {
-	ArrayList listaReservas = null;
+	ArrayList listaReservas = new ArrayList();
 	Usuario user = null;
 	Conexion oCon = new Conexion();
 	ResultSet rs = null;
@@ -122,7 +122,8 @@ public class BDReservas implements IBD {
 	    PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
 	    rs = sentencia.executeQuery();
 	    while (rs.next()) {
-		listaReservas.add(new Reserva(rs.getInt("idReserva"), null, rs.getInt("Butaca"), rs.getBoolean("Confirmacion"), null));
+                Reserva res = new Reserva(rs.getInt("idReserva"), null, rs.getInt("Butaca"), rs.getBoolean("Confirmacion"), null);
+		listaReservas.add(res);
 	    }
 	    rs.close();
 	    sentencia.close();
