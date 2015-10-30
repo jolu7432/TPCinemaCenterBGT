@@ -67,6 +67,15 @@ public class Reserva {
     public Reserva(int idReserva) {
         this.idReserva = idReserva;
     }
+
+    public Reserva(Usuario user, int butaca, boolean confirmacion, Funcion funcion) {
+	this.user = user;
+	this.butaca = butaca;
+	this.confirmacion = confirmacion;
+	this.funcion = funcion;
+    }
+    
+    
     
     
     

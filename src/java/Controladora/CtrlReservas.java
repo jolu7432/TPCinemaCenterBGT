@@ -17,17 +17,21 @@ import java.util.ArrayList;
 public class CtrlReservas {
 
     private BDReservas datosReservas = BDReservas.getInstance();
-    
+
+    public void altaReserva(ArrayList<Reserva> reservas) throws SQLException {
+	datosReservas.altaMultiplesReservas(reservas);
+    }
+
     public void bajaReserva(Reserva reserva) throws SQLException {
-        datosReservas.baja(reserva);
-    } 
+	datosReservas.baja(reserva);
+    }
 
     public Reserva existe(int idReserva) throws SQLException {
-        Reserva reserva = new Reserva(idReserva);
-        return (Reserva) datosReservas.existe(reserva);
-    }   
-    
+	Reserva reserva = new Reserva(idReserva);
+	return (Reserva) datosReservas.existe(reserva);
+    }
+
     public ArrayList listarXFuncion(int idFuncion) throws SQLException {
-        return datosReservas.listadoXFuncion(idFuncion);
-    }    
+	return datosReservas.listadoXFuncion(idFuncion);
+    }
 }

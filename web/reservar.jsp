@@ -55,7 +55,7 @@
                         $('<td>').text(item.sala.cine.nombre).appendTo(tr);
                         $('<td>').text(item.sala.numSala).appendTo(tr);
                         var accion = $('<td class="center">').appendTo(tr);
-                        $('<a href="elegirButaca.jsp?idFuncion=' + item.idFuncion  + '"  id="' + item.idFuncion + '"  class="btn btn-secondary reservar">Reservar</a>').appendTo(accion);
+                        $('<a href="elegirButaca.jsp?idFuncion=' + item.idFuncion  + '"  class="btn btn-secondary reservar">Reservar</a>').appendTo(accion);
                        
                     });
                    // $('#example').dataTable();

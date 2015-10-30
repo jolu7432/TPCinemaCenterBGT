@@ -53,6 +53,7 @@ public class BDReservas implements IBD {
 	    sentencia.setInt(5, aux.getFuncion().getIdFuncion());
 	    sentencia.execute();
 	    sentencia.close();
+
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	} finally {
@@ -122,7 +123,7 @@ public class BDReservas implements IBD {
 	    PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
 	    rs = sentencia.executeQuery();
 	    while (rs.next()) {
-                Reserva res = new Reserva(rs.getInt("idReserva"), null, rs.getInt("Butaca"), rs.getBoolean("Confirmacion"), null);
+		Reserva res = new Reserva(rs.getInt("idReserva"), null, rs.getInt("Butaca"), rs.getBoolean("Confirmacion"), null);
 		listaReservas.add(res);
 	    }
 	    rs.close();
@@ -132,6 +133,27 @@ public class BDReservas implements IBD {
 	} finally {
 	    oCon.close();
 	    return listaReservas;
+	}
+    }
+
+    public void altaMultiplesReservas(ArrayList<Reserva> reservas) throws SQLException {
+	Conexion oCon = new Conexion();
+	oCon.getConexion();
+	String insert = "INSERT INTO reservas(idUsuario, Butaca, Confirmacion, idFuncion) VALUES(?,?,?,?)";
+	try {
+	    for (Reserva aux : reservas) {
+		PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(insert);
+		sentencia.setInt(1, aux.getUser().getId());
+		sentencia.setInt(2, aux.getButaca());
+		sentencia.setBoolean(3, aux.isConfirmacion());
+		sentencia.setInt(4, aux.getFuncion().getIdFuncion());
+		sentencia.execute();
+		sentencia.close();
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} finally {
+	    oCon.close();
 	}
     }
 }

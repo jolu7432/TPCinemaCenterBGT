@@ -5,14 +5,18 @@
  */
 package Servlets;
 
+import Controladora.CtrlFuncion;
 import Controladora.CtrlReservas;
+import Controladora.CtrlUsuario;
 import Modelo.Reserva;
+import Modelo.Usuario;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,15 +31,18 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletReservar extends HttpServlet {
 
     CtrlReservas ctrlReservas;
+    CtrlFuncion ctrlFuncion;
+    CtrlUsuario ctrlUsuario;
     String[] butacasReserva;
-    
+
     public ServletReservar() {
-        this.ctrlReservas = new CtrlReservas();
+	this.ctrlReservas = new CtrlReservas();
+	this.ctrlFuncion = new CtrlFuncion();
+	this.ctrlUsuario = new CtrlUsuario();
     }
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -43,44 +50,53 @@ public class ServletReservar extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, Exception {
-        String accion = request.getParameter("accion");
-        String idReserva = request.getParameter("idReserva");
-        String idFuncion = request.getParameter("idFuncion");
-        String butacas = request.getParameter("ReservaButacas");       
-        if (request.getParameter("ReservaButacas") != null) {
-            butacasReserva = new String[butacas.split("-").length];
-            butacasReserva = butacas.split("-");          
-        }
-        if (accion != null) {
-            //reservar jeje
-
-        } else {
-            if (request.getParameter("borrar") != null) {
-                Reserva resBorrar = ctrlReservas.existe(Integer.parseInt(request.getParameter("borrar")));
-                ctrlReservas.bajaReserva(resBorrar);
-            } else {
-                ArrayList<Reserva> list = null;
-                boolean flag = false;
+	    throws ServletException, IOException, SQLException, Exception {
+	String accion = request.getParameter("accion");
+	String idReserva = request.getParameter("idReserva");
+	String idFuncion = request.getParameter("idFuncion");
+	String butacas = request.getParameter("ReservaButacas");
+	Usuario user = null;
+	if (request.getParameter("user") != null) {
+	    user = ctrlUsuario.traePorId(Integer.parseInt(request.getParameter("user")));
+	}
+	if (request.getParameter("ReservaButacas") != null) {
+	    butacasReserva = new String[butacas.split("-").length];
+	    butacasReserva = butacas.split("-");
+	}
+	if (butacasReserva != null) {
+	    ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+	    for (String aux : butacasReserva) {
+		reservas.add(new Reserva(user, Integer.parseInt(aux), true, ctrlFuncion.existe(Integer.parseInt(idFuncion))));
+	    }
+	ctrlReservas.altaReserva(reservas);
+	RequestDispatcher aux = request.getRequestDispatcher("/elegirButaca.jsp");
+	aux.include(request, response);
+	} else {
+	    if (request.getParameter("borrar") != null) {
+		Reserva resBorrar = ctrlReservas.existe(Integer.parseInt(request.getParameter("borrar")));
+		ctrlReservas.bajaReserva(resBorrar);
+	    } else {
+		ArrayList<Reserva> list = null;
+		boolean flag = false;
 
                 //           if (request.getParameter("idReserva") != null) {
-                //            list = ctrlFuncion.listarFuncionesXPelicula(Integer.parseInt(request.getParameter("idPelicula")));
-                //            flag = true;
-                //            } else {
-                if (request.getParameter("idReserva") == null) {
-                    if (idFuncion != null) {
-                        list = ctrlReservas.listarXFuncion(Integer.parseInt(idFuncion)); // faltaHacerlo la idea esta! creo... jeje
-                        flag = true;
-                    }
-                }
-                if (flag) {
-                    String json = new Gson().toJson(list);
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write(json);
-                }
-            }
-        }
+		//            list = ctrlFuncion.listarFuncionesXPelicula(Integer.parseInt(request.getParameter("idPelicula")));
+		//            flag = true;
+		//            } else {
+		if (request.getParameter("idReserva") == null) {
+		    if (idFuncion != null) {
+			list = ctrlReservas.listarXFuncion(Integer.parseInt(idFuncion)); // faltaHacerlo la idea esta! creo... jeje
+			flag = true;
+		    }
+		}
+		if (flag) {
+		    String json = new Gson().toJson(list);
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		}
+	    }
+	}
 
     }
 
@@ -95,12 +111,12 @@ public class ServletReservar extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(ServletReservar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	    throws ServletException, IOException {
+	try {
+	    processRequest(request, response);
+	} catch (Exception ex) {
+	    Logger.getLogger(ServletReservar.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
     /**
@@ -113,12 +129,12 @@ public class ServletReservar extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(ServletReservar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	    throws ServletException, IOException {
+	try {
+	    processRequest(request, response);
+	} catch (Exception ex) {
+	    Logger.getLogger(ServletReservar.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
     /**
@@ -128,7 +144,7 @@ public class ServletReservar extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+	return "Short description";
     }// </editor-fold>
 
 }
