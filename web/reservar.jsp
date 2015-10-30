@@ -58,13 +58,13 @@
                         $('<a href="elegirButaca.jsp?idFuncion=' + item.idFuncion  + '"  id="' + item.idFuncion + '"  class="btn btn-secondary reservar">Reservar</a>').appendTo(accion);
                        
                     });
-                    $('#example').dataTable();
+                   // $('#example').dataTable();
                 });
-               // $('#example').on('click', '.reservar', function () {
-                 //   $('#altaFuncion').val('Alta Funcion');
-                  //  $('#formAltaFuncion').text('');
-                   // $('#altaFuncion').val('Cancelar');
-                   // $('#formAltaFuncion').load('reservar.jsp?idFuncion=' + this.id);
+                //$('#example').on('click', '.reservar', function () {
+                //    $('#altaFuncion').val('Alta Funcion');
+                //    $('#formAltaFuncion').text('');
+                //   $('#altaFuncion').val('Cancelar');
+                //   $('#formAltaFuncion').load('reservar.jsp?idFuncion=' + this.id);
                 //});
                 //al hacer paginacion en la tabla
                 //$('#example').on('page', function () {
