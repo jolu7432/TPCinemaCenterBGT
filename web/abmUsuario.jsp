@@ -22,10 +22,11 @@
     <input type="button" id="altaUsuario" value="Subir Usuario"/><br>     
     <div id="formAltaUsuario"></div>         
     <div id="listadoUsuarios">
-        <jsp:include page="listadoUsuarios.jsp"/>
-    </div>   
+        <jsp:include page='listadoUsuarios.jsp'/>
+    </div> 
+  
 </body>
-<script>
+<script>   
     $('#altaUsuario').click(function () {
         if ($('#altaUsuario').val() == 'Cancelar') {
             $('#altaUsuario').val('Subir Usuario');

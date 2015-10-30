@@ -15,6 +15,6 @@
         <div id="menu">  
             <jsp:include page="menu.jsp"/>           
         </div> 
-         <h1><%= request.getParameter("msg")%></h1>
+        <h1><%= request.getParameter("msg")%></h1>
     </body>
 </html>

@@ -43,14 +43,18 @@
                     $('#altaUsuario').val('Cancelar');
                     $('#formAltaUsuario').load('altaUsuario.jsp?id=' + this.id);
                 });
-                $('#example').on('click', '.borrar', function () {                 
-                    $.post('ServletUsuario', {borrar: +this.id});
-                    location.href = "/TPCinemaCenterBGT/abmUsuario.jsp";
+                $('#example').on('click', '.borrar', function () {                  
+                    $.post('ServletUsuario', {borrar: +this.id}, function (responseJson) {                    
+                        $.each(responseJson, function (index, item) {
+                            alert(item);
+                        });
+                        location.href = "/TPCinemaCenterBGT/abmUsuario.jsp";
+                    });                       
                 });
                 //al hacer paginacion en la tabla
                 //$('#example').on('page', function () {
-                 // alert('paginacion');
-               //});         
+                // alert('paginacion');
+                //});         
             });
         </script>
         <style>
