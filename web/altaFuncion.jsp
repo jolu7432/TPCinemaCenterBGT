@@ -81,7 +81,7 @@
                             cargarComboPeliculas(item.sala.idSala);
                             global = item;
                         });
-                        setTimeout('cargarCamposForm(global)', 500); //tiempo que tarda en cargar los datos de la funcion a editar
+                        setTimeout ('cargarCamposForm(global)', 500); //tiempo que tarda en cargar los datos de la funcion a editar
                     });
                 }
 

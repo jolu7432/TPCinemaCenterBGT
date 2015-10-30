@@ -18,7 +18,7 @@
         <div id="menu">  
             <jsp:include page="menu.jsp"/>           
         </div> 
-    <center><h1>ACA VA UN TITULO DESCRIPTIVO</h1></center>
+    <center><h1>Administrar Peliculas</h1></center>
     <input type="button" id="altaPelicula" value="Subir Pelicula"/><br>     
     <div id="formAltaPelicula"></div>         
     <div id="listadoPeliculas">
