@@ -112,6 +112,31 @@ public class BDReservas implements IBD {
 	return null;
     }
 
+    public ArrayList listadoXUsuario(int user) throws SQLException {
+	ArrayList listaReservas = new ArrayList();
+	Conexion oCon = new Conexion();
+	ResultSet rs = null;
+	oCon.getConexion();
+	String consulta = "SELECT idReserva, idUsuario, Count(*) as Butacas, Confirmacion, idFuncion FROM reservas where idUsuario =" + user + " group by idFuncion";
+	try {
+	    PreparedStatement sentencia = (PreparedStatement) oCon.getConexion().prepareStatement(consulta);
+	    rs = sentencia.executeQuery();
+	    while (rs.next()) {
+                Funcion funcion = ctrlFuncion.existe(rs.getInt("idFuncion"));
+                Reserva res = new Reserva(rs.getInt("idReserva"), null, rs.getInt("Butacas"), rs.getBoolean("Confirmacion"), funcion);
+		listaReservas.add(res);
+	    }
+	    rs.close();
+	    sentencia.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} finally {
+	    oCon.close();
+	    return listaReservas;
+	}
+        
+    }    
+
     public ArrayList listadoXFuncion(int idFuncion) throws SQLException {
 	ArrayList listaReservas = new ArrayList();
 	Usuario user = null;
