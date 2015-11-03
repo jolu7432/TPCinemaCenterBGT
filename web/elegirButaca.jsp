@@ -14,7 +14,7 @@
 
     </head>
     <body align="center">
-        <%--    <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> --%>
+        <jsp:include page="ServletValidaLoginRol?UrlPage=<%= request.getRequestURL()%>" flush="true"/> 
         <div id="menu">  
             <jsp:include page="menu.jsp"/>           
         </div> 
@@ -36,7 +36,7 @@
 	var butacasOcupadas = [];
 	var butacasReservadas = [];
 	function recargar() {
-	    location.href = "/TPCinemaCenterBGT/principal.jsp?msj=reservado";
+	    location.href = "/TPCinemaCenterBGT/reservasUsuario.jsp?msj=reservado";
 	}
 	function traerFuncion(idFuncion)
 	{
@@ -59,6 +59,7 @@
 	;
 	function traerReservas() {
 	    $.post('ServletReservar', {idFuncion: <%= request.getParameter("idFuncion")%>}, function (responseJson) {
+		console.log(funcion);
 		$.each(responseJson, function (index, item) {
 		    for (i = 0; i < funcion.sala.fila; i++) {
 			//$('<br>').appendTo($('#salita'));
@@ -76,7 +77,7 @@
 	$(document).ready(function () {
 	    setTimeout('traerFuncion(<%= request.getParameter("idFuncion")%>)',200);
 	    //setTimeout('console.log(funcion)', 500);
-	    setTimeout('traerReservas()', 200);
+	    setTimeout('traerReservas()', 500);
 	    $('#reservar').click(function () {
 		if (butacasReservadas.length == 0) {
 		    alert('Debe seleccionar alguna butaca!!!');

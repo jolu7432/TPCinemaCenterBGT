@@ -26,16 +26,17 @@ public class ServletValidaLoginRol extends HttpServlet {
     Hashtable urlNoAdmin;
 
     public ServletValidaLoginRol() {
-        urlNoAdmin = new Hashtable();
-        //Agregar las URL que puede ingresar un usuario comun
-        urlNoAdmin.put("/altaPelicula.jsp", "/altaPelicula.jsp"); 
-        urlNoAdmin.put("/abmPelicula.jsp", "/abmPelicula.jsp");
+	urlNoAdmin = new Hashtable();
+	//Agregar las URL que puede ingresar un usuario comun
+	urlNoAdmin.put("/elegirButaca.jsp", "/elegirButaca.jsp");
+	urlNoAdmin.put("/reservar.jsp", "/reservar.jsp");
+	urlNoAdmin.put("/busquedaAvanzada.jsp", "/busquedaAvanzada..jsp");
+	urlNoAdmin.put("/reservasUsuario.jsp", "/reservasUsuario..jsp");
 
     }
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -43,42 +44,42 @@ public class ServletValidaLoginRol extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Usuario user = new Usuario();
-        HttpSession sesion = request.getSession(true);
-        user = (Usuario) sesion.getAttribute("usuarioLog");
-        if (user.getId() == 0) {
-            response.setContentType("text/html;charset=UTF-8");
-            try (PrintWriter out = response.getWriter()) {
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=principal.jsp'>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("</body>");
-                out.println("</html>");
-            }
-        } else {
-            if (!user.isAdministrador()) {
-                String url = request.getServletPath();
-                if (urlNoAdmin.get(url) == null) {
-                    response.setContentType("text/html;charset=UTF-8");
-                    try (PrintWriter out = response.getWriter()) {
-                        /* TODO output your page here. You may use following sample code. */
-                        out.println("<!DOCTYPE html>");
-                        out.println("<html>");
-                        out.println("<head>");
-                        out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=error.jsp?msg=No tenes permiso de administrador'>");
-                        out.println("</head>");
-                        out.println("<body>");                       
-                        out.println("</body>");
-                        out.println("</html>");
-                    }
-                } 
-            }
-        }
+	    throws ServletException, IOException {
+	Usuario user = new Usuario();
+	HttpSession sesion = request.getSession(true);
+	user = (Usuario) sesion.getAttribute("usuarioLog");
+	if (user.getId() == 0) {
+	    response.setContentType("text/html;charset=UTF-8");
+	    try (PrintWriter out = response.getWriter()) {
+		/* TODO output your page here. You may use following sample code. */
+		out.println("<!DOCTYPE html>");
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=principal.jsp'>");
+		out.println("</head>");
+		out.println("<body>");
+		out.println("</body>");
+		out.println("</html>");
+	    }
+	} else {
+	    if (!user.isAdministrador()) {
+		String url = request.getServletPath();
+		if (urlNoAdmin.get(url) == null) {
+		    response.setContentType("text/html;charset=UTF-8");
+		    try (PrintWriter out = response.getWriter()) {
+			/* TODO output your page here. You may use following sample code. */
+			out.println("<!DOCTYPE html>");
+			out.println("<html>");
+			out.println("<head>");
+			out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=error.jsp?msg=No tenes permiso de administrador'>");
+			out.println("</head>");
+			out.println("<body>");
+			out.println("</body>");
+			out.println("</html>");
+		    }
+		}
+	    }
+	}
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -92,8 +93,8 @@ public class ServletValidaLoginRol extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+	    throws ServletException, IOException {
+	processRequest(request, response);
     }
 
     /**
@@ -106,8 +107,8 @@ public class ServletValidaLoginRol extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+	    throws ServletException, IOException {
+	processRequest(request, response);
     }
 
     /**
@@ -117,7 +118,7 @@ public class ServletValidaLoginRol extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+	return "Short description";
     }// </editor-fold>
 
 }

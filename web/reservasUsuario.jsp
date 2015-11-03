@@ -19,43 +19,48 @@
             <jsp:include page="menu.jsp"/>
         </div>
         <script>
-            $(document).ready(function () {
-                $.post('ServletReservar',{ idUsuario: <%= usuarioLog.getId() %> }, function (responseJson) {
-                    $.each(responseJson, function (index, item) {
-                        var tr = $('<tr>').appendTo($('#tbody')); 
-                        
-                     
-                        var formattedDate = new Date(item.funcion.fechaYHora);
-                        var y = formattedDate.getFullYear();
-                        var m = formattedDate.getMonth();
-                        var d = formattedDate.getDate();
-                        var h = formattedDate.getHours();
-                        var min = formattedDate.getMinutes();
-                        m += 1;  // JavaScript months are 0-11                    
-                        $('<td>').text(y + "-" + m + "-" + d + " " + h + ":" + min).appendTo(tr);
-                        $('<td>').text(item.butaca).appendTo(tr);                  
-                        $('<td>').text(item.funcion.sala.cine.nombre).appendTo(tr);                  
-                        $('<td>').text(item.funcion.sala.numSala).appendTo(tr);                                 
-                    });
-                });
-            });
+	    <% if (request.getParameter("msj") != null) {%>
+	    <% if (request.getParameter("msj").equals("reservado")) {%>
+	    alert('Su reserva se realizo con exito');
+	    <%}%>
+	    <% }%>
+	    $(document).ready(function () {
+		$.post('ServletReservar', {idUsuario: <%= usuarioLog.getId()%>}, function (responseJson) {
+		    $.each(responseJson, function (index, item) {
+			var tr = $('<tr>').appendTo($('#tbody'));
+			var formattedDate = new Date(item.funcion.fechaYHora);
+			var y = formattedDate.getFullYear();
+			var m = formattedDate.getMonth();
+			var d = formattedDate.getDate();
+			var h = formattedDate.getHours();
+			var min = formattedDate.getMinutes();
+			m += 1;  // JavaScript months are 0-11                    
+			$('<td>').text(y + "-" + m + "-" + d + " " + h + ":" + min).appendTo(tr);
+			$('<td>').text(item.funcion.pelicula.nombre).appendTo(tr);
+			$('<td>').text(item.butaca).appendTo(tr);
+			$('<td>').text(item.funcion.sala.cine.nombre).appendTo(tr);
+			$('<td>').text(item.funcion.sala.numSala).appendTo(tr);
+		    });
+		});
+	    });
 
         </script>     
         <h1>Mis Reservas</h1>
         <div class="col-md-6">
             <table  class="table dataTable elemento " cellspacing="0" width="100%" >
-                    <thead>
-                        <tr style="background-color: #0088cc;">                        
-                            <th>Dia de Funcion</th>
-                            <th>Cantidad de Butacas</th>
-                            <th>Cine</th>
-                            <th>Sala</th>
-                        </tr>
-                    </thead>
+		<thead>
+		    <tr style="background-color: #0088cc;">                        
+			<th>Dia de Funcion</th>
+			<th>Pelicula</th>
+			<th>Cantidad de Butacas</th>
+			<th>Cine</th>
+			<th>Sala</th>
+		    </tr>
+		</thead>
 
-                    <tbody id="tbody">                   
-                    </tbody>
-                </table>
+		<tbody id="tbody">                   
+		</tbody>
+	    </table>
         </div>
     </body>
 </html>

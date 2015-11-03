@@ -11,11 +11,6 @@
     <head>
         <meta charset=UTF-8>
         <script language="javascript">
-	    <% if (request.getParameter("msj") != null) {%>
-	    <% if (request.getParameter("msj").equals("reservado")) {%>
-	    alert('Su reserva se realizo con exito');
-	    <%}%>
-	    <% }%>
 	    var titletext = "Bienvenidos a CinemaCenter!!!";
 	    var repeat = true;
 	    var index = 0;

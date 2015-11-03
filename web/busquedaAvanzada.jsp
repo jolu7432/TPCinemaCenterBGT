@@ -85,18 +85,17 @@
 	;
 	function cargarComboSalas() {
 	    $.post('ServletCargaComboBox', {Accion: "SalasTodas"}, function (responseJson) {
-		$('#chkSala').find('option:gt(0)').remove();
-		$('#chkPelicula').find('option:gt(0)').remove();
+		//$('#chkSala').find('option:gt(0)').remove();
+		//$('#chkPelicula').find('option:gt(0)').remove();
 		$.each(responseJson, function (index, item) {
-		    $('<option value="' + item.idSala + '">').text(item.numSala).appendTo($('#chkSala'));
+		    $('<option value="' + item.idSala + '">').text(item.numSala + "(" + item.cine.nombre + ")").appendTo($('#chkSala'));
 		});
 	    });
 	}
 	;
 	function cargarComboPeliculas() {
-	    $.post('ServletCargaComboBox', {Accion: "Peliculas"}, function (responseJson) {
-		console.log(responseJson);
-		$('#chkPelicula').find('option:gt(0)').remove();
+	    $.post('ServletCargaComboBox', {Accion: "Peliculas"}, function (responseJson) {		
+		//$('#chkPelicula').find('option:gt(0)').remove();
 		$.each(responseJson, function (index, item) {
 		    $('<option value="' + item.idPelicula + '">').text(item.nombre).appendTo($('#chkPelicula'));
 		});
