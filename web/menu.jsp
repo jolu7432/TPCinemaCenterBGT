@@ -58,8 +58,6 @@
                                     <li><a href="abmFuncion.jsp">ABM Funcion</a></li>
                                     <li><a href="abmCine.jsp">ABM Cines</a></li>
                                     <li><a href="abmSala.jsp">ABM Salas</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">One more separated link</a></li>
                                 </ul>
                             </li>
                             <%}

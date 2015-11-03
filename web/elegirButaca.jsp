@@ -22,8 +22,8 @@
         <form method="post" action="#">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-10" id="salita">
-                    </div>
+                   <center><div class="col-md-10" id="salita">
+		       </div></center>>
                     <div class="col-md-2">
                     </div>
                 </div>
@@ -35,9 +35,8 @@
 	var funcion;
 	var butacasOcupadas = [];
 	var butacasReservadas = [];
-	console.log(<%= request.getParameter("idFuncion")%>);
-	function recargar(){
-	    location.href = "/TPCinemaCenterBGT/elegirButaca.jsp?idFuncion=" +<%= request.getParameter("idFuncion")%>;
+	function recargar() {
+	    location.href = "/TPCinemaCenterBGT/principal.jsp?msj=reservado";
 	}
 	function traerFuncion(idFuncion)
 	{
@@ -60,9 +59,7 @@
 	;
 	function traerReservas() {
 	    $.post('ServletReservar', {idFuncion: <%= request.getParameter("idFuncion")%>}, function (responseJson) {
-		console.log("1");
 		$.each(responseJson, function (index, item) {
-		    		console.log("2");
 		    for (i = 0; i < funcion.sala.fila; i++) {
 			//$('<br>').appendTo($('#salita'));
 			//var tr = $('<tr>').appendTo($('#salita'));
@@ -77,9 +74,9 @@
 	}
 	;
 	$(document).ready(function () {
-	    traerFuncion(<%= request.getParameter("idFuncion")%>);
+	    setTimeout('traerFuncion(<%= request.getParameter("idFuncion")%>)',200);
 	    //setTimeout('console.log(funcion)', 500);
-	    setTimeout('traerReservas()', 500);
+	    setTimeout('traerReservas()', 200);
 	    $('#reservar').click(function () {
 		if (butacasReservadas.length == 0) {
 		    alert('Debe seleccionar alguna butaca!!!');
@@ -88,9 +85,9 @@
 		    $.each(butacasReservadas, function (ind, elem) {
 			id += elem + '-';
 		    });
-		    $.post('ServletReservar', {ReservaButacas: id, idFuncion: <%= request.getParameter("idFuncion")%>, user: <%=usuarioLog.getId()%>}, function (responseJson) {
+		    $.post('ServletReservar', {ReservaButacas: id, idFuncion: <%= request.getParameter("idFuncion")%>, user: <%=usuarioLog.getId()%>}, function (vacio) {
 		    });
-		    setTimeout('recargar()',500);
+		    setTimeout('recargar()', 500);
 		}
 	    });
 	});

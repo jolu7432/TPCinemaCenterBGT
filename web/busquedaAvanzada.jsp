@@ -75,93 +75,94 @@
     <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/css/jquery.dataTables.css">       
     <script type="text/javascript" charset="UTF-8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.1/jquery.dataTables.min.js"></script>   
     <script>
-        function cargarComboCines() {
-            $.post('ServletCargaComboBox', {Accion: "Cines"}, function (responseJson) {
-                $.each(responseJson, function (index, item) {
-                    $('<option value="' + item.idCine + '">').text(item.nombre).appendTo($('#chkCine'));
-                });
-            });
-        }
-        ;
-        function cargarComboSalas() {
-            $.post('ServletCargaComboBox', {Accion: "SalasTodas"}, function (responseJson) {
-                $('#chkSala').find('option:gt(0)').remove();
-                $('#chkPelicula').find('option:gt(0)').remove();
-                $.each(responseJson, function (index, item) {
-                    $('<option value="' + item.idSala + '">').text(item.numSala).appendTo($('#chkSala'));
-                });
-            });
-        }
-        ;
-        function cargarComboPeliculas() {
-            $.post('ServletCargaComboBox', {Accion: "Peliculas"}, function (responseJson) {
-                $('#chkPelicula').find('option:gt(0)').remove();
-                $.each(responseJson, function (index, item) {
-                    $('<option value="' + item.idPelicula + '">').text(item.nombre).appendTo($('#chkPelicula'));
-                });
-            });
-        }
-        ;
-        $(document).ready(function () {
-            cargarComboCines();
-            cargarComboSalas();
-            cargarComboPeliculas();
-            $('#btnBuscar').click(function () {
-                $('#divTabla').html("");
-                crearTabla();
-                $.post('ServletBusquedaAvanzada', {idCine: $('#chkCine').val(), idSala: $('#chkSala').val(), idPelicula: $('#chkPelicula').val() , NumeroButacas: $('#chkNumeroButacas').val()}, function (responseJson) {
-                    $.each(responseJson, function (index, item) {
-                        var tr = $('<tr>').appendTo($('#tbody'));
-                        var formattedDate = new Date(item.fechaYHora);
-                        var y = formattedDate.getFullYear();
-                        var m = formattedDate.getMonth();
-                        var d = formattedDate.getDate();
-                        var h = formattedDate.getHours();
-                        var min = formattedDate.getMinutes();
-                        m += 1;  // JavaScript months are 0-11                    
-                        $('<td>').text(y + "-" + m + "-" + d + " " + h + ":" + min).appendTo(tr);
-                        $('<td>').text(item.precio).appendTo(tr);
-                        $('<td>').text(item.duracion).appendTo(tr);
-                        $('<td>').text(item.sala.cine.nombre).appendTo(tr);
-                        $('<td>').text(item.sala.numSala).appendTo(tr);
-                        $('<td>').text(item.pelicula.nombre).appendTo(tr);
-                        //$('<td>').text("0").appendTo(tr); //cantidad de butacas disponibles
-                        var accion = $('<td class="center">').appendTo(tr);
-                        $('<input type="button" id="' + item.idFuncion + '" title="Reservar" value="Reservar" class="btn btn-primary btn-lg reservar">').appendTo(accion);
-                        // $('<button id="' + item.idFuncion + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
-                    });
-                    $('#example').dataTable();
-                });
-                $('#example').on('click', '.reservar', function () {
-                    location.href = "/TPCinemaCenterBGT/elegirButaca.jsp?idFuncion=" + this.id;
-                });
-            });
-        });
+	function cargarComboCines() {
+	    $.post('ServletCargaComboBox', {Accion: "Cines"}, function (responseJson) {
+		$.each(responseJson, function (index, item) {
+		    $('<option value="' + item.idCine + '">').text(item.nombre).appendTo($('#chkCine'));
+		});
+	    });
+	}
+	;
+	function cargarComboSalas() {
+	    $.post('ServletCargaComboBox', {Accion: "SalasTodas"}, function (responseJson) {
+		$('#chkSala').find('option:gt(0)').remove();
+		$('#chkPelicula').find('option:gt(0)').remove();
+		$.each(responseJson, function (index, item) {
+		    $('<option value="' + item.idSala + '">').text(item.numSala).appendTo($('#chkSala'));
+		});
+	    });
+	}
+	;
+	function cargarComboPeliculas() {
+	    $.post('ServletCargaComboBox', {Accion: "Peliculas"}, function (responseJson) {
+		console.log(responseJson);
+		$('#chkPelicula').find('option:gt(0)').remove();
+		$.each(responseJson, function (index, item) {
+		    $('<option value="' + item.idPelicula + '">').text(item.nombre).appendTo($('#chkPelicula'));
+		});
+	    });
+	}
+	;
+	$(document).ready(function () {
+	    cargarComboCines();
+	    cargarComboSalas();
+	    cargarComboPeliculas();
+	    $('#btnBuscar').click(function () {
+		$('#divTabla').html("");
+		crearTabla();
+		$.post('ServletBusquedaAvanzada', {idCine: $('#chkCine').val(), idSala: $('#chkSala').val(), idPelicula: $('#chkPelicula').val(), NumeroButacas: $('#chkNumeroButacas').val()}, function (responseJson) {
+		    $.each(responseJson, function (index, item) {
+			var tr = $('<tr>').appendTo($('#tbody'));
+			var formattedDate = new Date(item.fechaYHora);
+			var y = formattedDate.getFullYear();
+			var m = formattedDate.getMonth();
+			var d = formattedDate.getDate();
+			var h = formattedDate.getHours();
+			var min = formattedDate.getMinutes();
+			m += 1;  // JavaScript months are 0-11                    
+			$('<td>').text(y + "-" + m + "-" + d + " " + h + ":" + min).appendTo(tr);
+			$('<td>').text(item.precio).appendTo(tr);
+			$('<td>').text(item.duracion).appendTo(tr);
+			$('<td>').text(item.sala.cine.nombre).appendTo(tr);
+			$('<td>').text(item.sala.numSala).appendTo(tr);
+			$('<td>').text(item.pelicula.nombre).appendTo(tr);
+			//$('<td>').text("0").appendTo(tr); //cantidad de butacas disponibles
+			var accion = $('<td class="center">').appendTo(tr);
+			$('<input type="button" id="' + item.idFuncion + '" title="Reservar" value="Reservar" class="btn btn-primary btn-lg reservar">').appendTo(accion);
+			// $('<button id="' + item.idFuncion + '" title="Borrar" class="btn14 mr5 removeBtn borrar" data-entity-id="21589"><img src="iconos/remove.png" alt="Borrar">').appendTo(accion);
+		    });
+		    $('#example').dataTable();
+		});
+		$('#example').on('click', '.reservar', function () {
+		    location.href = "/TPCinemaCenterBGT/elegirButaca.jsp?idFuncion=" + this.id;
+		});
+	    });
+	});
 
-        function crearTabla() {
-            var tabla = $('<table id="example" class="dataTable" cellspacing="0" width="100%">').appendTo($('#divTabla'));
-            var thead = $('<thead>').appendTo(tabla);
-            var tr = $('<tr>').appendTo(thead);
-            $('<th>Fecha Y Hora</th>').appendTo(tr);
-            $('<th>Precio</th>').appendTo(tr);
-            $('<th>Duracion</th>').appendTo(tr);
-            $('<th>Cine</th>').appendTo(tr);
-            $('<th>Sala</th>').appendTo(tr);
-            $('<th>Pelicula</th>').appendTo(tr);
-            //$('<th>Butacas Disponibles</th>').appendTo(tr);
-            $('<th>Accion</th>').appendTo(tr);
-            var tfoot = $('<tfoot>').appendTo(tabla);
-            var trf = $('<tr>').appendTo(tfoot);
-            $('<th>Fecha Y Hora</th>').appendTo(trf);
-            $('<th>Precio</th>').appendTo(trf);
-            $('<th>Duracion</th>').appendTo(trf);
-            $('<th>Cine</th>').appendTo(trf);
-            $('<th>Sala</th>').appendTo(trf);
-            $('<th>Pelicula</th>').appendTo(trf);
-            //$('<th>Butacas Disponibles</th>').appendTo(trf);
-            $('<th>Accion</th>').appendTo(trf);
-            $('<tbody id="tbody">').appendTo(tabla);
-        }
+	function crearTabla() {
+	    var tabla = $('<table id="example" class="dataTable" cellspacing="0" width="100%">').appendTo($('#divTabla'));
+	    var thead = $('<thead>').appendTo(tabla);
+	    var tr = $('<tr>').appendTo(thead);
+	    $('<th>Fecha Y Hora</th>').appendTo(tr);
+	    $('<th>Precio</th>').appendTo(tr);
+	    $('<th>Duracion</th>').appendTo(tr);
+	    $('<th>Cine</th>').appendTo(tr);
+	    $('<th>Sala</th>').appendTo(tr);
+	    $('<th>Pelicula</th>').appendTo(tr);
+	    //$('<th>Butacas Disponibles</th>').appendTo(tr);
+	    $('<th>Accion</th>').appendTo(tr);
+	    var tfoot = $('<tfoot>').appendTo(tabla);
+	    var trf = $('<tr>').appendTo(tfoot);
+	    $('<th>Fecha Y Hora</th>').appendTo(trf);
+	    $('<th>Precio</th>').appendTo(trf);
+	    $('<th>Duracion</th>').appendTo(trf);
+	    $('<th>Cine</th>').appendTo(trf);
+	    $('<th>Sala</th>').appendTo(trf);
+	    $('<th>Pelicula</th>').appendTo(trf);
+	    //$('<th>Butacas Disponibles</th>').appendTo(trf);
+	    $('<th>Accion</th>').appendTo(trf);
+	    $('<tbody id="tbody">').appendTo(tabla);
+	}
     </script>
     <style>
         .reservar{
